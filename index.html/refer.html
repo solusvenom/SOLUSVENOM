@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venom Terminal - Referral Core</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. MASTER GLASS DESIGN SYSTEM & NEON MATRIX ENGINE
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #06090e 0%, #010204 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        /* Ambient Venom Neon Aura Elements */
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.15; }
+        .orb-1 { width: 500px; height: 500px; background: #39FF14; top: -10%; left: -20%; }
+        .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom: -10%; right: -15%; }
+
+        /* Structural Glassmorphism Framework */
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(3, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.95); border-radius: 36px; }
+
+        /* Real-time Dynamic Shimmer Scanning Reflection */
+        .premium-glass::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg); animation: shimmerEffect 7s infinite ease-in-out; pointer-events: none;
+        }
+        @keyframes shimmerEffect { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        /* ==========================================================================
+           2. HEADER HEADER CONSOLE STRIP
+           ========================================================================== */
+        .deck-header {
+            padding: 45px 24px 15px 24px;
+            display: flex; align-items: center; gap: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 10;
+        }
+        .back-node-btn { color: rgba(255,255,255,0.5); font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        .back-node-btn:hover { color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
+        .deck-header h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+
+        /* ==========================================================================
+           3. LIVE TELEMETRY COUNTER PANELS METER
+           ========================================================================== */
+        .balance-monitor-panel {
+            padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 10;
+        }
+        .balance-tile { padding: 16px; border-radius: 20px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); }
+        .balance-tile small { font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 4px; }
+        .balance-tile h2 { font-family: 'Share Tech Mono', monospace; font-size: 1.55rem; font-weight: 800; color: #ffffff; }
+        .tile-withdrawable { border-color: rgba(57, 255, 20, 0.12); background: rgba(57, 255, 20, 0.01); }
+        .tile-withdrawable h2 { color: #39FF14; text-shadow: 0 0 12px rgba(57, 255, 20, 0.2); }
+
+        /* ==========================================================================
+           4. CORE SCROLL CONTAINER FRAME
+           ========================================================================== */
+        .content-scroll { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 140px; z-index: 10; display: flex; flex-direction: column; gap: 24px; }
+
+        .block-header-title { font-size: 0.7rem; text-transform: uppercase; color: rgba(255,255,255,0.3); letter-spacing: 1px; font-weight: bold; border-left: 2px solid #39FF14; padding-left: 8px; }
+
+        /* Clipboard Copy Deck Elements */
+        .refer-share-box {
+            padding: 20px; border-radius: 22px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; gap: 14px;
+        }
+        .link-capture-row { display: flex; gap: 10px; }
+        .code-display-terminal {
+            flex: 1; padding: 14px 16px; background: rgba(0,0,0,0.5); border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06); font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem; color: rgba(255,255,255,0.8); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .btn-terminal-copy {
+            width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08); color: #39FF14; display: flex;
+            justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; font-size: 1rem;
+        }
+        .btn-terminal-copy:hover { background: rgba(57, 255, 20, 0.08); border-color: rgba(57, 255, 20, 0.3); box-shadow: 0 0 15px rgba(57, 255, 20, 0.1); }
+
+        /* Claim Operational Execution Gate */
+        .btn-claim-bonus {
+            background: #39FF14; color: #000; font-family: 'Share Tech Mono', monospace;
+            padding: 16px; border-radius: 16px; text-transform: uppercase; font-weight: 800;
+            font-size: 0.88rem; text-align: center; border: none; cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-claim-bonus:hover { box-shadow: 0 0 25px rgba(57, 255, 20, 0.35); transform: translateY(-1px); }
+
+        /* Info Guide Bullet Box Layout */
+        .terminal-notice-box { padding: 14px 18px; border-radius: 16px; background: rgba(124, 58, 237, 0.01); border: 1px solid rgba(124, 58, 237, 0.12); display: flex; gap: 12px; }
+        .terminal-notice-box i { color: #7c3aed; font-size: 1.1rem; margin-top: 2px; }
+        .terminal-notice-box p { font-size: 0.72rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        /* ==========================================================================
+           5. ACTIVE NETWORK MAP TREE DATA LAYOUTS
+           ========================================================================== */
+        .network-ledger-stream { display: flex; flex-direction: column; gap: 10px; }
+        .network-row-card {
+            padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center;
+        }
+        .node-meta-side { display: flex; align-items: center; gap: 12px; }
+        .node-avatar-stub {
+            width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: center; align-items: center;
+            color: rgba(255,255,255,0.6); font-size: 0.85rem;
+        }
+        .node-strings-text h5 { font-size: 0.8rem; font-weight: 600; color: #ffffff; }
+        .node-strings-text small { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: rgba(255,255,255,0.3); display: block; margin-top: 1px; }
+
+        .node-metric-status { text-align: right; }
+        .node-metric-status span { font-size: 0.62rem; font-weight: bold; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; font-family: 'Share Tech Mono', monospace; }
+        .status-active-node { background: rgba(57, 255, 20, 0.08); color: #39FF14; border: 1px solid rgba(57, 255, 20, 0.15); }
+        .status-idle-node { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.4); }
+
+        .empty-tree-placeholder { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.3); font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .empty-tree-placeholder i { font-size: 2.2rem; color: rgba(255,255,255,0.08); }
+
+        /* ==========================================================================
+           6. INTERCEPTOR POPUP ALERT WINDOW MODAL
+           ========================================================================== */
+        .popup-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 3, 5, 0.94); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); z-index: 9999; display: none; 
+            justify-content: center; align-items: center; padding: 35px;
+        }
+        .popup-overlay.active { display: flex; }
+        .popup-card {
+            width: 100%; padding: 40px 25px; border-radius: 28px; text-align: center;
+            border: 1px solid #39FF14 !important; background: #040705;
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.12);
+        }
+        .popup-card.alert-warning { border-color: #eab308 !important; background: #080703; box-shadow: 0 0 40px rgba(234,179,8,0.12); }
+        .popup-card i { font-size: 3.2rem; color: #39FF14; margin-bottom: 18px; text-shadow: 0 0 20px rgba(57, 255, 20, 0.25); }
+        .popup-card h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+        .popup-card p { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.5; }
+        .btn-action { background: #39FF14; color: #000; border: none; padding: 14px; border-radius: 14px; width: 100%; font-weight: 700; font-size: 0.88rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-family: 'Share Tech Mono', monospace; }
+
+        /* ==========================================================================
+           7. FLOATING CYBER CURVED NAVIGATION DECK BAR
+           ========================================================================== */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 86px;
+            border-radius: 32px 32px 0 0; display: flex; justify-content: space-around;
+            align-items: center; z-index: 100; padding: 0 10px 12px 10px;
+            background: linear-gradient(180deg, rgba(11, 15, 24, 0.98) 0%, rgba(4, 6, 10, 0.99) 100%);
+            border-top: 1px solid rgba(57, 255, 20, 0.15);
+            box-shadow: 0 -15px 35px rgba(0,0,0,0.8);
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; gap: 5px; 
+            color: rgba(255,255,255,0.32); text-decoration: none; transition: all 0.3s ease;
+            position: relative; flex: 1; text-align: center;
+        }
+        .nav-item i { font-size: 1.25rem; transition: transform 0.2s; }
+        .nav-item span { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+        
+        .nav-center {
+            position: relative; transform: translateY(-26px);
+            width: 66px; height: 66px; background: #020304; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid rgba(255,255,255,0.12); box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+            color: rgba(255,255,255,0.4) !important; flex: none; z-index: 110;
+        }
+        .nav-center i { font-size: 1.5rem !important; }
+        
+        .nav-item.active { color: #39FF14; text-shadow: 0 0 10px rgba(57,255,20,0.2); }
+        .nav-item.active span { color: #ffffff; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div id="referAlertModal" class="popup-overlay">
+        <div id="alertCardFrame" class="popup-card premium-glass">
+            <i id="alertIcon" class="fa-solid fa-square-poll-horizontal"></i>
+            <h2 id="alertTitle">Network Logs</h2>
+            <p id="alertDesc">Operation transaction execution parameters sync complete status.</p>
+            <button class="btn-action" onclick="dismissReferModalPopup()">Acknowledge</button>
+        </div>
+    </div>
+
+    <div class="phone-wrapper premium-glass">
+        
+        <header class="deck-header">
+            <a href="main.html" class="back-node-btn"><i class="fa-solid fa-arrow-left-long"></i></a>
+            <h3>Referral Control Grid</h3>
+        </header>
+
+        <section class="balance-monitor-panel">
+            <div class="balance-tile">
+                <small>Nodes Connected</small>
+                <h2><span id="displayCountNodes">0</span> Nodes</h2>
+            </div>
+            <div class="balance-tile tile-withdrawable">
+                <small>Claimable Bonus</small>
+                <h2>₹<span id="displayBonusBal">0.00</span></h2>
+            </div>
+        </section>
+
+        <div class="content-scroll">
+
+            <span class="block-header-title">Share Injection Tokens Link</span>
+
+            <div class="refer-share-box">
+                <div class="link-capture-row">
+                    <div id="textReferLink" class="code-display-terminal">Generating vector route strings...</div>
+                    <div class="btn-terminal-copy" onclick="copyReferralLinkToClipboardSystem()"><i class="fa-regular fa-copy"></i></div>
+                </div>
+                <button class="btn-claim-bonus" onclick="executeClaimReferralBonusPipeline()">
+                    <i class="fa-solid fa-gavel"></i> Claim Bonus To Wallet Pool
+                </button>
+            </div>
+
+            <div class="terminal-notice-box">
+                <i class="fa-solid fa-circle-nodes"></i>
+                <p>Every dynamic terminal sync token active on your refer pipeline generates premium credit payouts direct to available claim allocation loops instant.</p>
+            </div>
+
+            <span class="block-header-title">Active Network Tree Trace Ledger</span>
+
+            <div id="networkTreeContainer" class="network-ledger-stream">
+                <div class="empty-tree-placeholder">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                    <p>Scanning peripheral cluster nodes records maps...</p>
+                </div>
+            </div>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Profile</span>
+            </a>
+            <a href="wallet.html" class="nav-item">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="main.html" class="nav-item nav-center">
+                <i class="fa-solid fa-circle-dot"></i>
+            </a>
+            <a href="refer.html" class="nav-item active">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Refer</span>
+            </a>
+            <a href="trust.html" class="nav-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Trust</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, update, onValue, get, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Global Firebase Configuration Mapping Profile
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUserUid = null;
+        let cachedBonusAllocationAmount = 0;
+        let globalFormedLinkString = "";
+
+        // Verify Core User Verification Context Session States
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                
+                // Formulate complete refer target string route vector
+                globalFormedLinkString = `https://solous-venom.web.app/register.html?ref=${user.uid}`;
+                document.getElementById('textReferLink').innerText = globalFormedLinkString;
+
+                connectRealtimeReferralNetworkMonitor(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        // LIVE PIPELINE REALTIME MONITOR SYNC ENGINE
+        function connectRealtimeReferralNetworkMonitor(uid) {
+            const userMainRefNode = ref(database, 'users/' + uid);
+
+            onValue(userMainRefNode, (snapshot) => {
+                if (!snapshot.exists()) return;
+                const coreUserData = snapshot.val();
+
+                cachedBonusAllocationAmount = parseFloat(coreUserData.referBonusPool || 0);
+                document.getElementById('displayBonusBal').innerText = cachedBonusAllocationAmount.toFixed(2);
+
+                // Fetch, count, and render network downlines sub clusters records maps
+                resolveAndRenderDownlineNetworkTree(coreUserData.referrals);
+            });
+        }
+
+        // PARSING DOWNLINE NETWORK RECORDS INTO DATA CARDS
+        function resolveAndRenderDownlineNetworkTree(referralsBranchPayload) {
+            const treeContainer = document.getElementById('networkTreeContainer');
+            treeContainer.innerHTML = ""; // Flush buffer loaders fallback text elements
+
+            if (!referralsBranchPayload) {
+                document.getElementById('displayCountNodes').innerText = "0";
+                treeContainer.innerHTML = `
+                    <div class="empty-tree-placeholder">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <p>No peripheral hardware nodes registered on your stream trace vector link.</p>
+                    </div>`;
+                return;
+            }
+
+            const activeKeysListArray = Object.keys(referralsBranchPayload);
+            document.getElementById('displayCountNodes').innerText = activeKeysListArray.length;
+
+            activeKeysListArray.forEach((nodeKeyId) => {
+                const nodeRecordItem = referralsBranchPayload[nodeKeyId];
+                
+                // Parse strings parameters fallbacks
+                const nodeTitle = nodeRecordItem.name || "Anonymous Node";
+                const nodeTimeStr = nodeRecordItem.joinedAt ? new Date(nodeRecordItem.joinedAt).toLocaleDateString() : "Timestamp synced";
+                const nodeStatus = nodeRecordItem.status || "IDLE";
+                
+                const styleClassStatusStr = nodeStatus === "ACTIVE" ? "status-active-node" : "status-idle-node";
+
+                const rowCardStringHtml = `
+                    <div class="network-row-card premium-glass">
+                        <div class="node-meta-side">
+                            <div class="node-avatar-stub">
+                                <i class="fa-solid fa-terminal"></i>
+                            </div>
+                            <div class="node-strings-text">
+                                <h5>${nodeTitle}</h5>
+                                <small>Linked: ${nodeTimeStr}</small>
+                            </div>
+                        </div>
+                        <div class="node-metric-status">
+                            <span class="${styleClassStatusStr}">${nodeStatus}</span>
+                        </div>
+                    </div>`;
+                
+                treeContainer.innerHTML += rowCardStringHtml;
+            });
+        }
+
+        // NATIVE DEVICE CLIPBOARD INJECTION RUNTIME HANDLER
+        window.copyReferralLinkToClipboardSystem = function() {
+            if (globalFormedLinkString === "" || globalFormedLinkString.includes("Generating")) return;
+
+            navigator.clipboard.writeText(globalFormedLinkString).then(() => {
+                triggerReferNoticeModalPopup("Vector Link Copied", "Referral target tunnel path injected into hardware system clipboard logs framework.", "success");
+            }).catch((err) => {
+                console.error("Clipboard Intercept Refused:", err);
+            });
+        };
+
+        // TRANSACTION CONTROL CLAIMS REWARDS TO MAIN WALLET POOLS ENGINE
+        window.executeClaimReferralBonusPipeline = function() {
+            if (cachedBonusAllocationAmount <= 0) {
+                triggerReferNoticeModalPopup("Claim Rejected", "Resource allocation empty. No collectable credit tokens found inside refer bonus memory registry.", "warning");
+                return;
+            }
+
+            if (currentUserUid) {
+                const targetUserAccountRefNode = ref(database, 'users/' + currentUserUid);
+
+                // Execute Atomic Firebase Isolation Transaction Layer Rules
+                runTransaction(targetUserAccountRefNode, (currentDatabaseStateSnapshot) => {
+                    if (currentDatabaseStateSnapshot) {
+                        let activeBal = parseFloat(currentDatabaseStateSnapshot.totalBalance || 0);
+                        let withdrawBal = parseFloat(currentDatabaseStateSnapshot.withdrawableBalance || 0);
+                        let referralBonus = parseFloat(currentDatabaseStateSnapshot.referBonusPool || 0);
+
+                        if (referralBonus > 0) {
+                            // Inject bonus asset safely inside withdrawable ledger frameworks blocks
+                            currentDatabaseStateSnapshot.totalBalance = activeBal + referralBonus;
+                            currentDatabaseStateSnapshot.withdrawableBalance = withdrawBal + referralBonus;
+                            
+                            // Reset allocation block to clear tracks prevent loops exploits
+                            currentDatabaseStateSnapshot.referBonusPool = 0;
+                        }
+                    }
+                    return currentDatabaseStateSnapshot;
+                }).then(() => {
+                    triggerReferNoticeModalPopup("Allocation Claimed", `Success! ₹${cachedBonusAllocationAmount.toFixed(2)} bonus credits successfully merged onto core wallet matrices values layers.`, "success");
+                }).catch((error) => {
+                    console.error("Transaction Core Process Aborted Error Logs:", error);
+                });
+            }
+        };
+
+        // POPUP MODAL NOTICE WINDOW MASTER TRIGGERS CONTROLLER
+        function triggerReferNoticeModalPopup(title, desc, layoutStyleMode) {
+            const overlay = document.getElementById('referAlertModal');
+            const cardFrame = document.getElementById('alertCardFrame');
+            const iconNode = document.getElementById('alertIcon');
+
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertDesc').innerText = desc;
+
+            cardFrame.className = "popup-card premium-glass";
+
+            if (layoutStyleMode === "warning") {
+                cardFrame.classList.add('alert-warning');
+                iconNode.className = "fa-solid fa-triangle-exclamation";
+                iconNode.style.color = "#eab308";
+                iconNode.style.textShadow = "0 0 20px rgba(234, 179, 8, 0.3)";
+            } else if (layoutStyleMode === "success") {
+                iconNode.className = "fa-solid fa-square-check";
+                iconNode.style.color = "#39FF14";
+                iconNode.style.textShadow = "0 0 20px rgba(57, 255, 20, 0.4)";
+            }
+
+            overlay.classList.add('active');
+        }
+
+        window.dismissReferModalPopup = function() {
+            document.getElementById('referAlertModal').classList.remove('active');
+        };
+    </script>
+</body>
+</html>

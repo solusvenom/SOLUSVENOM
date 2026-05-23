@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solus Venom - Aviator Terminal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Solus Venom - Aviator Terminal Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
@@ -11,125 +11,482 @@
            ========================================================================== */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
         body {
             background: radial-gradient(circle at 50% 50%, #040609 0%, #010102 100%);
-            color: #ffffff; min-height: 100vh; display: flex;
-            justify-content: center; align-items: center; overflow: hidden; position: relative;
+            color: #ffffff; 
+            min-height: 100vh; 
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+            position: relative;
         }
 
-        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.2; }
-        .orb-flight { width: 500px; height: 500px; background: linear-gradient(135deg, #0d9488, #39FF14); top: -10%; right: -10%; }
+        .glow-orb { 
+            position: absolute; 
+            border-radius: 50%; 
+            filter: blur(140px); 
+            z-index: 0; 
+            opacity: 0.15; 
+        }
+        .orb-flight { 
+            width: 500px; 
+            height: 500px; 
+            background: linear-gradient(135deg, #0d9488, #39FF14); 
+            top: -10%; 
+            right: -10%; 
+        }
 
         .premium-glass {
-            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 36px; position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 36px; 
+            position: relative; 
+            overflow: hidden;
         }
 
-        .phone-wrapper { width: 410px; height: 860px; background: rgba(3, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; padding: 40px 22px 15px 22px; justify-content: space-between; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); }
+        .phone-wrapper { 
+            width: 410px; 
+            height: 860px; 
+            background: rgba(3, 5, 8, 0.88); 
+            z-index: 5; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 35px 20px 15px 20px; 
+            justify-content: space-between; 
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); 
+        }
 
         /* Top Header Navigation Strip */
-        .header-strip { display: flex; justify-content: space-between; align-items: center; z-index: 2; }
-        .identity-block { display: flex; align-items: center; gap: 10px; }
-        .identity-block img { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid #39FF14; box-shadow: 0 0 12px rgba(57,255,20,0.3); }
-        .identity-block h4 { font-size: 0.9rem; font-weight: 700; color: #fff; }
-        .identity-block p { font-size: 0.68rem; color: rgba(255,255,255,0.4); font-family: 'Share Tech Mono', monospace; }
+        .header-strip { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 2; 
+        }
+        .identity-block { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .identity-block img { 
+            width: 42px; 
+            height: 42px; 
+            border-radius: 50%; 
+            border: 1.5px solid #39FF14; 
+            box-shadow: 0 0 12px rgba(57,255,20,0.3); 
+            object-fit: cover;
+        }
+        .identity-block h4 { 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            color: #fff; 
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .identity-block p { 
+            font-size: 0.68rem; 
+            color: rgba(255,255,255,0.4); 
+            font-family: 'Share Tech Mono', monospace; 
+        }
 
-        .wallet-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 10px 18px; border-radius: 16px; text-align: right; }
-        .wallet-node small { font-size: 0.6rem; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
-        .wallet-node div { font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; color: #39FF14; font-weight: 700; }
+        .wallet-node { 
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            padding: 8px 14px; 
+            border-radius: 16px; 
+            text-align: right; 
+        }
+        .wallet-node small { 
+            font-size: 0.6rem; 
+            text-transform: uppercase; 
+            color: rgba(255,255,255,0.4); 
+            letter-spacing: 0.5px; 
+        }
+        .wallet-node div { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 1.15rem; 
+            color: #39FF14; 
+            font-weight: 700; 
+        }
 
         /* Recent Multipliers Badges Scroller Grid */
-        .history-scroller-strip { display: flex; gap: 8px; overflow-x: auto; padding: 5px 2px; margin-top: 5px; z-index: 2; width: 100%; -webkit-overflow-scrolling: touch; }
-        .history-scroller-strip::-webkit-scrollbar { display: none; }
-        .badge-multiplier { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; padding: 5px 12px; border-radius: 8px; font-weight: 700; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); flex-shrink: 0; }
-        .badge-premium-mult { color: #39FF14; border-color: rgba(57,255,20,0.2); background: rgba(57,255,20,0.03); }
+        .history-scroller-strip { 
+            display: flex; 
+            gap: 8px; 
+            overflow-x: auto; 
+            padding: 5px 2px; 
+            margin-top: 8px; 
+            z-index: 2; 
+            width: 100%; 
+            -webkit-overflow-scrolling: touch; 
+        }
+        .history-scroller-strip::-webkit-scrollbar { 
+            display: none; 
+        }
+        .badge-multiplier { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 0.72rem; 
+            padding: 5px 12px; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.06); 
+            color: rgba(255,255,255,0.6); 
+            flex-shrink: 0; 
+        }
+        .badge-premium-mult { 
+            color: #39FF14; 
+            border-color: rgba(57,255,20,0.25); 
+            background: rgba(57,255,20,0.04); 
+            text-shadow: 0 0 8px rgba(57,255,20,0.3);
+        }
 
         /* ==========================================================================
            2. DYNAMIC FLIGHT CANVAS RADAR SYSTEM & COUNTER
            ========================================================================== */
         .radar-display-container {
-            width: 100%; height: 260px; background: #020305; border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.04); position: relative; margin-top: 10px;
-            overflow: hidden; z-index: 2; box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            width: 100%; 
+            height: 260px; 
+            background: #020305; 
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.04); 
+            position: relative; 
+            margin-top: 12px;
+            overflow: hidden; 
+            z-index: 2; 
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
         }
         
         .radar-display-container::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-            background-size: 20px 20px; top: 0; left: 0; pointer-events: none;
+            content: ''; 
+            position: absolute; 
+            width: 100%; 
+            height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+            background-size: 20px 20px; 
+            top: 0; 
+            left: 0; 
+            pointer-events: none;
+            z-index: 2;
         }
 
-        #flightRenderCanvas { width: 100%; height: 100%; display: block; position: absolute; top: 0; left: 0; z-index: 1; }
+        #flightRenderCanvas { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            z-index: 1; 
+        }
 
         .multiplier-digital-counter {
-            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
-            font-family: 'Share Tech Mono', monospace; font-size: 3.2rem; font-weight: 800;
-            color: #ffffff; text-shadow: 0 0 30px rgba(255,255,255,0.2); z-index: 5; text-align: center;
+            position: absolute; 
+            top: 48%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 3.4rem; 
+            font-weight: 800;
+            color: #ffffff; 
+            text-shadow: 0 0 30px rgba(255,255,255,0.2); 
+            z-index: 5; 
+            text-align: center;
+            transition: color 0.2s ease;
         }
-        .multiplier-digital-counter.flew-away { color: #ff0055 !important; text-shadow: 0 0 30px rgba(255,0,85,0.6); animation: blastTextShake 0.15s infinite; }
-        .multiplier-digital-counter.betting-phase { color: #facc15 !important; text-shadow: 0 0 30px rgba(250,204,21,0.4); font-size: 2rem; }
-        @keyframes blastTextShake { 0% { transform: translate(-52%, -48%) scale(1.02); } 100% { transform: translate(-48%, -52%) scale(0.98); } }
+        .multiplier-digital-counter.flew-away { 
+            color: #ff0055 !important; 
+            text-shadow: 0 0 30px rgba(255,0,85,0.6); 
+            animation: blastTextShake 0.15s infinite; 
+        }
+        .multiplier-digital-counter.betting-phase { 
+            color: #facc15 !important; 
+            text-shadow: 0 0 30px rgba(250,204,21,0.4); 
+            font-size: 1.8rem; 
+            width: 90%;
+        }
+        @keyframes blastTextShake { 
+            0% { transform: translate(-51%, -49%) scale(1.01); } 
+            100% { transform: translate(-49%, -51%) scale(0.99); } 
+        }
 
-        .game-status-logs { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: #39FF14; text-transform: uppercase; position: absolute; top: 15px; left: 20px; z-index: 5; letter-spacing: 1px; }
+        .game-status-logs { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 0.68rem; 
+            color: #39FF14; 
+            text-transform: uppercase; 
+            position: absolute; 
+            top: 15px; 
+            left: 20px; 
+            z-index: 5; 
+            letter-spacing: 1px; 
+        }
 
         /* ==========================================================================
            3. LIVE ACTIVE STREAM DATA TRAFFIC OVERLAY PANELS
            ========================================================================== */
-        .live-traffic-terminal { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 15px; height: 190px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; z-index: 2; margin-top: 10px; }
-        .live-traffic-terminal h5 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
-        .live-traffic-terminal h5 span { color: #39FF14; font-family: 'Share Tech Mono', monospace; }
+        .live-traffic-terminal { 
+            background: rgba(0,0,0,0.4); 
+            border: 1px solid rgba(255,255,255,0.04); 
+            border-radius: 24px; 
+            padding: 15px; 
+            height: 200px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            overflow: hidden; 
+            z-index: 2; 
+            margin-top: 12px; 
+        }
+        .live-traffic-terminal h5 { 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: rgba(255,255,255,0.4); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            border-bottom: 1px solid rgba(255,255,255,0.06); 
+            padding-bottom: 6px; 
+        }
+        .live-traffic-terminal h5 span { 
+            color: #39FF14; 
+            font-family: 'Share Tech Mono', monospace; 
+        }
         
-        .traffic-rows-box { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
-        .traffic-flight-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 12px; font-size: 0.75rem; animation: rowInject 0.25s ease; }
-        @keyframes rowInject { from { opacity:0; transform: translateY(-3px); } to { opacity:1; transform: translateY(0); } }
+        .traffic-rows-box { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 6px; 
+            overflow-y: auto; 
+            flex: 1; 
+        }
+        .traffic-rows-box::-webkit-scrollbar {
+            width: 3px;
+        }
+        .traffic-rows-box::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
         
-        .pilot-identity { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); }
-        .pilot-stake-badge { font-family: 'Share Tech Mono', monospace; font-weight: bold; color: #fff; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 6px; }
-        .pilot-status-cashout { font-family: 'Share Tech Mono', monospace; font-weight: 800; color: #000; background: #39FF14; padding: 2px 8px; border-radius: 6px; box-shadow: 0 0 10px rgba(57,255,20,0.2); }
-        .pilot-status-flying { font-family: 'Share Tech Mono', monospace; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 1px 7px; border-radius: 6px; }
+        .traffic-flight-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(255,255,255,0.01); 
+            border: 1px solid rgba(255,255,255,0.03); 
+            padding: 8px 12px; 
+            border-radius: 12px; 
+            font-size: 0.75rem; 
+            animation: rowInject 0.25s ease forwards; 
+        }
+        @keyframes rowInject { 
+            from { opacity:0; transform: translateY(-5px); } 
+            to { opacity:1; transform: translateY(0); } 
+        }
+        
+        .pilot-identity { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            color: rgba(255,255,255,0.8); 
+        }
+        .pilot-stake-badge { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-weight: bold; 
+            color: #fff; 
+            background: rgba(255,255,255,0.05); 
+            padding: 2px 6px; 
+            border-radius: 6px; 
+        }
+        .pilot-status-cashout { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-weight: 800; 
+            color: #000; 
+            background: #39FF14; 
+            padding: 2px 8px; 
+            border-radius: 6px; 
+            box-shadow: 0 0 10px rgba(57,255,20,0.2); 
+        }
+        .pilot-status-flying { 
+            font-family: 'Share Tech Mono', monospace; 
+            color: rgba(255,255,255,0.3); 
+            border: 1px solid rgba(255,255,255,0.08); 
+            padding: 1px 7px; 
+            border-radius: 6px; 
+        }
 
         /* ==========================================================================
            4. TRANSACTION BOARD & BET / CASHOUT DYNAMIC CONTROLLER
            ========================================================================== */
-        .control-panel-deck { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.04); border-radius: 26px; padding: 16px; margin-top: 10px; z-index: 2; display: flex; flex-direction: column; gap: 12px; }
+        .control-panel-deck { 
+            background: rgba(0,0,0,0.25); 
+            border: 1px solid rgba(255,255,255,0.04); 
+            border-radius: 26px; 
+            padding: 16px; 
+            margin-top: 12px; 
+            z-index: 2; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
         
-        .chip-grid-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .chip-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 10px; border-radius: 12px; font-family: 'Share Tech Mono', monospace; font-weight: 700; font-size: 0.82rem; text-align: center; cursor: pointer; color: rgba(255,255,255,0.6); transition: 0.2s; }
-        .chip-item.selected { background: rgba(57, 255, 20, 0.05); border-color: #39FF14; color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.15); }
+        .chip-grid-row { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; 
+        }
+        .chip-item { 
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid rgba(255,255,255,0.08); 
+            padding: 10px; 
+            border-radius: 12px; 
+            font-family: 'Share Tech Mono', monospace; 
+            font-weight: 700; 
+            font-size: 0.82rem; 
+            text-align: center; 
+            cursor: pointer; 
+            color: rgba(255,255,255,0.6); 
+            transition: all 0.2s ease; 
+        }
+        .chip-item.selected { 
+            background: rgba(57, 255, 20, 0.05); 
+            border-color: #39FF14; 
+            color: #39FF14; 
+            box-shadow: 0 0 10px rgba(57,255,20,0.15); 
+        }
+        .chip-item.disabled-ctx {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-color: rgba(255,255,255,0.03);
+        }
 
         /* Giant Master Action Button Engine */
         .btn-master-flight-action {
-            width: 100%; padding: 20px; border-radius: 20px; border: none;
-            font-size: 1.15rem; font-weight: 800; text-transform: uppercase;
-            font-family: 'Share Tech Mono', monospace; letter-spacing: 0.5px; cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.2;
+            width: 100%; 
+            padding: 18px; 
+            border-radius: 20px; 
+            border: none;
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            font-family: 'Share Tech Mono', monospace; 
+            letter-spacing: 0.5px; 
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            line-height: 1.2;
         }
         
-        .btn-state-bet { background: linear-gradient(135deg, #059669, #39FF14); color: #000000; box-shadow: 0 6px 20px rgba(57,255,20,0.25); }
-        .btn-state-bet small { font-size: 0.7rem; font-weight: 600; text-transform: none; opacity: 0.7; }
+        .btn-state-bet { 
+            background: linear-gradient(135deg, #059669, #39FF14); 
+            color: #000000; 
+            box-shadow: 0 6px 20px rgba(57,255,20,0.25); 
+        }
+        .btn-state-bet small { 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            text-transform: none; 
+            opacity: 0.8; 
+        }
         
-        .btn-state-waiting { background: rgba(255,255,255,0.04) !important; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4) !important; cursor: not-allowed; box-shadow: none !important; }
+        .btn-state-waiting { 
+            background: rgba(255,255,255,0.04) !important; 
+            border: 1px solid rgba(255,255,255,0.08); 
+            color: rgba(255,255,255,0.4) !important; 
+            cursor: not-allowed; 
+            box-shadow: none !important; 
+        }
+        .btn-state-waiting small {
+            font-size: 0.7rem;
+            text-transform: none;
+        }
         
-        .btn-state-cashout { background: linear-gradient(135deg, #ea580c, #facc15); color: #000000; box-shadow: 0 6px 25px rgba(234, 88, 12, 0.35); }
-        .btn-state-cashout small { font-size: 0.75rem; font-weight: 700; }
+        .btn-state-cashout { 
+            background: linear-gradient(135deg, #ea580c, #facc15); 
+            color: #000000; 
+            box-shadow: 0 6px 25px rgba(234, 88, 12, 0.35); 
+        }
+        .btn-state-cashout small { 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+        }
 
         /* ==========================================================================
            5. RUNTIME CASHOUT WIN OVERLAY DIALOG MODAL
            ========================================================================== */
         .win-overlay-modal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2,3,5,0.95); backdrop-filter: blur(20px);
-            z-index: 999; display: none; justify-content: center; align-items: center; padding: 25px;
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(2,3,5,0.95); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 999; 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 25px;
         }
-        .win-overlay-modal.active { display: flex; }
-        .win-card-deck { width: 100%; padding: 40px 25px; text-align: center; border: 1px solid rgba(57, 255, 20, 0.25) !important; background: rgba(4,8,6,0.96); border-radius: 28px; box-shadow: 0 0 40px rgba(57,255,20,0.15); display: flex; flex-direction: column; align-items: center; gap: 10px;}
-        .win-card-deck i { font-size: 3.8rem; color: #39FF14; text-shadow: 0 0 20px rgba(57,255,20,0.4); margin-bottom: 15px; }
-        .win-card-deck h2 { font-size: 1.8rem; font-weight: 800; color: #fff; text-transform: uppercase; }
-        .win-card-deck p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 6px; line-height: 1.5; }
-        .win-card-deck h1 { font-family: 'Share Tech Mono', monospace; font-size: 2.5rem; color: #39FF14; margin: 15px 0; text-shadow: 0 0 15px rgba(57,255,20,0.3); }
+        .win-overlay-modal.active { 
+            display: flex; 
+        }
+        .win-card-deck { 
+            width: 100%; 
+            padding: 40px 25px; 
+            text-align: center; 
+            border: 1px solid rgba(57, 255, 20, 0.25) !important; 
+            background: rgba(4,8,6,0.96); 
+            border-radius: 28px; 
+            box-shadow: 0 0 40px rgba(57,255,20,0.15); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .win-card-deck i { 
+            font-size: 3.5rem; 
+            color: #39FF14; 
+            text-shadow: 0 0 20px rgba(57,255,20,0.4); 
+            margin-bottom: 12px; 
+        }
+        .win-card-deck h2 { 
+            font-size: 1.6rem; 
+            font-weight: 800; 
+            color: #fff; 
+            text-transform: uppercase; 
+        }
+        .win-card-deck p { 
+            font-size: 0.85rem; 
+            color: rgba(255,255,255,0.6); 
+            margin-top: 4px; 
+            line-height: 1.5; 
+        }
+        .win-card-deck h1 { 
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 2.6rem; 
+            color: #39FF14; 
+            margin: 12px 0; 
+            text-shadow: 0 0 15px rgba(57,255,20,0.3); 
+        }
     </style>
 </head>
 <body>
@@ -150,7 +507,7 @@
 
         <header class="header-strip">
             <div class="identity-block">
-                <img id="playerAvatar" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png" alt="User">
+                <img id="playerAvatar" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png" alt="User Data Matrix Allocation Node">
                 <div>
                     <h4 id="playerNameText">Loading Radar...</h4>
                     <p><i class="fa-solid fa-shield-halved" style="color:#39FF14;"></i> Aviator Operator</p>
@@ -179,14 +536,13 @@
 
         <div class="live-traffic-terminal">
             <h5><i class="fa-solid fa-satellite-dish"></i> Live Traffic Terminal <span id="radarNodesCount">ACTIVE</span></h5>
-            <div class="traffic-rows-box" id="globalLiveTrafficContainer">
-                </div>
+            <div class="traffic-rows-box" id="globalLiveTrafficContainer"></div>
         </div>
 
         <div class="control-panel-deck premium-glass">
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <small style="font-size:0.65rem; text-transform:uppercase; color:rgba(255,255,255,0.4); letter-spacing:0.5px; font-weight:600; padding-left:2px;">Select Deployment Stake</small>
-                <div class="chip-grid-row">
+                <div class="chip-grid-row" id="stakeChipsInteractiveContainer">
                     <div class="chip-item selected" onclick="selectStakeChipValue(this, 10)">₹10</div>
                     <div class="chip-item" onclick="selectStakeChipValue(this, 50)">₹50</div>
                     <div class="chip-item" onclick="selectStakeChipValue(this, 100)">₹100</div>
@@ -200,7 +556,7 @@
             </button>
         </div>
 
-        <div style="font-family:'Share Tech Mono', monospace; font-size:0.68rem; color:rgba(255,255,255,0.25); text-align:center; padding-top:5px;">
+        <div style="font-family:'Share Tech Mono', monospace; font-size:0.68rem; color:rgba(255,255,255,0.2); text-align:center; padding-top:5px;">
             SOLUS VENOM ENHANCED CASINO MATRIX CORE RL-1
         </div>
 
@@ -225,11 +581,13 @@
         const auth = getAuth(app);
         const database = getDatabase(app);
 
+        // Core Global Matrix Variable Space Nodes
         let currentUserId = null;
         let currentUserCurrentBalance = 0;
         let currentSelectedStakeAmount = 10;
+        let nextSelectedStakeAmountPlaceholder = 10; // For active mid-flight selection storage
         
-        let currentSystemGameStateMode = "BETTING"; // BETTING, FLYING, CRASHED
+        let currentSystemGameStateMode = "BETTING"; // Engine Context Array States: BETTING, FLYING, CRASHED
         let liveRunningFlightMultiplierCoefficient = 1.00;
         let activeRoundCalculatedServerCrashPointThreshold = 2.50; 
         let executionMutexGateLock = false; 
@@ -242,8 +600,9 @@
         let localBettingPhaseCountdownSeconds = 7;
         let globalLoopTimerIntervalNode = null;
 
-        const fakePilotsNameRoster = ["Kabir_Fly", "Racer_Viper", "Aviator_Pro", "Crypto_Don", "Zeus_Strike", "Neon_Rider", "Alpha_007", "Phantom_Jet", "Shadow_Pilot", "Matrix_X", "Hydra_Venom", "Apex_Predator"];
+        const fakePilotsNameRoster = ["Kabir_Fly", "Racer_Viper", "Aviator_Pro", "Crypto_Don", "Zeus_Strike", "Neon_Rider", "Alpha_007", "Phantom_Jet", "Shadow_Pilot", "Matrix_X", "Hydra_Venom", "Apex_Predator", "Ghost_Rider", "Solus_01", "Delta_V", "Viper_X"];
 
+        // Firebase Identity Subsystem Authentication Stream Channel Listener
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserId = user.uid;
@@ -255,15 +614,22 @@
             }
         });
 
+        // Realtime Balance Channel Listener Synchronization Node
         function initializeRealtimeBalanceListener(uid) {
             onValue(ref(database, 'users/' + uid), (snap) => {
                 if (snap.exists()) {
                     currentUserCurrentBalance = parseFloat(snap.val().walletBalance || 0);
                     document.getElementById('playerBalanceText').innerText = "₹" + currentUserCurrentBalance.toFixed(2);
+                    
+                    // Reactive recalculation updates on state variations
+                    if(currentSystemGameStateMode === "BETTING" && !executionMutexGateLock) {
+                        updateActionButtonUIStateRepresentation();
+                    }
                 }
             });
         }
 
+        // Hardware Canvas Graphic Allocation Matrix Dimensions Setup 
         function configureCanvasSizeDimensionsLayout() {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
@@ -272,13 +638,13 @@
         configureCanvasSizeDimensionsLayout();
 
         // ==========================================================================
-        // AUTOMATED RECURSIVE CENTRAL TIMING MACHINE 
+        // SYSTEM CORNERSTONE CONTROL ENGINE CORE PROCESSORS
         // ==========================================================================
         function triggerInfiniteCentralRadarEngineLoop() {
-            // High-volume traffic simulation execution node initialization
+            // Live Data Stream Pipeline Simulation Interlocks initialization
             executeLiveTrafficSimulationPipeline();
 
-            // Run structural continuous loop phase sequence monitoring
+            // Fire and cycle Central State Processing Counter Loops
             runBettingPhaseIntervalCounter();
         }
 
@@ -286,10 +652,15 @@
             currentSystemGameStateMode = "BETTING";
             localBettingPhaseCountdownSeconds = 7;
             
+            // Sync intermediate queued stake parameter changes made during previous live flights
+            currentSelectedStakeAmount = nextSelectedStakeAmountPlaceholder;
+            
             document.getElementById('engineStatusIndicatorLog').innerText = "[STATUS: ACCEPTING PLACEMENTS]";
             const counterTextNode = document.getElementById('canvasLiveCounterText');
             counterTextNode.className = "multiplier-digital-counter betting-phase";
 
+            // Remove structural overlay selection blocks across interactive chips
+            evaluateInteractiveStakeChipsVisualLockContext();
             updateActionButtonUIStateRepresentation();
 
             globalLoopTimerIntervalNode = setInterval(() => {
@@ -301,17 +672,18 @@
                     counterTextNode.className = "multiplier-digital-counter";
                     counterTextNode.innerText = "1.00x";
                     
-                    // Trigger automated background crash configuration allocation vector
-                    calculateDynamicRoundCrashPointVector();
+                    // Block mid-flight chip manipulations 
+                    evaluateInteractiveStakeChipsVisualLockContext();
 
-                    // Start visual canvas flight animation loop path
-                    beginGraphicalRadarFlightSimulationLoop();
+                    // Generate round specific parameters vector allocations 
+                    calculateDynamicRoundCrashPointVector().then(() => {
+                        beginGraphicalRadarFlightSimulationLoop();
+                    });
                 }
             }, 1000);
         }
 
         async function calculateDynamicRoundCrashPointVector() {
-            // Check for explicit admin override dashboard controls setup first
             try {
                 const overrideSnapRef = await get(ref(database, 'gameControls/aviatorOverride'));
                 if (overrideSnapRef.exists() && parseFloat(overrideSnapRef.val()) > 1.0) {
@@ -320,18 +692,23 @@
                     return;
                 }
             } catch (err) {
-                console.warn("Override intercept failure, rolling native matrix logic");
+                console.warn("Override control intercept failure, rolling system matrix defaults");
             }
 
             const randomDeterminantSeed = Math.random();
-            if (randomDeterminantSeed < 0.18) activeRoundCalculatedServerCrashPointThreshold = 1.00 + (Math.random() * 0.08); 
-            else if (randomDeterminantSeed < 0.68) activeRoundCalculatedServerCrashPointThreshold = 1.12 + (Math.random() * 0.85); 
-            else if (randomDeterminantSeed < 0.93) activeRoundCalculatedServerCrashPointThreshold = 2.00 + (Math.random() * 2.2); 
-            else activeRoundCalculatedServerCrashPointThreshold = 4.20 + (Math.random() * 14.0); 
+            if (randomDeterminantSeed < 0.18) {
+                activeRoundCalculatedServerCrashPointThreshold = 1.00 + (Math.random() * 0.08); 
+            } else if (randomDeterminantSeed < 0.68) {
+                activeRoundCalculatedServerCrashPointThreshold = 1.12 + (Math.random() * 0.85); 
+            } else if (randomDeterminantSeed < 0.93) {
+                activeRoundCalculatedServerCrashPointThreshold = 2.00 + (Math.random() * 2.2); 
+            } else {
+                activeRoundCalculatedServerCrashPointThreshold = 4.20 + (Math.random() * 14.0); 
+            }
         }
 
         // ==========================================================================
-        // DYNAMIC RENDERING STEP VECTOR ENGINE
+        // CANVAS VECTOR GRAPHICS & RADAR FLIGHT SIMULATOR ENGINE
         // ==========================================================================
         function beginGraphicalRadarFlightSimulationLoop() {
             animationProgressTrackerTimeStep = 0;
@@ -344,37 +721,43 @@
             function frameRenderStep() {
                 if (currentSystemGameStateMode !== "FLYING") return;
 
-                animationProgressTrackerTimeStep += 0.006;
-                // Complex incremental multiplier curve simulation coefficient
-                liveRunningFlightMultiplierCoefficient += 0.008 + (animationProgressTrackerTimeStep * 0.018);
+                // Scaled incremental curve logic execution tracking matrix
+                animationProgressTrackerTimeStep += 0.0055;
+                liveRunningFlightMultiplierCoefficient += 0.0075 + (animationProgressTrackerTimeStep * 0.0195);
                 
                 document.getElementById('canvasLiveCounterText').innerText = liveRunningFlightMultiplierCoefficient.toFixed(2) + "x";
 
-                ctx.clearRect(0,0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+                // Flight path generation wireframe configuration parameters
                 ctx.beginPath();
-                ctx.lineWidth = 4;
+                ctx.lineWidth = 4.5;
                 ctx.strokeStyle = "#39FF14";
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = "#39FF14";
+                ctx.shadowBlur = 18;
+                ctx.shadowColor = "rgba(57, 255, 20, 0.6)";
                 ctx.moveTo(0, canvas.height);
                 
-                let targetPlaneVectorX = animationProgressTrackerTimeStep * (canvas.width * 0.85);
-                let targetPlaneVectorY = canvas.height - (Math.pow(animationProgressTrackerTimeStep, 1.8) * (canvas.height * 0.75));
+                let targetPlaneVectorX = animationProgressTrackerTimeStep * (canvas.width * 0.88);
+                let targetPlaneVectorY = canvas.height - (Math.pow(animationProgressTrackerTimeStep, 1.75) * (canvas.height * 0.78));
                 
-                if (targetPlaneVectorX > canvas.width * 0.85) targetPlaneVectorX = canvas.width * 0.85;
-                if (targetPlaneVectorY < canvas.height * 0.2) targetPlaneVectorY = canvas.height * 0.2;
+                if (targetPlaneVectorX > canvas.width * 0.86) targetPlaneVectorX = canvas.width * 0.86;
+                if (targetPlaneVectorY < canvas.height * 0.18) targetPlaneVectorY = canvas.height * 0.18;
 
-                ctx.quadraticCurveTo(targetPlaneVectorX / 2, canvas.height, targetPlaneVectorX, targetPlaneVectorY);
+                ctx.quadraticCurveTo(targetPlaneVectorX / 1.85, canvas.height * 0.98, targetPlaneVectorX, targetPlaneVectorY);
                 ctx.stroke();
 
-                ctx.shadowBlur = 25;
+                // Vector pointer tracking head terminal rendering
+                ctx.shadowBlur = 28;
                 ctx.fillStyle = "#ffffff";
+                ctx.shadowColor = "#ffffff";
                 ctx.beginPath();
-                ctx.arc(targetPlaneVectorX, targetPlaneVectorY, 7, 0, 2 * Math.PI);
+                ctx.arc(targetPlaneVectorX, targetPlaneVectorY, 7.5, 0, 2 * Math.PI);
                 ctx.fill();
 
-                // Auto intercept crash event check conditions
+                // Reset shadow transformations parameters context for native canvas bounds
+                ctx.shadowBlur = 0;
+
+                // Threshold cross checks interlock matching points execution bounds
                 if (liveRunningFlightMultiplierCoefficient >= activeRoundCalculatedServerCrashPointThreshold) {
                     executeFlightEngineCrashInterceptionSequence();
                     return;
@@ -389,9 +772,10 @@
             cancelAnimationFrame(flightLoopAnimationId);
             currentSystemGameStateMode = "CRASHED";
             
-            document.getElementById('engineStatusIndicatorLog').innerText = "[STATUS: ENGINE CRASHED DETECTED]";
+            document.getElementById('engineStatusIndicatorLog').innerText = "[STATUS: ENGINE CRASH DETECTED]";
             
             const btn = document.getElementById('masterExecutionActionButton');
+            const hasActiveBet = btn.getAttribute('data-has-active-bet') === "true";
             btn.setAttribute('data-has-active-bet', "false"); 
 
             const counterTextNode = document.getElementById('canvasLiveCounterText');
@@ -399,33 +783,35 @@
             counterTextNode.innerText = "FLEW AWAY";
 
             prependOutcomeBadgeIntoHistoryStrip(activeRoundCalculatedServerCrashPointThreshold.toFixed(2) + "x");
+            
+            // Re-evaluate interactive control nodes contexts
+            evaluateInteractiveStakeChipsVisualLockContext();
             updateActionButtonUIStateRepresentation();
 
-            // 3.5 seconds cooldown timeline phase before recycling engine state
+            // Synchronized recovery structural timeframe phase sequence window loop
             setTimeout(() => {
-                ctx.clearRect(0,0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 runBettingPhaseIntervalCounter();
-            }, 3500);
+            }, 3800);
         }
 
         // ==========================================================================
-        // HIGH DENSITY FAKE PLAYER STAKES DATA SIMULATION STREAM
+        // HIGH PERFORMANCE DATA STREAM PIPELINE TRAFFIC OVERLAY
         // ==========================================================================
         function executeLiveTrafficSimulationPipeline() {
             const trafficBox = document.getElementById('globalLiveTrafficContainer');
 
             setInterval(() => {
-                // Generate fake pilots rows only during betting and initial flying loops
                 if (currentSystemGameStateMode === "CRASHED") return;
 
                 const selectedRandomPilotName = fakePilotsNameRoster[Math.floor(Math.random() * fakePilotsNameRoster.length)];
-                const randomStakeVolume = Math.floor(Math.random() * 12) * 200 + 200;
+                const randomStakeVolume = Math.floor(Math.random() * 15 + 1) * 100;
                 const allocationUidRowId = "pilot-node-" + Math.floor(Math.random() * 100000);
 
                 if (currentSystemGameStateMode === "BETTING") {
                     const templateMarkupString = `
                         <div class="traffic-flight-row" id="${allocationUidRowId}">
-                            <div class="pilot-identity"><i class="fa-solid fa-plane-arrival" style="opacity:0.35;"></i> <span>${selectedRandomPilotName}</span></div>
+                            <div class="pilot-identity"><i class="fa-solid fa-plane-arrival" style="opacity:0.35; color:#39FF14;"></i> <span>${selectedRandomPilotName}</span></div>
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <span class="pilot-stake-badge">₹${randomStakeVolume}</span>
                                 <span class="pilot-status-flying" id="status-text-${allocationUidRowId}">Flying</span>
@@ -434,94 +820,153 @@
                     `;
                     trafficBox.insertAdjacentHTML('afterbegin', templateMarkupString);
 
-                    // Auto cash out simulation logic link
+                    // Dynamic runtime simulated settlement pipelines allocations
                     setTimeout(() => {
                         const targetStatusNode = document.getElementById(`status-text-${allocationUidRowId}`);
                         if (targetStatusNode && currentSystemGameStateMode === "FLYING") {
-                            const dynamicMultiplierYieldCapture = (1.10 + Math.random() * 1.5);
+                            const dynamicMultiplierYieldCapture = (1.08 + Math.random() * 2.8);
                             if (dynamicMultiplierYieldCapture < activeRoundCalculatedServerCrashPointThreshold) {
                                 targetStatusNode.className = "pilot-status-cashout";
                                 targetStatusNode.innerText = `₹${(randomStakeVolume * dynamicMultiplierYieldCapture).toFixed(0)}`;
                             } else {
                                 targetStatusNode.style.color = "#ff0055";
+                                targetStatusNode.style.borderColor = "rgba(255,0,85,0.2)";
                                 targetStatusNode.innerText = "Crashed";
                             }
                         }
-                    }, 2000 + Math.random() * 4000);
+                    }, 1500 + Math.random() * 4500);
                 }
 
-                // Node size optimization cap rules bounds
-                if (trafficBox.children.length > 20) {
+                // Keep memory payload clean within layout tracking constraints
+                if (trafficBox.children.length > 22) {
                     trafficBox.removeChild(trafficBox.lastChild);
                 }
-            }, 800);
+            }, 650);
         }
 
         // ==========================================================================
-        // CONTROLLERS LOGIC HANDLERS
+        // DISCRETE RUNTIME CONTROL BOARD FUNCTIONAL HANDLING LOGIC
         // ==========================================================================
         window.selectStakeChipValue = function(element, value) {
-            if (currentSystemGameStateMode !== "BETTING") return; 
+            // FIX: Agar round chal raha hai aur user stake badal raha hai toh use next round ke liye queue karenge.
+            if (btnActionStateMarkupEvaluationHelper() === "LOCKED_IN_BET") {
+                return; // Active registration state locks out matching modifications
+            }
+
             document.querySelectorAll('.chip-item').forEach(c => c.classList.remove('selected'));
             element.classList.add('selected');
-            currentSelectedStakeAmount = value;
-            updateActionButtonUIStateRepresentation();
+            
+            if (currentSystemGameStateMode === "BETTING") {
+                currentSelectedStakeAmount = value;
+                nextSelectedStakeAmountPlaceholder = value;
+                updateActionButtonUIStateRepresentation();
+            } else {
+                // Queuing logic for ongoing flight frames
+                nextSelectedStakeAmountPlaceholder = value;
+                const subTextDescNode = document.getElementById('subTextActionButtonDescription');
+                if(subTextDescNode && document.getElementById('masterExecutionActionButton').getAttribute('data-has-active-bet') !== "true") {
+                    subTextDescNode.innerText = `Next Round Stake: ₹${value}`;
+                }
+            }
         };
+
+        function evaluateInteractiveStakeChipsVisualLockContext() {
+            const chips = document.querySelectorAll('.chip-item');
+            const currentCtxState = btnActionStateMarkupEvaluationHelper();
+
+            chips.forEach(chip => {
+                if (currentCtxState === "LOCKED_IN_BET") {
+                    chip.classList.add('disabled-ctx');
+                } else {
+                    chip.classList.remove('disabled-ctx');
+                    
+                    // Auto restore synchronization matching markers visual layers
+                    const targetValueAttr = parseInt(chip.innerText.replace('₹', ''));
+                    if (targetValueAttr === nextSelectedStakeAmountPlaceholder) {
+                        chips.forEach(c => c.classList.remove('selected'));
+                        chip.classList.add('selected');
+                    }
+                }
+            });
+        }
+
+        function btnActionStateMarkupEvaluationHelper() {
+            const btn = document.getElementById('masterExecutionActionButton');
+            const hasActiveBetFlag = btn.getAttribute('data-has-active-bet') === "true";
+
+            if (currentSystemGameStateMode === "BETTING") {
+                return hasActiveBetFlag ? "LOCKED_IN_BET" : "CAN_PLACE_BET";
+            } else if (currentSystemGameStateMode === "FLYING") {
+                return hasActiveBetFlag ? "CAN_CASHOUT" : "MISSED_ROUND";
+            }
+            return "SYSTEM_RECALIBRATING";
+        }
 
         function updateActionButtonUIStateRepresentation() {
             const btn = document.getElementById('masterExecutionActionButton');
             const span = btn.querySelector('span');
             const small = btn.querySelector('small');
+            const evaluationStateCode = btnActionStateMarkupEvaluationHelper();
 
             btn.className = "btn-master-flight-action"; 
+            btn.disabled = false;
 
-            if (currentSystemGameStateMode === "BETTING") {
-                if (btn.getAttribute('data-has-active-bet') === "true") {
-                    btn.classList.add('btn-state-waiting');
-                    span.innerText = "Bet Registered";
-                    small.innerText = `Locked: ₹${currentSelectedStakeAmount}`;
-                } else {
+            switch (evaluationStateCode) {
+                case "CAN_PLACE_BET":
                     btn.classList.add('btn-state-bet');
                     span.innerText = "Place Bet";
                     small.innerText = `Stake: ₹${currentSelectedStakeAmount}`;
-                    btn.disabled = false;
-                }
-            } else if (currentSystemGameStateMode === "FLYING") {
-                if (btn.getAttribute('data-has-active-bet') === "true") {
+                    break;
+
+                case "LOCKED_IN_BET":
+                    btn.classList.add('btn-state-waiting');
+                    span.innerText = "Bet Registered";
+                    small.innerText = `Locked: ₹${currentSelectedStakeAmount} (Wait Flight)`;
+                    break;
+
+                case "CAN_CASHOUT":
                     btn.classList.add('btn-state-cashout');
-                    let currentLiveWinningsYieldProjection = currentSelectedStakeAmount * liveRunningFlightMultiplierCoefficient;
+                    let liveWinningsYieldProjection = currentSelectedStakeAmount * liveRunningFlightMultiplierCoefficient;
                     span.innerText = "Cash Out";
-                    small.innerText = `Take: ₹${currentLiveWinningsYieldProjection.toFixed(2)}`;
-                    btn.disabled = false;
-                } else {
+                    small.innerText = `Take: ₹${liveWinningsYieldProjection.toFixed(2)}`;
+                    break;
+
+                case "MISSED_ROUND":
                     btn.classList.add('btn-state-waiting');
                     span.innerText = "Flying Live";
-                    small.innerText = "Wait next iteration loop";
+                    small.innerText = `Next Queue Stake: ₹${nextSelectedStakeAmountPlaceholder}`;
                     btn.disabled = true;
-                }
-            } else {
-                btn.classList.add('btn-state-waiting');
-                span.innerText = "Crashed";
-                small.innerText = "Recalibrating parameters...";
-                btn.disabled = true;
+                    break;
+
+                case "SYSTEM_RECALIBRATING":
+                default:
+                    btn.classList.add('btn-state-waiting');
+                    span.innerText = "Crashed";
+                    small.innerText = "Recalibrating parameters...";
+                    btn.disabled = true;
+                    break;
             }
         }
 
-        // High frequency UI listener monitoring pipeline
+        // Realtime Refresh Tracker for active multiplier display fields numbers sync
         setInterval(() => {
-            if (currentSystemGameStateMode === "FLYING" && document.getElementById('masterExecutionActionButton').getAttribute('data-has-active-bet') === "true") {
+            if (btnActionStateMarkupEvaluationHelper() === "CAN_CASHOUT") {
                 let currentLiveWinningsYieldProjection = currentSelectedStakeAmount * liveRunningFlightMultiplierCoefficient;
                 document.getElementById('masterExecutionActionButton').querySelector('small').innerText = `Take: ₹${currentLiveWinningsYieldProjection.toFixed(2)}`;
             }
-        }, 50);
+        }, 40);
 
+        // ==========================================================================
+        // MASTER CENTRAL TRANSACTION EXECUTION ARCHITECTURE INTERLOCKS
+        // ==========================================================================
         window.handleMasterActionStateTrigger = async function() {
             if (executionMutexGateLock) return;
             const btn = document.getElementById('masterExecutionActionButton');
+            const currentStateEvaluation = btnActionStateMarkupEvaluationHelper();
 
-            if (currentSystemGameStateMode === "BETTING") {
+            if (currentStateEvaluation === "CAN_PLACE_BET") {
                 if (currentUserCurrentBalance < currentSelectedStakeAmount) {
-                    alert("Insufficient wallet volume allocation tokens! Please request balance.");
+                    alert("Insufficient wallet volume allocation tokens! Please process transaction addition values.");
                     return;
                 }
 
@@ -537,7 +982,8 @@
                     }
 
                     if (currentVerifiedBal < currentSelectedStakeAmount) {
-                        alert("Pipeline Synchronization Error: Insufficient real balance state.");
+                        alert("Pipeline Synchronization Error: Insufficient real-time asset ledger capacity.");
+                        updateActionButtonUIStateRepresentation();
                         return;
                     }
 
@@ -545,16 +991,17 @@
                     await update(ref(database, `users/${currentUserId}`), { walletBalance: optimizedUpdatedBalance });
                     
                     btn.setAttribute('data-has-active-bet', "true");
+                    evaluateInteractiveStakeChipsVisualLockContext();
                     updateActionButtonUIStateRepresentation();
 
                 } catch(err) {
-                    console.error("Bet Placement Fault:", err);
+                    console.error("Bet Placement Fault Pipeline Intercept:", err);
                 } finally {
                     executionMutexGateLock = false;
                 }
             } 
             
-            else if (currentSystemGameStateMode === "FLYING" && btn.getAttribute('data-has-active-bet') === "true") {
+            else if (currentStateEvaluation === "CAN_CASHOUT") {
                 executionMutexGateLock = true; 
                 btn.setAttribute('data-has-active-bet', "false"); 
                 
@@ -565,7 +1012,6 @@
                     const balanceReverificationSnap = await get(ref(database, `users/${currentUserId}`));
                     let freshLiveWalletAsset = currentUserCurrentBalance;
                     
-                    // Track standard transaction turnover fields metrics
                     let currentLifetimeWin = 0;
                     let currentWagerRequirement = 0;
 
@@ -587,10 +1033,12 @@
                     
                     document.getElementById('winAmountDisplayText').innerText = "₹" + preciseWinningsYieldValue.toFixed(2);
                     document.getElementById('cashoutWinModal').classList.add('active');
+                    
+                    evaluateInteractiveStakeChipsVisualLockContext();
                     updateActionButtonUIStateRepresentation();
 
                 } catch (err) {
-                    console.error("Critical Cashout Settlement Failure:", err);
+                    console.error("Critical Cashout Settlement Failure Terminal Log:", err);
                 } finally {
                     executionMutexGateLock = false;
                 }
@@ -600,7 +1048,7 @@
         function prependOutcomeBadgeIntoHistoryStrip(multiplierString) {
             const scroller = document.getElementById('multiplierHistoryRow');
             
-            if (scroller.children.length >= 12) {
+            if (scroller.children.length >= 14) {
                 scroller.removeChild(scroller.lastChild);
             }
 
@@ -614,7 +1062,7 @@
             document.getElementById('cashoutWinModal').classList.remove('active');
         };
 
-        // Initialize multi-state infinite continuous execution cycles engine
+        // Initialize Central Timing Control Engine Loops Pipeline
         triggerInfiniteCentralRadarEngineLoop();
     </script>
 </body>

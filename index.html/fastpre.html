@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solus Venom - FastParity Engine</title>
+    <title>Solus Venom - FastParity Engine Matrix</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
@@ -45,7 +45,7 @@
         /* ==========================================================================
            2. IDENTITY BOARD LOGS & AVAILABLE BALANCE GRID
            ========================================================================== */
-        .profile-strip { display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+        .profile-strip { display: flex; align-items: center; justify-content: space-between; z-index: 2; margin-top: 10px; }
         .user-block { display: flex; align-items: center; gap: 12px; }
         .user-block img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #39FF14; box-shadow: 0 0 15px rgba(57,255,20,0.3); }
         .user-block h3 { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.3px; color: #fff; }
@@ -158,6 +158,11 @@
         .verdict-deck h2 { font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; }
         .verdict-deck p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
         .verdict-deck .res-ball { width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Share Tech Mono', monospace; font-weight: 800; font-size: 1.4rem; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin: 5px 0; border: 2px solid rgba(255,255,255,0.2); }
+
+        /* Deck-back structural redirection node button strip header */
+        .back-node-strip { display: flex; align-items: center; width: 100%; z-index: 10; margin-bottom: -5px; }
+        .back-nav-link { color: rgba(255,255,255,0.4); font-size: 1.15rem; transition: 0.2s; text-decoration: none; display: flex; align-items: center; gap: 8px; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
+        .back-nav-link:hover { color: #39FF14; text-shadow: 0 0 10px rgba(57,255,20,0.4); }
     </style>
 </head>
 <body>
@@ -166,6 +171,10 @@
     <div class="glow-orb orb-2"></div>
 
     <div class="phone-wrapper premium-glass" id="appMainChassis">
+
+        <div class="back-node-strip">
+            <a href="main.html" class="back-nav-link"><i class="fa-solid fa-arrow-left-long"></i> Exit Engine</a>
+        </div>
 
         <div id="gameModalOverlay" class="glass-overlay-popup">
             
@@ -380,12 +389,10 @@
         }
 
         function setBetOptionButtonsDisabledState(status) {
-            // Disable color buttons
             document.getElementById('betBtn-GREEN').disabled = status;
             document.getElementById('betBtn-VIOLET').disabled = status;
             document.getElementById('betBtn-RED').disabled = status;
             
-            // Disable 0-9 numerical buttons
             for (let i = 0; i <= 9; i++) {
                 document.getElementById(`numBtn-${i}`).disabled = status;
             }
@@ -493,7 +500,7 @@
                 const finalComputedWalletBalance = currentLiveBal - selectedInvestmentChipAmount;
                 const updatesMap = {};
                 updatesMap[`users/${currentUserId}/walletBalance`] = finalComputedWalletBalance;
-                updatesMap[`users/${currentUserId}/activeBet/color`] = selectedColorTargetOption; // Color fields tracks number/colors simultaneously
+                updatesMap[`users/${currentUserId}/activeBet/color`] = selectedColorTargetOption;
                 updatesMap[`users/${currentUserId}/activeBet/amount`] = selectedInvestmentChipAmount;
                 updatesMap[`users/${currentUserId}/activeBet/period`] = activeSelectedPeriodIdentification;
 
@@ -512,9 +519,8 @@
         // DYNAMIC ALGORITHMIC 0-9 OUTCOME SYSTEM CALCULATOR
         // ==========================================================================
         async function evaluateRoundSettlementVerdictMetrics() {
-            let chosenRandomLuckyDigit = Math.floor(Math.random() * 10); // Generates 0 to 9 cleanly
+            let chosenRandomLuckyDigit = Math.floor(Math.random() * 10);
             
-            // Check for explicit admin override panels configuration locks first
             try {
                 const overrideSnapRef = await get(ref(database, 'gameControls/fastparityOverride'));
                 if (overrideSnapRef.exists() && overrideSnapRef.val() !== "NONE") {
@@ -522,7 +528,6 @@
                     if (!isNaN(forcedValue)) {
                         chosenRandomLuckyDigit = parseInt(forcedValue);
                     } else {
-                        // Color conversion fallback overrides matches
                         if (forcedValue === "GREEN") chosenRandomLuckyDigit = [1,3,7,9][Math.floor(Math.random()*4)];
                         else if (forcedValue === "RED") chosenRandomLuckyDigit = [2,4,6,8][Math.floor(Math.random()*4)];
                         else if (forcedValue === "VIOLET") chosenRandomLuckyDigit = Math.random() > 0.5 ? 0 : 5;
@@ -533,14 +538,12 @@
                 console.warn("Override interceptor skipped.");
             }
 
-            // Derive base primary system configurations matching outputs parameters
             let finalPrimaryColorTag = "GREEN";
-            if (chosenRandomLuckyDigit === 0) finalPrimaryColorTag = "DUAL_RV"; // Red + Violet
-            else if (chosenRandomLuckyDigit === 5) finalPrimaryColorTag = "DUAL_GV"; // Green + Violet
+            if (chosenRandomLuckyDigit === 0) finalPrimaryColorTag = "DUAL_RV"; 
+            else if (chosenRandomLuckyDigit === 5) finalPrimaryColorTag = "DUAL_GV"; 
             else if (chosenRandomLuckyDigit % 2 === 0) finalPrimaryColorTag = "RED";
             else finalPrimaryColorTag = "GREEN";
 
-            // Process rendering to charts logic pipeline
             appendCalculatedOutcomeItemIntoHistoryGrid(activeSelectedPeriodIdentification, finalPrimaryColorTag, chosenRandomLuckyDigit);
 
             if (!currentUserId) return;
@@ -573,7 +576,6 @@
             card.className = "verdict-deck premium-glass";
             vBall.innerText = chosenRandomLuckyDigit;
             
-            // Assign ballistic neon color rendering profiles
             if (finalPrimaryColorTag === "GREEN") vBall.style.background = '#10b981';
             else if (finalPrimaryColorTag === "RED") vBall.style.background = '#ef4444';
             else if (finalPrimaryColorTag === "DUAL_RV") vBall.style.background = 'linear-gradient(135deg, #ef4444, #8b5cf6)';
@@ -590,27 +592,24 @@
                     currentLiveBalance = parseFloat(freshUserSnap.val().walletBalance || 0);
                 }
 
-                // Check complex Multi-layered Winning Criteria Logic Matrices
                 let isRoundVictorToken = false;
                 let prizeMultiplierCoefficient = 0;
 
                 if (!isNaN(userPlacementsTarget)) {
-                    // Scenario A: User predicted accurate individual digit matrix target (9X Multiplier)
                     if (parseInt(userPlacementsTarget) === chosenRandomLuckyDigit) {
                         isRoundVictorToken = true;
-                        prizeMultiplierCoefficient = 8.82; // 9x minus 2% engine optimization tax
+                        prizeMultiplierCoefficient = 8.82; 
                     }
                 } else {
-                    // Scenario B: User predicted color channels indices
                     if (userPlacementsTarget === "GREEN" && ["GREEN", "DUAL_GV"].includes(finalPrimaryColorTag)) {
                         isRoundVictorToken = true;
-                        prizeMultiplierCoefficient = (finalPrimaryColorTag === "DUAL_GV") ? 1.47 : 1.96; // Halved or standard odds ratios
+                        prizeMultiplierCoefficient = (finalPrimaryColorTag === "DUAL_GV") ? 1.47 : 1.96; 
                     } else if (userPlacementsTarget === "RED" && ["RED", "DUAL_RV"].includes(finalPrimaryColorTag)) {
                         isRoundVictorToken = true;
                         prizeMultiplierCoefficient = (finalPrimaryColorTag === "DUAL_RV") ? 1.47 : 1.96;
                     } else if (userPlacementsTarget === "VIOLET" && ["DUAL_GV", "DUAL_RV"].includes(finalPrimaryColorTag)) {
                         isRoundVictorToken = true;
-                        prizeMultiplierCoefficient = 4.41; // Violet returns 4.5x payouts
+                        prizeMultiplierCoefficient = 4.41; 
                     }
                 }
 

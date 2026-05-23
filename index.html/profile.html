@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venom Matrix - Profile Core</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. MASTER GLASS DESIGN SYSTEM & CYBER NEON KEYFRAMES
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #06090e 0%, #010204 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        /* Ambient Venom Neon Aura Elements */
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.15; }
+        .orb-1 { width: 500px; height: 500px; background: #39FF14; top: -10%; left: -15%; }
+        .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom: -5%; right: -10%; }
+
+        /* Structural Glassmorphism Framework */
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(3, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.95); border-radius: 36px; }
+
+        /* Real-time Dynamic Shimmer Scanning Reflection */
+        .premium-glass::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg); animation: shimmerEffect 7s infinite ease-in-out; pointer-events: none;
+        }
+        @keyframes shimmerEffect { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        /* ==========================================================================
+           2. LIVE CENTRAL SCROLL CONTAINER BLOCK
+           ========================================================================== */
+        .content-scroll { flex: 1; overflow-y: auto; padding: 45px 24px 140px 24px; z-index: 10; display: flex; flex-direction: column; gap: 24px; }
+        
+        .section-title-strip { display: flex; align-items: center; justify-content: space-between; }
+        .section-title-strip h3 { font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Share Tech Mono', monospace; }
+        .terminal-uid { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); text-transform: uppercase; }
+
+        /* Identity Token Showcase Framework Card Layout */
+        .identity-avatar-card {
+            padding: 24px; border-radius: 24px; display: flex; align-items: center; gap: 18px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.002) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .identity-img-wrapper { position: relative; }
+        .master-avatar-shield {
+            width: 72px; height: 72px; border-radius: 50%;
+            border: 2px solid #39FF14; box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+            object-fit: cover; background: #111;
+        }
+        .status-pulse-dot { width: 12px; height: 12px; background: #39FF14; border-radius: 50%; position: absolute; bottom: 4px; right: 4px; border: 2px solid #040705; box-shadow: 0 0 8px #39FF14; }
+        
+        .identity-meta h4 { font-size: 1.05rem; font-weight: 700; color: #fff; }
+        .identity-meta p { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 2px; font-weight: 400; max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Verification Indicator System Badges CSS */
+        .verification-badge-strip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 8px; font-size: 0.62rem; text-transform: uppercase; font-weight: bold; margin-top: 8px; font-family: 'Share Tech Mono', monospace; letter-spacing: 0.5px; }
+        .badge-verified { background: rgba(57, 255, 20, 0.08); color: #39FF14; border: 1px solid rgba(57, 255, 20, 0.15); }
+        .badge-pending { background: rgba(234, 179, 8, 0.08); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.15); }
+        .badge-unlinked { background: rgba(255, 255, 255, 0.04); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.05); }
+
+        /* ==========================================================================
+           3. INTEGRATED SETTINGS OPERATIONS FRAME FORMS INTERFACE
+           ========================================================================== */
+        .settings-form-panel { display: flex; flex-direction: column; gap: 18px; }
+        .block-header-title { font-size: 0.7rem; text-transform: uppercase; color: rgba(255,255,255,0.3); letter-spacing: 1px; font-weight: bold; border-left: 2px solid #39FF14; padding-left: 8px; margin-bottom: 2px; }
+
+        /* Input Form Group Fields Structures */
+        .input-group-node { display: flex; flex-direction: column; gap: 8px; }
+        .input-group-node label { font-size: 0.65rem; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 0.8px; font-weight: 600; }
+        .input-wrapper-field { position: relative; display: flex; align-items: center; }
+        .input-wrapper-field i { position: absolute; left: 16px; color: rgba(255,255,255,0.25); font-size: 0.95rem; }
+        .input-wrapper-field input {
+            width: 100%; padding: 14px 16px 14px 44px; background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; color: #fff;
+            font-size: 0.88rem; outline: none; transition: 0.2s;
+        }
+        .input-wrapper-field input:focus { border-color: #39FF14; box-shadow: 0 0 15px rgba(57, 255, 20, 0.08); }
+        .input-wrapper-field input:disabled { background: rgba(255,255,255,0.01); color: rgba(255,255,255,0.4); cursor: not-allowed; border-color: transparent; }
+
+        /* Action Buttons Core Matrix Execution Triggers */
+        .btn-update-commit {
+            background: #39FF14; color: #000; font-family: 'Share Tech Mono', monospace;
+            padding: 15px; border-radius: 14px; text-transform: uppercase; font-weight: 800;
+            font-size: 0.85rem; text-align: center; border: none; cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 6px;
+        }
+        .btn-update-commit:hover { box-shadow: 0 0 25px rgba(57, 255, 20, 0.3); transform: translateY(-1px); }
+
+        .pending-notice-banner {
+            padding: 12px 14px; border-radius: 12px; background: rgba(234, 179, 8, 0.02);
+            border: 1px solid rgba(234, 179, 8, 0.12); font-size: 0.68rem; color: rgba(234, 179, 8, 0.8);
+            display: flex; gap: 8px; align-items: flex-start; line-height: 1.4;
+        }
+        .pending-notice-banner i { margin-top: 2px; }
+
+        /* ==========================================================================
+           4. CENTRAL NOTIFICATION OVERLAY MODAL
+           ========================================================================== */
+        .popup-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 3, 5, 0.94); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); z-index: 9999; display: none; 
+            justify-content: center; align-items: center; padding: 35px;
+        }
+        .popup-overlay.active { display: flex; }
+        .popup-card {
+            width: 100%; padding: 40px 25px; border-radius: 28px; text-align: center;
+            border: 1px solid #39FF14 !important; background: #040705;
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.12);
+        }
+        .popup-card.alert-warning { border-color: #eab308 !important; background: #080703; box-shadow: 0 0 40px rgba(234,179,8,0.12); }
+        .popup-card i { font-size: 3.2rem; color: #39FF14; margin-bottom: 18px; text-shadow: 0 0 20px rgba(57, 255, 20, 0.25); }
+        .popup-card h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+        .popup-card p { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.5; }
+        .btn-action { background: #39FF14; color: #000; border: none; padding: 14px; border-radius: 14px; width: 100%; font-weight: 700; font-size: 0.88rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-family: 'Share Tech Mono', monospace; }
+
+        /* ==========================================================================
+           5. FLOATING CYBER HALF-CIRCLE CURVED NAVIGATION DECK BAR
+           ========================================================================== */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 86px;
+            border-radius: 32px 32px 0 0; display: flex; justify-content: space-around;
+            align-items: center; z-index: 100; padding: 0 10px 12px 10px;
+            background: linear-gradient(180deg, rgba(11, 15, 24, 0.98) 0%, rgba(4, 6, 10, 0.99) 100%);
+            border-top: 1px solid rgba(57, 255, 20, 0.15);
+            box-shadow: 0 -15px 35px rgba(0,0,0,0.8);
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; gap: 5px; 
+            color: rgba(255,255,255,0.32); text-decoration: none; transition: all 0.3s ease;
+            position: relative; flex: 1; text-align: center;
+        }
+        .nav-item i { font-size: 1.25rem; transition: transform 0.2s; }
+        .nav-item span { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+        
+        .nav-center {
+            position: relative; transform: translateY(-26px);
+            width: 66px; height: 66px; background: #020304; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid rgba(255,255,255,0.12); box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+            color: rgba(255,255,255,0.4) !important; flex: none; z-index: 110;
+        }
+        .nav-center i { font-size: 1.5rem !important; }
+        
+        .nav-item.active { color: #39FF14; text-shadow: 0 0 10px rgba(57,255,20,0.2); }
+        .nav-item.active span { color: #ffffff; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div id="profileAlertModal" class="popup-overlay">
+        <div id="alertCardFrame" class="popup-card premium-glass">
+            <i id="alertIcon" class="fa-solid fa-circle-nodes"></i>
+            <h2 id="alertTitle">System Logs</h2>
+            <p id="alertDesc">Operation execution completed successfully tracking system loops.</p>
+            <button class="btn-action" onclick="dismissProfileModalPopup()">Acknowledge</button>
+        </div>
+    </div>
+
+    <div class="phone-wrapper premium-glass">
+        
+        <div class="content-scroll">
+            
+            <div class="section-title-strip">
+                <h3>Terminal Security Shield</h3>
+                <span id="displayUid" class="terminal-uid">UID: Syncing...</span>
+            </div>
+
+            <div class="identity-avatar-card premium-glass">
+                <div class="identity-img-wrapper">
+                    <img id="profileAvatarImg" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png" alt="Pilot" class="master-avatar-shield">
+                    <div class="status-pulse-dot"></div>
+                </div>
+                <div class="identity-meta">
+                    <h4 id="profileNameString">Venom Identity</h4>
+                    <p id="profileEmailString">resolving authentication stream...</p>
+                    <div id="verificationBadgeBox" class="verification-badge-strip badge-unlinked">
+                        <i class="fa-solid fa-ellipsis-stroke"></i> Initializing
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-form-panel">
+                
+                <span class="block-header-title">Identity Parameters Settings</span>
+                
+                <div class="input-group-node">
+                    <label>Account Holder Identification Title</label>
+                    <div class="input-wrapper-field">
+                        <i class="fa-solid fa-signature"></i>
+                        <input type="text" id="inputHolderName" placeholder="Enter bank account name">
+                    </div>
+                </div>
+
+                <span class="block-header-title">Banking Settlement Core Routing</span>
+
+                <div class="input-group-node">
+                    <label>Account Number String Token</label>
+                    <div class="input-wrapper-field">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <input type="password" id="inputAccountNo" placeholder="Enter banking account string">
+                    </div>
+                </div>
+
+                <div class="input-group-node">
+                    <label>IFSC System Network Location Route</label>
+                    <div class="input-wrapper-field">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <input type="text" id="inputIfscCode" placeholder="Enter 11 digit IFSC string code" maxlength="11">
+                    </div>
+                </div>
+
+                <span class="block-header-title">Digital Extraction Gateway Matrix</span>
+
+                <div class="input-group-node">
+                    <label>Virtual Unified Payout Terminal Target (UPI ID)</label>
+                    <div class="input-wrapper-field">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <input type="text" id="inputUpiId" placeholder="username@bankhandle">
+                    </div>
+                </div>
+
+                <div id="pendingAlertBanner" class="pending-notice-banner" style="display: none;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p>Parameters execution logged on memory heap. Modified banking matrix changes are currently pending approval clearance at Master Admin spaces.</p>
+                </div>
+
+                <button class="btn-update-commit" onclick="transmitProfileSettingsPayloadRequest()">
+                    <i class="fa-solid fa-server"></i> Commit Configuration Nodes
+                </button>
+
+            </div>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="profile.html" class="nav-item active">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Profile</span>
+            </a>
+            <a href="wallet.html" class="nav-item">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="main.html" class="nav-item nav-center">
+                <i class="fa-solid fa-circle-dot"></i>
+            </a>
+            <a href="refer.html" class="nav-item">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Refer</span>
+            </a>
+            <a href="trust.html" class="nav-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Trust</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Cloud Core Profile Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUserUid = null;
+
+        // Verify Realtime Security Context Session Stream
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                
+                document.getElementById('displayUid').innerText = "UID: " + user.uid.substring(0, 8).toUpperCase() + "...";
+                document.getElementById('profileNameString').innerText = user.displayName || "Venom Pilot";
+                document.getElementById('profileEmailString').innerText = user.email;
+                document.getElementById('profileAvatarImg').src = user.photoURL || "https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png";
+                
+                connectRealtimeIdentityMonitorPipeline(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        // REALTIME CORE SECURITY PROFILE SYNCHRONIZATION PIPELINE
+        function connectRealtimeIdentityMonitorPipeline(uid) {
+            const profileRefNode = ref(database, 'users/' + uid);
+
+            onValue(profileRefNode, (snapshot) => {
+                if (!snapshot.exists()) return;
+                const userData = snapshot.val();
+
+                // 1. Resolve Matrix Indicators Base Verifications Statuses Badges
+                const verifyStatus = userData.bankVerifyStatus || "UNLINKED";
+                renderActiveVerificationBadgeStatus(verifyStatus);
+
+                // 2. Logic Check: Render Permanent Confirmed Parameters Fields if verified or unlinked
+                // If status is PENDING, we prioritize displaying data from the 'pendingBankDetails' branch 
+                // so the user can see what they submitted while it waits for admin action.
+                if (verifyStatus === "PENDING" && userData.pendingBankDetails) {
+                    document.getElementById('inputHolderName').value = userData.pendingBankDetails.holderName || "";
+                    document.getElementById('inputAccountNo').value = userData.pendingBankDetails.accountNumber || "";
+                    document.getElementById('inputIfscCode').value = userData.pendingBankDetails.ifscCode || "";
+                    document.getElementById('inputUpiId').value = userData.pendingBankDetails.upiId || "";
+                    document.getElementById('pendingAlertBanner').style.display = "flex";
+                } else {
+                    document.getElementById('inputHolderName').value = userData.holderName || "";
+                    document.getElementById('inputAccountNo').value = userData.accountNumber || "";
+                    document.getElementById('inputIfscCode').value = userData.ifscCode || "";
+                    document.getElementById('inputUpiId').value = userData.upiId || "";
+                    document.getElementById('pendingAlertBanner').style.display = "none";
+                }
+            });
+        }
+
+        // BADGE DESIGN INJECTION RECONCILIATION SUB LOGIC
+        function renderActiveVerificationBadgeStatus(statusStringCode) {
+            const badgeBox = document.getElementById('verificationBadgeBox');
+            badgeBox.className = "verification-badge-strip";
+
+            if (statusStringCode === "VERIFIED") {
+                badgeBox.classList.add('badge-verified');
+                badgeBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> Verified Matrix`;
+            } else if (statusStringCode === "PENDING") {
+                badgeBox.classList.add('badge-pending');
+                badgeBox.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Audit Pending`;
+            } else {
+                badgeBox.classList.add('badge-unlinked');
+                badgeBox.innerHTML = `<i class="fa-solid fa-link-slash"></i> Unlinked Core`;
+            }
+        }
+
+        // SECURE SUBMISSION LOGIC: PUSH SETTINGS INTO PENDING BUFFER STREAM
+        window.transmitProfileSettingsPayloadRequest = function() {
+            const hName = document.getElementById('inputHolderName').value.trim();
+            const accNo = document.getElementById('inputAccountNo').value.trim();
+            const ifsc = document.getElementById('inputIfscCode').value.trim().toUpperCase();
+            const upi = document.getElementById('inputUpiId').value.trim();
+
+            // Form Structure Boundaries Fields Validation Intercepts
+            if (hName === "" || accNo === "" || ifsc === "" || upi === "") {
+                triggerProfileNoticeModalPopup("Payload Refused", "Configuration fields parameters array mismatch. Ensure all core binding strings contain values.", "warning");
+                return;
+            }
+
+            if (ifsc.length < 11) {
+                triggerProfileNoticeModalPopup("Routing Mismatch", "IFSC location target string is incomplete. Require an absolute 11 characters token trace.", "warning");
+                return;
+            }
+
+            if (currentUserUid) {
+                const targetUserNode = ref(database, 'users/' + currentUserUid);
+
+                // Payload packet locked inside 'pendingBankDetails' buffer array maps object
+                const updatePayloadPacket = {
+                    bankVerifyStatus: "PENDING",
+                    pendingBankDetails: {
+                        holderName: hName,
+                        accountNumber: accNo,
+                        ifscCode: ifsc,
+                        upiId: upi
+                    }
+                };
+
+                update(targetUserNode, updatePayloadPacket).then(() => {
+                    triggerProfileNoticeModalPopup("Nodes Logged", "Configuration update parameters pushed inside system stream buffers. Payout fields will unlock upon master admin verification clear sequence.", "success");
+                }).catch((error) => {
+                    console.error("Critical Profile Write Mismatch:", error);
+                });
+            }
+        };
+
+        // POPUP NOTICE CONTROLLER SYSTEM MODALS
+        function triggerProfileNoticeModalPopup(title, desc, layoutStyleMode) {
+            const overlay = document.getElementById('profileAlertModal');
+            const cardFrame = document.getElementById('alertCardFrame');
+            const iconNode = document.getElementById('alertIcon');
+
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertDesc').innerText = desc;
+
+            cardFrame.className = "popup-card premium-glass";
+
+            if (layoutStyleMode === "warning") {
+                cardFrame.classList.add('alert-warning');
+                iconNode.className = "fa-solid fa-triangle-exclamation";
+                iconNode.style.color = "#eab308";
+                iconNode.style.textShadow = "0 0 20px rgba(234, 179, 8, 0.3)";
+            } else if (layoutStyleMode === "success") {
+                iconNode.className = "fa-solid fa-server";
+                iconNode.style.color = "#39FF14";
+                iconNode.style.textShadow = "0 0 20px rgba(57, 255, 20, 0.4)";
+            }
+
+            overlay.classList.add('active');
+        }
+
+        window.dismissProfileModalPopup = function() {
+            document.getElementById('profileAlertModal').classList.remove('active');
+        };
+    </script>
+</body>
+</html>

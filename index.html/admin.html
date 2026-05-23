@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solus Venom - Supreme Console</title>
+    <title>Solus Venom - Supreme Ultimate Control Core</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
-           1. MASTER GLASS DESIGN SYSTEM & FULL ADMIN GRID WIREFRAME
+           1. MASTER GLASS DESIGN SYSTEM & CYBERPUNK WIREFRAME
            ========================================================================== */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
 
@@ -38,13 +38,13 @@
         .panel-title h1 { font-family: 'Share Tech Mono', monospace; font-size: 1.8rem; font-weight: 800; color: #39FF14; text-shadow: 0 0 20px rgba(57, 255, 20, 0.3); }
         .panel-title p { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
         
-        .system-stats { display: flex; gap: 30px; align-items: center; }
-        .stat-node { text-align: right; }
+        .system-stats { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; }
+        .stat-node { text-align: right; min-width: 100px; }
         .stat-node small { font-size: 0.68rem; text-transform: uppercase; color: rgba(255,255,255,0.4); }
         .stat-node div { font-family: 'Share Tech Mono', monospace; font-size: 1.4rem; font-weight: 700; color: #fff; }
 
         /* Games Grid Panel Framework */
-        .games-control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .games-control-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .game-card-module { padding: 25px; border: 1px solid rgba(255,255,255,0.05); background: rgba(3, 4, 7, 0.6); position: relative; overflow: hidden; }
         .game-card-module h2 { font-family: 'Share Tech Mono', monospace; font-size: 1.25rem; color: #39FF14; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px; }
         
@@ -53,14 +53,23 @@
         .btn-ovr-green { background: #10b981; color: #000; }
         .btn-ovr-violet { background: #8b5cf6; color: #fff; }
         .btn-ovr-red { background: #ef4444; color: #fff; }
+        .btn-ovr-orange { background: #f97316; color: #000; }
+        .btn-ovr-blue { background: #3b82f6; color: #fff; }
         .btn-override:hover { filter: brightness(1.2); box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
         
         .active-lock-badge { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(57,255,20,0.1); color: #39FF14; border: 1px solid rgba(57,255,20,0.2); display: inline-block; margin-top: 8px; transition: all 0.3s ease; }
 
+        /* Split Sections Layout */
+        .admin-split-layout { display: grid; grid-template-columns: 1fr; gap: 25px; }
+        @media(min-width: 1200px) {
+            .admin-split-layout { grid-template-columns: 1fr; }
+        }
+        
         /* ==========================================================================
            2. DATABASE METRICS LIVE DATAGRID INTERFACE TABLE
            ========================================================================== */
-        .table-container { flex: 1; overflow-x: auto; background: rgba(3, 4, 7, 0.8); border: 1px solid rgba(255,255,255,0.05); }
+        .table-container { overflow-x: auto; background: rgba(3, 4, 7, 0.8); border: 1px solid rgba(255,255,255,0.05); }
+        .section-title { padding: 20px 20px 5px 20px; font-family: 'Share Tech Mono', monospace; font-size: 1.3rem; color: #39FF14; display: flex; align-items: center; gap: 10px; justify-content: space-between; }
         
         .admin-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; white-space: nowrap; }
         .admin-table th { 
@@ -80,10 +89,14 @@
         .status-offline { background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.08); }
         .status-banned { background: rgba(255, 0, 85, 0.1); color: #ff0055; border: 1px solid rgba(255,0,85,0.2); }
 
+        .payment-tag { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+        .tag-deposit { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .tag-withdrawal { background: rgba(249, 115, 22, 0.1); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.2); }
+
         .balance-txt { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #39FF14; }
 
         /* ==========================================================================
-           3. TERMINAL ACTION OPERATOR BUTTONS BLOCK
+           3. ACTIONS AND TERMINAL BUTTONS BLOCK
            ========================================================================== */
         .actions-group { display: flex; gap: 8px; }
         .btn-action { 
@@ -93,12 +106,35 @@
         }
         .btn-action:hover { color: #000; background: #39FF14; border-color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.3); }
         .btn-action.btn-danger-action:hover { background: #ff0055; border-color: #ff0055; color: #fff; box-shadow: 0 0 10px rgba(255,0,85,0.3); }
+        .btn-action.btn-success-action:hover { background: #10b981; border-color: #10b981; color: #000; box-shadow: 0 0 10px rgba(16,185,129,0.3); }
 
         /* ==========================================================================
-           4. LIVE CONSOLE MONITOR LOG SYSTEM (NEW ADDITION)
+           4. INTERNAL USER APP INTERCEPTOR EMBEDDED SIMULATOR UI
            ========================================================================== */
+        .user-gateway-simulator {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+            padding: 25px; background: rgba(5, 8, 14, 0.85); border: 1px solid rgba(57, 255, 20, 0.2);
+        }
+        .sim-screen-box {
+            background: #020305; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px; min-height: 250px; position: relative; overflow: hidden;
+        }
+        .sim-screen-box h4 { font-family: 'Share Tech Mono', monospace; font-size: 1rem; color: #39FF14; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        
+        /* Simulated Lock Screen Layer */
+        .sim-lockout-mask {
+            position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,0,85,0.95);
+            display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:10;
+            text-align:center; padding:15px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .sim-lockout-mask.triggered { transform: translateY(0); }
+        .sim-lockout-mask i { font-size: 2.5rem; color: #fff; margin-bottom: 10px; animation: pulse 1.5s infinite; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        /* Live Console Monitor Log System */
         .live-terminal-logs {
-            background: rgba(2, 4, 7, 0.9); height: 130px; padding: 15px 25px;
+            background: rgba(2, 4, 7, 0.9); height: 140px; padding: 15px 25px;
             border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
             font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; color: #a1a1aa;
             display: flex; flex-direction: column; gap: 6px; overflow-y: auto;
@@ -107,8 +143,9 @@
         .log-timestamp { color: rgba(255,255,255,0.25); }
         .log-tag { color: #39FF14; text-transform: uppercase; font-weight: bold; }
         .log-tag.danger { color: #ff0055; }
+        .log-tag.warn { color: #f97316; }
 
-        /* Modals & Overlays Configuration Elements */
+        /* Modals Frame Configuration */
         .overlay-modal { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(2,3,5,0.92); backdrop-filter: blur(15px);
@@ -125,8 +162,9 @@
         .form-input:focus { border-color: #39FF14; }
 
         .modal-buttons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
-        .btn-panel { padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; }
+        .btn-panel { padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; transition: 0.2s; }
         .btn-confirm { background: #39FF14; color: #000; }
+        .btn-confirm:hover { background: #fff; }
         .btn-cancel { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.08); }
     </style>
 </head>
@@ -134,8 +172,8 @@
 
     <header class="admin-header premium-glass">
         <div class="panel-title">
-            <h1>Venom Master Shell</h1>
-            <p>Real-time User Allocation Controller Terminal</p>
+            <h1>Venom Ultimate Master Frame</h1>
+            <p>Unified Real-time Allocation Interceptor Shell</p>
         </div>
         <div class="system-stats">
             <div class="stat-node">
@@ -143,18 +181,25 @@
                 <div id="stat-server-ping" style="color: #10b981;">0 ms</div>
             </div>
             <div class="stat-node">
-                <small>Total Registers</small>
+                <small>Pending Deposit</small>
+                <div id="stat-pending-deposits" style="color: #10b981;">0</div>
+            </div>
+            <div class="stat-node">
+                <small>Pending Withdraw</small>
+                <div id="stat-pending-withdrawals" style="color: #f97316;">0</div>
+            </div>
+            <div class="stat-node">
+                <small>Total Profiles</small>
                 <div id="stat-total-users">00</div>
             </div>
             <div class="stat-node">
-                <small>Active Threads</small>
+                <small>Active Pipes</small>
                 <div id="stat-online-users" style="color: #39FF14;">00</div>
             </div>
         </div>
     </header>
 
     <section class="games-control-grid">
-        
         <div class="game-card-module premium-glass">
             <h2><i class="fa-solid fa-dice"></i> FastParity Hacking Core</h2>
             <div class="form-group" style="margin-bottom:10px;">
@@ -163,6 +208,7 @@
                     <button class="btn-override btn-ovr-green" onclick="forceNextFastParityColorResult('GREEN')">Green</button>
                     <button class="btn-override btn-ovr-violet" onclick="forceNextFastParityColorResult('VIOLET')">Violet</button>
                     <button class="btn-override btn-ovr-red" onclick="forceNextFastParityColorResult('RED')">Red</button>
+                    <button class="btn-override btn-cancel" style="font-size: 0.7rem;" onclick="resetGameOverride('fastparityOverride')">Clear</button>
                 </div>
             </div>
             <div id="fastparityStatusLockNode" class="active-lock-badge">Mode: Automated Algorithms (Random)</div>
@@ -171,43 +217,160 @@
         <div class="game-card-module premium-glass">
             <h2><i class="fa-solid fa-jet-fighter"></i> Aviator Flight Interceptor</h2>
             <div class="form-group" style="margin-bottom:12px;">
-                <label>Next Round Crash Multiplier Target (Guna)</label>
+                <label>Next Round Crash Multiplier Target</label>
                 <div style="display:flex; gap:10px;">
-                    <input type="number" id="aviatorMultiplierInputField" class="form-input" placeholder="e.g. 1.50, 3.00, 10.00" step="0.1" style="margin:0; flex:1;">
-                    <button class="btn-panel btn-confirm" style="border-radius:12px; padding:0 20px;" onclick="lockNextAviatorCrashMultiplierPoint()">Lock Multiplier</button>
+                    <input type="number" id="aviatorMultiplierInputField" class="form-input" placeholder="e.g. 1.50, 5.00" step="0.1" style="margin:0; flex:1;">
+                    <button class="btn-panel btn-confirm" style="border-radius:12px; padding:0 15px;" onclick="lockNextAviatorCrashMultiplierPoint()">Lock</button>
+                    <button class="btn-panel btn-cancel" style="border-radius:12px; padding:0 15px;" onclick="resetGameOverride('aviatorOverrideMultiplier')">Reset</button>
                 </div>
             </div>
             <div id="aviatorStatusLockNode" class="active-lock-badge">Current Crash Curve: Dynamic Random Fallback</div>
         </div>
 
+        <div class="game-card-module premium-glass">
+            <h2><i class="fa-solid fa-cubes"></i> Dice Engine Interceptor</h2>
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Force Exact Dice Number Outcome (0-99)</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="number" id="diceOverrideInputField" class="form-input" placeholder="e.g. 45" min="0" max="99" style="margin:0; flex:1;">
+                    <button class="btn-panel btn-confirm" style="border-radius:12px; padding:0 15px;" onclick="lockNextDiceOutcomeNumber()">Lock</button>
+                    <button class="btn-panel btn-cancel" style="border-radius:12px; padding:0 15px;" onclick="resetGameOverride('diceOverrideNumber')">Clear</button>
+                </div>
+            </div>
+            <div id="diceStatusLockNode" class="active-lock-badge">Dice Status: Automated Sync</div>
+        </div>
+
+        <div class="game-card-module premium-glass">
+            <h2><i class="fa-solid fa-land-mine-on"></i> Mines Map Predictor Array</h2>
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Setup Fixed Safe Indices String (0-24)</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="minesOverrideInputField" class="form-input" placeholder="0,4,8,12" style="margin:0; flex:1; font-family: monospace;">
+                    <button class="btn-panel btn-confirm" style="border-radius:12px; padding:0 15px;" onclick="lockMinesSafeIndicesPattern()">Deploy</button>
+                    <button class="btn-panel btn-cancel" style="border-radius:12px; padding:0 15px;" onclick="resetGameOverride('minesSafeIndices')">Clear</button>
+                </div>
+            </div>
+            <div id="minesStatusLockNode" class="active-lock-badge">Mines Status: Server Core Default</div>
+        </div>
+
+        <div class="game-card-module premium-glass">
+            <h2><i class="fa-solid fa-circle-dot"></i> Wheel Sector Force Driver</h2>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Force Target Segment Selection</label>
+                <div class="override-actions-row">
+                    <button class="btn-override btn-ovr-blue" onclick="forceNextWheelSectorOutcome('BLUE')">Blue</button>
+                    <button class="btn-override btn-ovr-orange" onclick="forceNextWheelSectorOutcome('ORANGE')">Orange</button>
+                    <button class="btn-override btn-ovr-red" onclick="forceNextWheelSectorOutcome('RED')">Red</button>
+                    <button class="btn-override btn-cancel" style="font-size: 0.7rem;" onclick="resetGameOverride('wheelOverrideSector')">Clear</button>
+                </div>
+            </div>
+            <div id="wheelStatusLockNode" class="active-lock-badge">Wheel Sector: Standard Dynamic Rotation</div>
+        </div>
     </section>
 
-    <main class="table-container premium-glass">
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>User Credentials</th>
-                    <th>Network Node IP</th>
-                    <th>Device Specs</th>
-                    <th>Wallet Balance</th>
-                    <th>Active Bet Status</th>
-                    <th>Status Matrix</th>
-                    <th style="text-align: center;">Terminal Actions</th>
-                </tr>
-            </thead>
-            <tbody id="usersDynamicTableBody">
-                <tr>
-                    <td colspan="7" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.3); font-family: 'Share Tech Mono', monospace;">INTERROGATING REMOTE CHANNELS POOL...</td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+    <div class="admin-split-layout">
+        
+        <main class="table-container premium-glass">
+            <div class="section-title">
+                <span><i class="fa-solid fa-users-gear"></i> Master Database Core Registry</span>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>User Credentials</th>
+                        <th>Network IP</th>
+                        <th>Hardware Profile</th>
+                        <th>Wallet Balance</th>
+                        <th>Active Bet Status</th>
+                        <th>Status Block</th>
+                        <th style="text-align: center;">Terminal Operation Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersDynamicTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.3); font-family: 'Share Tech Mono', monospace;">INTERROGATING INBOUND NETWORK STREAMS...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <section class="table-container premium-glass">
+            <div class="section-title"><span><i class="fa-solid fa-money-bill-transfer"></i> Financial Settlement Interceptor Engine</span></div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>User Identity & Token ID</th>
+                        <th>Request Type</th>
+                        <th>Transaction Volume</th>
+                        <th>Reference UTR / Gateway Path</th>
+                        <th>Timestamp Trace</th>
+                        <th style="text-align: center;">Settlement Decision Matrix</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentsDynamicTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.3); font-family: 'Share Tech Mono', monospace;">STREAMING TRANSACTIONS INTERCEPTOR IDLE...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+
+    <section class="table-container premium-glass" style="margin-top:10px;">
+        <div class="section-title" style="color:#10b981;">
+            <span><i class="fa-solid fa-mobile-screen-button"></i> Integrated User-Side Active App Interceptor Terminal (Simulator Window)</span>
+        </div>
+        <div class="user-gateway-simulator">
+            <div class="sim-screen-box">
+                <h4>User Node: Submit Deposit (Pay-In)</h4>
+                <div class="form-group" style="margin-bottom:10px;">
+                    <label>Mock Deposit Amount (INR)</label>
+                    <input type="number" id="simDepAmount" class="form-input" value="500" style="padding:8px 12px; font-size:0.85rem;">
+                </div>
+                <div class="form-group" style="margin-bottom:10px;">
+                    <label>12-Digit Bank Transaction UTR</label>
+                    <input type="text" id="simDepUtr" class="form-input" value="UTR928401840284" style="padding:8px 12px; font-size:0.85rem; font-family:monospace;">
+                </div>
+                <button class="btn-panel btn-confirm" style="width:100%; padding:10px; font-size:0.75rem;" onclick="simulateUserSideDepositRequestSubmission()">Submit Pay-In Transaction Package</button>
+            </div>
+
+            <div class="sim-screen-box">
+                <h4>User Node: Cashout Extraction (Pay-Out)</h4>
+                <div class="form-group" style="margin-bottom:10px;">
+                    <label>Extraction Amount (INR)</label>
+                    <input type="number" id="simWithAmount" class="form-input" value="1000" style="padding:8px 12px; font-size:0.85rem;">
+                </div>
+                <div class="form-group" style="margin-bottom:10px;">
+                    <label>Destination UPI Target Path</label>
+                    <input type="text" id="simWithUpi" class="form-input" value="solusdevil@ybl" style="padding:8px 12px; font-size:0.85rem; font-family:monospace;">
+                </div>
+                <button class="btn-panel btn-override btn-ovr-orange" style="width:100%; padding:10px; font-size:0.75rem;" onclick="simulateUserSideWithdrawalRequestSubmission()">Request Double-Spend Protected Cashout</button>
+            </div>
+
+            <div class="sim-screen-box" id="userAppLiveViewportScreenFrame">
+                <div class="sim-lockout-mask" id="globalDeviceLockoutScreenOverlay">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3 style="font-family:'Share Tech Mono', monospace;">NODE LOCKOUT</h3>
+                    <p id="lockoutTerminalReasonText" style="font-size:0.7rem; color:#fff; opacity:0.9; margin-top:5px;"></p>
+                </div>
+                <h4>Active Interceptor Device Listener Status</h4>
+                <div style="font-family:'Share Tech Mono', monospace; font-size:0.8rem; display:flex; flex-direction:column; gap:8px;">
+                    <div>Mock Session Target: <span style="color:#39FF14;" id="simTrackedUserBadge">Selecting database node...</span></div>
+                    <div>Wallet HUD Balance: <span style="color:#10b981; font-weight:bold;" id="simTrackedUserBalance">₹0.00</span></div>
+                    <div id="userAppLivePopupNotifierSlot" style="background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.3); padding:8px; border-radius:8px; display:none; color:#f97316; font-size:0.75rem; margin-top:10px;">
+                        <i class="fa-solid fa-bell"></i> <b>System Alert Packet:</b> <span id="popupAlertTextContainer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="live-terminal-logs premium-glass" id="liveTerminalLogsFrame">
         <div class="log-entry">
             <span class="log-timestamp">[00:00:00]</span>
             <span class="log-tag">SYSTEM</span>
-            <span class="log-msg">Secure core pipeline handshake initialized... Ready.</span>
+            <span class="log-msg">Secure full-stack unified matrix pipeline handshake complete... Standing by.</span>
         </div>
     </footer>
 
@@ -227,7 +390,7 @@
             </div>
             <div class="form-group">
                 <label>Transaction Amount (INR)</label>
-                <input type="number" id="balAmountInput" class="form-input" placeholder="Enter amount (e.g. 500)" min="1">
+                <input type="number" id="balAmountInput" class="form-input" placeholder="Enter amount" min="1">
             </div>
             <div class="modal-buttons-row">
                 <button class="btn-panel btn-cancel" onclick="closeControlModal('balanceModal')">Abort</button>
@@ -238,14 +401,14 @@
 
     <div id="noticeModal" class="overlay-modal">
         <div class="control-card premium-glass">
-            <h3><i class="fa-solid fa-satellite-dish"></i> Emit Warning Notice</h3>
+            <h3><i class="fa-solid fa-satellite-dish"></i> Emit Custom Popup Notification</h3>
             <div class="form-group">
                 <label>Recipient Target Mail</label>
                 <input type="text" id="noticeTargetDisplay" class="form-input" disabled style="color:rgba(255,255,255,0.4);">
             </div>
             <div class="form-group">
                 <label>System Message Payload</label>
-                <textarea id="noticeTextMessage" class="form-input" rows="4" placeholder="Type notification context string details clear here..." style="resize:none;"></textarea>
+                <textarea id="noticeTextMessage" class="form-input" rows="4" placeholder="Type notification context string..." style="resize:none;"></textarea>
             </div>
             <div class="modal-buttons-row">
                 <button class="btn-panel btn-cancel" onclick="closeControlModal('noticeModal')">Cancel</button>
@@ -256,9 +419,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, update, remove, get, set, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Firebase Unified Credentials Config Profile Matching Engine Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
             authDomain: "solous-venom.firebaseapp.com",
@@ -272,18 +434,21 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Core Cache State Map Storage Array Structure
         let activeTargetUidCache = null;
         let activeTargetCurrentBalanceCache = 0;
+        let globalSelectedSimulatorTargetUid = null; 
 
-        // Custom Console Logger Utility Function
-        function appendTerminalShellLog(tag, message, isDanger = false) {
+        function appendTerminalShellLog(tag, message, level = "info") {
             const container = document.getElementById('liveTerminalLogsFrame');
             const timeStr = new Date().toTimeString().split(' ')[0];
+            let classTag = "";
+            if(level === "danger") classTag = "danger";
+            if(level === "warn") classTag = "warn";
+            
             const logHTML = `
                 <div class="log-entry">
                     <span class="log-timestamp">[${timeStr}]</span>
-                    <span class="log-tag ${isDanger ? 'danger' : ''}">${tag}</span>
+                    <span class="log-tag ${classTag}">${tag}</span>
                     <span class="log-msg">${message}</span>
                 </div>
             `;
@@ -291,32 +456,34 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // Initialize Realtime Sync Loop Channels Hook
+        // START LIVE STREAM REAL-TIME REALITY LISTENERS
         function startLiveDatabaseTableListener() {
             const startTimestamp = Date.now();
             
+            // 1. OBSERVE AND PARSE LIVE ACCOUNT REGISTRY STACK
             onValue(ref(database, 'users'), (snapshot) => {
-                // Calculate Dynamic Network Ping Handshake Delay
                 const currentPing = Date.now() - startTimestamp;
                 document.getElementById('stat-server-ping').innerText = `${currentPing > 120 ? Math.floor(Math.random() * 40) + 15 : currentPing} ms`;
 
                 const tableBody = document.getElementById('usersDynamicTableBody');
-                tableBody.innerHTML = ""; // Clear current table buffer frames
+                tableBody.innerHTML = ""; 
 
                 if (!snapshot.exists()) {
-                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.3);">NO ACTIVE ACCOUNTS REGISTERED</td></tr>`;
-                    appendTerminalShellLog("SYNC", "User reference pool snapshot returned null query parameters.");
+                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.3);">NO REGISTERED ENTITIES FOUND IN DB CORE</td></tr>`;
                     return;
                 }
 
-                let totalCount = 0;
-                let onlineCount = 0;
+                let totalCount = 0; let onlineCount = 0;
 
                 snapshot.forEach((childSnapshot) => {
                     const user = childSnapshot.val();
                     totalCount++;
 
-                    // Extract Status State tags constraints
+                    // Automatic fallback selection initialization for user app simulator trace execution loop
+                    if(!globalSelectedSimulatorTargetUid) {
+                        bindUserNodeToSimulatorChannelPipeline(user.uid);
+                    }
+
                     let statusMarkup = `<span class="status-tag status-offline">Offline</span>`;
                     if (user.isBlocked === true) {
                         statusMarkup = `<span class="status-tag status-banned">Banned</span>`;
@@ -325,40 +492,36 @@
                         onlineCount++;
                     }
 
-                    // Render current active bets tracker diagnostics
-                    let activeBetStringDiagnostics = `<span style="color:rgba(255,255,255,0.3); font-size:0.75rem;">No Active Stake</span>`;
+                    let activeBetStringDiagnostics = `<span style="color:rgba(255,255,255,0.3); font-size:0.75rem;">No Active Position</span>`;
                     if (user.activeBet) {
-                        const betColor = user.activeBet.color || "None";
-                        const betAmt = user.activeBet.amount || 0;
-                        activeBetStringDiagnostics = `<span style="font-family:'Share Tech Mono', monospace; font-size:0.82rem; color:#fff; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:6px; border:1px solid rgba(255,255,255,0.08);">Stacked ₹${betAmt} on <b style="color:${betColor==='GREEN'?'#10b981':betColor==='RED'?'#ef4444':'#8b5cf6'}">${betColor}</b></span>`;
+                        activeBetStringDiagnostics = `<span style="font-family:'Share Tech Mono', monospace; font-size:0.82rem; color:#fff; padding:3px 8px; background:rgba(57,255,20,0.05); border-radius:6px; border:1px solid rgba(57,255,20,0.15);">${user.activeBet.game}: ₹${user.activeBet.amount} -> [<b>${user.activeBet.target}</b>]</span>`;
                     }
 
                     const walletVal = user.walletBalance !== undefined ? parseFloat(user.walletBalance).toFixed(2) : "0.00";
-                    const deviceString = `${user.deviceBrand || "Unknown"} (${user.deviceOS || "N/A"})`;
+                    const deviceString = `${user.deviceBrand || "Generic"} (${user.deviceOS || "WebX"})`;
 
-                    // Row Element String Assembly Grid 
                     const rowElementMarkup = `
-                        <tr>
+                        <tr style="cursor:pointer;" onclick="bindUserNodeToSimulatorChannelPipeline('${user.uid}')">
                             <td>
                                 <div class="user-meta-cell">
                                     <img src="${user.photo || 'https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png'}" alt="Avatar">
                                     <div class="meta-det">
-                                        <h4>${user.name || 'Anonymous'}</h4>
-                                        <small>${user.email || 'No Linked Email'}</small>
+                                        <h4 style="${globalSelectedSimulatorTargetUid === user.uid ? 'color:#39FF14;' : ''}">${user.name || 'Anonymous User'}</h4>
+                                        <small>${user.email || 'No Email Field'}</small>
                                     </div>
                                 </div>
                             </td>
-                            <td style="font-family:'Share Tech Mono', monospace; font-size:0.85rem; color: #94a3b8;">${user.ipAddress || '0.0.0.0'}</td>
+                            <td style="font-family:'Share Tech Mono', monospace; font-size:0.85rem; color: #94a3b8;">${user.ipAddress || '127.0.0.1'}</td>
                             <td style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">${deviceString}</td>
                             <td><span class="balance-txt">₹${walletVal}</span></td>
                             <td>${activeBetStringDiagnostics}</td>
                             <td>${statusMarkup}</td>
-                            <td>
+                            <td onclick="event.stopPropagation()">
                                 <div class="actions-group" style="justify-content: center;">
-                                    <button class="btn-action" title="Modify Balance Wallet" onclick="openBalanceControlPanel('${user.uid}', '${user.name}', ${walletVal})"><i class="fa-solid fa-plus-minus"></i></button>
-                                    <button class="btn-action" title="Push Custom System Popup" onclick="openNoticeControlPanel('${user.uid}', '${user.email}')"><i class="fa-solid fa-paper-plane"></i></button>
-                                    <button class="btn-action" title="Force Disconnect Session" onclick="executeRemoteSessionReset('${user.uid}')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
-                                    <button class="btn-action btn-danger-action" title="${user.isBlocked ? 'Unban Account' : 'Suspend Account'}" onclick="toggleAccountBanRestriction('${user.uid}', ${user.isBlocked || false})"><i class="fa-solid ${user.isBlocked ? 'fa-unlock' : 'fa-user-slash'}"></i></button>
+                                    <button class="btn-action" title="Modify Balance" onclick="openBalanceControlPanel('${user.uid}', '${user.name}', ${walletVal})"><i class="fa-solid fa-plus-minus"></i></button>
+                                    <button class="btn-action" title="Emit Custom Push Popup Alert" onclick="openNoticeControlPanel('${user.uid}', '${user.email}')"><i class="fa-solid fa-paper-plane"></i></button>
+                                    <button class="btn-action" title="Force Intercept Kill Connection Session" onclick="executeRemoteSessionReset('${user.uid}')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                                    <button class="btn-action btn-danger-action" title="${user.isBlocked ? 'Lift Ban' : 'Execute System Ban Layer'}" onclick="toggleAccountBanRestriction('${user.uid}', ${user.isBlocked || false})"><i class="fa-solid ${user.isBlocked ? 'fa-unlock' : 'fa-user-slash'}"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -368,64 +531,338 @@
 
                 document.getElementById('stat-total-users').innerText = totalCount < 10 ? "0" + totalCount : totalCount;
                 document.getElementById('stat-online-users').innerText = onlineCount < 10 ? "0" + onlineCount : onlineCount;
-                appendTerminalShellLog("MIRROR", `Database pipeline parsed successfully. Online: [${onlineCount}/${totalCount}]`);
             });
 
-            // Keep game parameters indicators sync status live updated on boots
+            // 2. FINANCIAL INBOUND PIPELINE LEDGER MONITOR (DEPOSITS/WITHDRAWALS CONTROL)
+            onValue(ref(database, 'paymentRequests'), (snapshot) => {
+                const payBody = document.getElementById('paymentsDynamicTableBody');
+                payBody.innerHTML = "";
+
+                if (!snapshot.exists()) {
+                    payBody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.2); font-family: 'Share Tech Mono', monospace;">FINANCIAL LEDGER TRACE STACK EMPTY</td></tr>`;
+                    document.getElementById('stat-pending-deposits').innerText = "0";
+                    document.getElementById('stat-pending-withdrawals').innerText = "0";
+                    return;
+                }
+
+                let dCount = 0; let wCount = 0;
+
+                snapshot.forEach((childSnapshot) => {
+                    const req = childSnapshot.val();
+                    const reqId = childSnapshot.key;
+
+                    if(req.type === 'DEPOSIT') dCount++;
+                    if(req.type === 'WITHDRAWAL') wCount++;
+
+                    const typeBadge = req.type === 'DEPOSIT' ? 
+                        `<span class="payment-tag tag-deposit"><i class="fa-solid fa-arrow-trend-up"></i> Deposit Request</span>` : 
+                        `<span class="payment-tag tag-withdrawal"><i class="fa-solid fa-arrow-trend-down"></i> Cashout Lock</span>`;
+
+                    const rowMarkup = `
+                        <tr>
+                            <td style="font-family:'Share Tech Mono', monospace;">
+                                <b style="color:#fff;">${req.userName || 'Unknown Alias'}</b><br>
+                                <small style="color:rgba(255,255,255,0.3); font-size:0.68rem;">Token: ${req.uid}</small>
+                            </td>
+                            <td>${typeBadge}</td>
+                            <td><span style="font-family:'Share Tech Mono', monospace; font-weight:bold; color:#39FF14; font-size:1rem;">₹${parseFloat(req.amount).toFixed(2)}</span></td>
+                            <td style="font-family:'Share Tech Mono', monospace; font-size:0.8rem; color:#a1a1aa;">Data Field: ${req.referenceData || 'N/A'}</td>
+                            <td style="font-size:0.75rem; color:rgba(255,255,255,0.4);">${req.timestamp || 'Realtime Log Trace'}</td>
+                            <td>
+                                <div class="actions-group" style="justify-content: center;">
+                                    <button class="btn-action btn-success-action" title="Execute Approval Authorization" onclick="settlePaymentRequest('${reqId}', '${req.uid}', '${req.type}', ${req.amount}, 'APPROVE')"><i class="fa-solid fa-check"></i></button>
+                                    <button class="btn-action btn-danger-action" title="Reject and Void Package Entry" onclick="settlePaymentRequest('${reqId}', '${req.uid}', '${req.type}', ${req.amount}, 'REJECT')"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    payBody.insertAdjacentHTML('beforeend', rowMarkup);
+                });
+
+                document.getElementById('stat-pending-deposits').innerText = dCount;
+                document.getElementById('stat-pending-withdrawals').innerText = wCount;
+            });
+
+            // GAME MODULATION OBSERVERS SYNC ARRAY
             onValue(ref(database, 'gameControls/fastparityOverride'), (snap) => {
                 const node = document.getElementById('fastparityStatusLockNode');
                 if (snap.exists() && snap.val() !== "NONE") {
-                    const colorVal = snap.val();
-                    node.innerText = `Mode: FORCED CRASH ON ${colorVal} ⚠️`;
-                    node.style.color = "#ff0055";
-                    node.style.borderColor = "rgba(255,0,85,0.2)";
-                    appendTerminalShellLog("FASTPARITY", `Global override interception locked on node: [${colorVal}]`, true);
+                    node.innerText = `Mode: OVERRIDDEN LAYER ON [${snap.val()}] ⚠️`;
+                    node.style.color = "#ff0055"; node.style.borderColor = "rgba(255,0,85,0.2)";
                 } else {
                     node.innerText = "Mode: Automated Algorithms (Random)";
-                    node.style.color = "#39FF14";
-                    node.style.borderColor = "rgba(57,255,20,0.2)";
+                    node.style.color = "#39FF14"; node.style.borderColor = "rgba(57,255,20,0.2)";
                 }
             });
 
             onValue(ref(database, 'gameControls/aviatorOverrideMultiplier'), (snap) => {
                 const node = document.getElementById('aviatorStatusLockNode');
                 if (snap.exists() && parseFloat(snap.val()) > 0) {
-                    const multVal = snap.val();
-                    node.innerText = `Current Crash Curve: LOCKED AT ${multVal}x ⚠️`;
-                    node.style.color = "#ff0055";
-                    node.style.borderColor = "rgba(255,0,85,0.2)";
-                    appendTerminalShellLog("AVIATOR", `Algorithm vector vector matrix frozen at: [${multVal}x]`, true);
+                    node.innerText = `Current Crash Curve: FORCE TERMINATED AT [${snap.val()}x] ⚠️`;
+                    node.style.color = "#ff0055"; node.style.borderColor = "rgba(255,0,85,0.2)";
                 } else {
                     node.innerText = "Current Crash Curve: Dynamic Random Fallback";
-                    node.style.color = "#39FF14";
-                    node.style.borderColor = "rgba(57,255,20,0.2)";
+                    node.style.color = "#39FF14"; node.style.borderColor = "rgba(57,255,20,0.2)";
+                }
+            });
+
+            onValue(ref(database, 'gameControls/diceOverrideNumber'), (snap) => {
+                const node = document.getElementById('diceStatusLockNode');
+                if (snap.exists() && snap.val() !== -1) {
+                    node.innerText = `Dice Logic Track: FORCED SHIFT TO NUMBER [${snap.val()}] ⚠️`;
+                    node.style.color = "#ff0055"; node.style.borderColor = "rgba(255,0,85,0.2)";
+                } else {
+                    node.innerText = "Dice Status: Automated Sync";
+                    node.style.color = "#39FF14"; node.style.borderColor = "rgba(57,255,20,0.2)";
+                }
+            });
+
+            onValue(ref(database, 'gameControls/minesSafeIndices'), (snap) => {
+                const node = document.getElementById('minesStatusLockNode');
+                if (snap.exists() && snap.val() !== "NONE") {
+                    node.innerText = `Safe Path Buffer Injected Array: [${snap.val()}] ⚠️`;
+                    node.style.color = "#ff0055"; node.style.borderColor = "rgba(255,0,85,0.2)";
+                } else {
+                    node.innerText = "Mines Status: Server Core Default";
+                    node.style.color = "#39FF14"; node.style.borderColor = "rgba(57,255,20,0.2)";
+                }
+            });
+
+            onValue(ref(database, 'gameControls/wheelOverrideSector'), (snap) => {
+                const node = document.getElementById('wheelStatusLockNode');
+                if (snap.exists() && snap.val() !== "NONE") {
+                    node.innerText = `Axial Magnet Matrix Locked Segment: [${snap.val()}] ⚠️`;
+                    node.style.color = "#ff0055"; node.style.borderColor = "rgba(255,0,85,0.2)";
+                } else {
+                    node.innerText = "Wheel Sector: Standard Dynamic Rotation";
+                    node.style.color = "#39FF14"; node.style.borderColor = "rgba(57,255,20,0.2)";
                 }
             });
         }
 
         // ==========================================================================
-        // NEW GAME ENGINE INTERCEPTOR CONTROL LOGIC FUNCTIONS
+        // DYNAMIC DEVICE-SIDE APPLICATION LISTENER INTERCEPTOR (SIMULATOR HARNESS)
+        // ==========================================================================
+        let unbindPreviousSimulatorObserverFunction = null;
+
+        window.bindUserNodeToSimulatorChannelPipeline = function(uid) {
+            globalSelectedSimulatorTargetUid = uid;
+            document.getElementById('simTrackedUserBadge').innerText = uid.substring(0,12) + "...";
+            
+            if(typeof unbindPreviousSimulatorObserverFunction === "function") {
+                unbindPreviousSimulatorObserverFunction();
+            }
+
+            // INJECT LIVE SIMULATED CLIENT LISTENER PIPELINE (Exactly how the real client App operates)
+            unbindPreviousSimulatorObserverFunction = onValue(ref(database, `users/${uid}`), (snap) => {
+                if(!snap.exists()) return;
+                const clientData = snap.val();
+
+                // Interceptor Stream A: Update App Balance Display Frame
+                document.getElementById('simTrackedUserBalance').innerText = `₹${parseFloat(clientData.walletBalance || 0).toFixed(2)}`;
+
+                // Interceptor Stream B: Session Security Verification Handler
+                const lockMask = document.getElementById('globalDeviceLockoutScreenOverlay');
+                const lockReasonText = document.getElementById('lockoutTerminalReasonText');
+
+                if(clientData.isBlocked === true) {
+                    lockMask.classList.add('active', 'triggered');
+                    lockReasonText.innerHTML = "CRITICAL VIOLATION ACCESS RESTRICTED<br><small>Your profile has been blacklisted by Security Shell.</small>";
+                } else if(clientData.forceDisconnect === true) {
+                    lockMask.classList.add('active', 'triggered');
+                    lockReasonText.innerHTML = "SESSION TERMINATED TERMINATION REASON: REMOTE FORCE REBOOT FLUSH<br><small>Connection sequence dropped. Please re-authenticate account token tracking.</small>";
+                } else {
+                    lockMask.classList.remove('active', 'triggered');
+                }
+
+                // Interceptor Stream C: Dynamic System Broadcast Popup Receiver Terminal
+                const alertSlotNode = document.getElementById('userAppLivePopupNotifierSlot');
+                if(clientData.popupMessage && clientData.popupMessage.trim() !== "") {
+                    document.getElementById('popupAlertTextContainer').innerText = clientData.popupMessage;
+                    alertSlotNode.style.display = "block";
+                } else {
+                    alertSlotNode.style.display = "none";
+                }
+            });
+        };
+
+        // USER SIMULATOR SYSTEM TRANSACTION SUBMISSIONS TRACE LOGS
+        window.simulateUserSideDepositRequestSubmission = function() {
+            if(!globalSelectedSimulatorTargetUid) return alert("Select a database profile record first.");
+            const amt = parseFloat(document.getElementById('simDepAmount').value);
+            const utr = document.getElementById('simDepUtr').value.trim();
+
+            if(isNaN(amt) || amt <= 0 || utr === "") return alert("Corrupted Pay-In Parameter Packets.");
+
+            get(ref(database, `users/${globalSelectedSimulatorTargetUid}`)).then((snap) => {
+                if(!snap.exists()) return;
+                const name = snap.val().name || "User Node";
+                const payloadKey = "DEP_" + Date.now().toString().substring(6);
+                
+                set(ref(database, `paymentRequests/${payloadKey}`), {
+                    uid: globalSelectedSimulatorTargetUid,
+                    userName: name,
+                    type: "DEPOSIT",
+                    amount: amt,
+                    referenceData: "UTR: " + utr,
+                    timestamp: new Date().toLocaleTimeString()
+                }).then(() => {
+                    appendTerminalShellLog("CLIENT_APP", `User dispatched Pay-In Request stream packet [Volume: ₹${amt}]`);
+                });
+            });
+        };
+
+        window.simulateUserSideWithdrawalRequestSubmission = function() {
+            if(!globalSelectedSimulatorTargetUid) return alert("Select a database profile record first.");
+            const amt = parseFloat(document.getElementById('simWithAmount').value);
+            const upi = document.getElementById('simWithUpi').value.trim();
+
+            if(isNaN(amt) || amt <= 0 || upi === "") return alert("Invalid Parameter Vectors.");
+
+            const targetUserAccountNodeRef = ref(database, `users/${globalSelectedSimulatorTargetUid}`);
+
+            get(targetUserAccountNodeRef).then((snap) => {
+                if(!snap.exists()) return;
+                const userObj = snap.val();
+                let balanceVector = parseFloat(userObj.walletBalance || 0);
+
+                // DOUBLE SPEND SAFE SECURITY CHECK LAYER INJECTED
+                if(balanceVector < amt) {
+                    appendTerminalShellLog("CLIENT_APP_BLOCKED", `Extraction request rejected: Account out of balance bounds. [Requested: ₹${amt} | Account Pool: ₹${balanceVector}]`, "danger");
+                    alert("Execution Core Fault: Insufficient funds in current storage register.");
+                    return;
+                }
+
+                // AUTOMATED SAFE DEBIT BALANCING SYNC INITIATION ENGINE
+                let postDeductionLockedBalanceBuffer = balanceVector - amt;
+                
+                update(targetUserAccountNodeRef, { walletBalance: postDeductionLockedBalanceBuffer }).then(() => {
+                    const payloadKey = "WITH_" + Date.now().toString().substring(6);
+                    set(ref(database, `paymentRequests/${payloadKey}`), {
+                        uid: globalSelectedSimulatorTargetUid,
+                        userName: userObj.name || "User Profile Node",
+                        type: "WITHDRAWAL",
+                        amount: amt,
+                        referenceData: "UPI Target Path: " + upi,
+                        timestamp: new Date().toLocaleTimeString()
+                    }).then(() => {
+                        appendTerminalShellLog("CLIENT_APP_SECURE", `Cashout Extraction Request authorized safely. Balance locked and subtracted [Volume: ₹${amt}]`, "warn");
+                    });
+                });
+            });
+        };
+
+        // ==========================================================================
+        // FINANCIAL TRANSACTION SETTLEMENT FINAL RESOLUTION PROCESSING MECHANISM
+        // ==========================================================================
+        window.settlePaymentRequest = function(requestId, targetUid, type, amount, resolution) {
+            if (!confirm(`Are you sure you want to completely execute [${resolution}] on this ${type} packet sequence?`)) return;
+
+            const userBalanceRef = ref(database, `users/${targetUid}`);
+
+            if (resolution === 'APPROVE') {
+                get(userBalanceRef).then((snap) => {
+                    if (snap.exists()) {
+                        let currentBal = parseFloat(snap.val().walletBalance || 0);
+                        let finalBal = currentBal;
+
+                        if (type === 'DEPOSIT') {
+                            finalBal += parseFloat(amount); // Deposit approved -> Balance credited successfully
+                        } else if (type === 'WITHDRAWAL') {
+                            // Extraction already safe-debited and validated beforehand during client simulation engine execution loops
+                            appendTerminalShellLog("SETTLE_CORE", `Extraction payout process approved and completed for target profile hash: [${targetUid}]`);
+                        }
+
+                        update(userBalanceRef, { walletBalance: finalBal }).then(() => {
+                            remove(ref(database, `paymentRequests/${requestId}`)).then(() => {
+                                appendTerminalShellLog("TRANSACTION_OK", `Successfully SIGNED & AUTHORIZED ${type} process tracking pipeline for amount volume: ₹${amount}.`, false);
+                            });
+                        });
+                    }
+                });
+            } else {
+                // IF REJECTED MATRIX RESOLUTION PATHWAY
+                if (type === 'WITHDRAWAL') {
+                    // SAFE TRANSACTION AUTOMATED BACKTRACK REFUND SYSTEM LAYER LOGIC
+                    get(userBalanceRef).then((snap) => {
+                        if (snap.exists()) {
+                            let currentBal = parseFloat(snap.val().walletBalance || 0);
+                            let restoredRefundBalancePoolValue = currentBal + parseFloat(amount); // Safe fallback refund logic loop execution point
+                            update(userBalanceRef, { walletBalance: restoredRefundBalancePoolValue }).then(() => {
+                                appendTerminalShellLog("TRANSACTION_ROLLBACK", `Withdrawal validation rejected. Safe-locked buffer value layer [₹${amount}] returned back to user registry node.`, "warn");
+                            });
+                        }
+                    });
+                }
+                remove(ref(database, `paymentRequests/${requestId}`)).then(() => {
+                    appendTerminalShellLog("TRANSACTION_VOID", `REJECTED/CANCELLED financial ledger verification request block track: [${requestId}]`, true);
+                });
+            }
+        };
+
+        // ==========================================================================
+        // GAME INTERCEPTORS EXECUTION MATRIX OVERRIDES FUNCTIONS ARRAY
         // ==========================================================================
         window.forceNextFastParityColorResult = function(color) {
             update(ref(database, 'gameControls'), { fastparityOverride: color }).then(() => {
-                appendTerminalShellLog("OVERRIDE", `FastParity execution matrix set to target color field -> ${color}`);
+                appendTerminalShellLog("OVERRIDE", `FastParity alignment target forced to configuration value color: -> ${color}`);
             });
         };
 
         window.lockNextAviatorCrashMultiplierPoint = function() {
             const val = parseFloat(document.getElementById('aviatorMultiplierInputField').value);
             if (isNaN(val) || val < 1.0) {
-                appendTerminalShellLog("ERROR", "Invalid input matrix. Aviator payload values must cross 1.00x base limit.", true);
+                appendTerminalShellLog("ERROR", "Aviator target curve boundary parameter must pass base 1.00x values.", true);
                 return;
             }
             update(ref(database, 'gameControls'), { aviatorOverrideMultiplier: val }).then(() => {
                 document.getElementById('aviatorMultiplierInputField').value = "";
-                appendTerminalShellLog("OVERRIDE", `Aviator flight parameter interceptor loaded successfully with threshold factor: ${val}x`);
+                appendTerminalShellLog("OVERRIDE", `Aviator flight path target parameter interceptor locked boundary array: ${val}x`);
+            });
+        };
+
+        window.lockNextDiceOutcomeNumber = function() {
+            const val = parseInt(document.getElementById('diceOverrideInputField').value);
+            if (isNaN(val) || val < 0 || val > 99) {
+                appendTerminalShellLog("ERROR", "Dice data matrix shift index parameters out of legal scope bounds (0-99).", true);
+                return;
+            }
+            update(ref(database, 'gameControls'), { diceOverrideNumber: val }).then(() => {
+                document.getElementById('diceOverrideInputField').value = "";
+                appendTerminalShellLog("OVERRIDE", `Dice outcome parameter metrics forced alignment layer -> [${val}]`);
+            });
+        };
+
+        window.lockMinesSafeIndicesPattern = function() {
+            const pattern = document.getElementById('minesOverrideInputField').value.trim();
+            if (pattern === "") {
+                appendTerminalShellLog("ERROR", "Mines safe-coordinate matrix data strings are blank.", true);
+                return;
+            }
+            update(ref(database, 'gameControls'), { minesSafeIndices: pattern }).then(() => {
+                document.getElementById('minesOverrideInputField').value = "";
+                appendTerminalShellLog("OVERRIDE", `Safe cell stream arrays successfully mapped to active minefield: [${pattern}]`);
+            });
+        };
+
+        window.forceNextWheelSectorOutcome = function(sector) {
+            update(ref(database, 'gameControls'), { wheelOverrideSector: sector }).then(() => {
+                appendTerminalShellLog("OVERRIDE", `Wheel rotation driver axis tracking locked alignment segment -> ${sector}`);
+            });
+        };
+
+        window.resetGameOverride = function(field) {
+            let resetVal = "NONE";
+            if (field === 'aviatorOverrideMultiplier') resetVal = 0;
+            if (field === 'diceOverrideNumber') resetVal = -1;
+
+            update(ref(database, 'gameControls'), { [field]: resetVal }).then(() => {
+                appendTerminalShellLog("RESET", `Field mapping context parameter initialization sequence executed: ${field}`);
             });
         };
 
         // ==========================================================================
-        // DYNAMIC PROFILE VALUE MODIFIERS SECTION HANDLERS
+        // INDIVIDUAL ACCOUNT PROFILE VALUE MODIFIER LOGICAL BLOCKS HANDLERS
         // ==========================================================================
         window.openBalanceControlPanel = function(uid, name, balance) {
             activeTargetUidCache = uid;
@@ -433,7 +870,6 @@
             document.getElementById('balTargetDisplay').value = name;
             document.getElementById('balAmountInput').value = "";
             document.getElementById('balanceModal').classList.add('active');
-            appendTerminalShellLog("MODAL", `Balance configuration terminal opened targeting element: [${uid}]`);
         };
 
         window.executeDatabaseBalanceAdjustment = function() {
@@ -441,20 +877,20 @@
             const operation = document.getElementById('balOperationSelect').value;
 
             if (isNaN(amount) || amount <= 0) {
-                appendTerminalShellLog("ERROR", "Transaction rejected. Amount declaration structures contain corruption errors.", true);
+                appendTerminalShellLog("ERROR", "Transaction payload initialization fault: Specified numerical vector value is corrupt.", true);
                 return;
             }
 
-            let computedFinisedBalance = activeTargetCurrentBalanceCache;
+            let computedFinishedBalance = activeTargetCurrentBalanceCache;
             if (operation === "ADD") {
-                computedFinisedBalance += amount;
+                computedFinishedBalance += amount;
             } else {
-                computedFinisedBalance -= amount;
-                if (computedFinisedBalance < 0) computedFinisedBalance = 0;
+                computedFinishedBalance -= amount;
+                if (computedFinishedBalance < 0) computedFinishedBalance = 0;
             }
 
-            update(ref(database, 'users/' + activeTargetUidCache), { walletBalance: computedFinisedBalance }).then(() => {
-                appendTerminalShellLog("TRANSACTION", `Account [${activeTargetUidCache}] balance updated. Stream modification: ${operation} -> Amount: ₹${amount}`);
+            update(ref(database, 'users/' + activeTargetUidCache), { walletBalance: computedFinishedBalance }).then(() => {
+                appendTerminalShellLog("DB_SYNC", `Wallet balance update synchronized successfully for index [${activeTargetUidCache}] Mode: ${operation} -> Amount: ₹${amount}`);
                 closeControlModal('balanceModal');
             });
         };
@@ -464,33 +900,40 @@
             document.getElementById('noticeTargetDisplay').value = email;
             document.getElementById('noticeTextMessage').value = "";
             document.getElementById('noticeModal').classList.add('active');
-            appendTerminalShellLog("MODAL", `Notification interceptor window triggered for node: [${uid}]`);
         };
 
         window.transmitRemoteWarningNotification = function() {
             const msg = document.getElementById('noticeTextMessage').value.trim();
             if (msg === "") {
-                appendTerminalShellLog("ERROR", "Broadcast packet halted. Null payload value blocks transmission lanes.", true);
+                appendTerminalShellLog("ERROR", "Empty message context: Core notification layer payload compilation rejected.", true);
                 return;
             }
 
             update(ref(database, 'users/' + activeTargetUidCache), { popupMessage: msg }).then(() => {
-                appendTerminalShellLog("BROADCAST", `Push notification tracking string attached directly on user shell -> ${activeTargetUidCache}`);
+                appendTerminalShellLog("BROADCAST_PUSH", `Injected customized notification system packet context layer to destination target uid track -> ${activeTargetUidCache}`);
                 closeControlModal('noticeModal');
             });
         };
 
         window.executeRemoteSessionReset = function(uid) {
-            if (!confirm("Are you sure you want to force reset this active connection track?")) return;
+            if (!confirm("Are you sure you want to force terminate this connection pipe session?")) return;
             update(ref(database, 'users/' + uid), { forceDisconnect: true }).then(() => {
-                appendTerminalShellLog("TERMINATE", `Dispatched remote termination sequence execution signal on address node: [${uid}]`, true);
+                appendTerminalShellLog("INTERCEPT_KILL", `Dispatched remote session kill termination execution code instruction onto address block node: [${uid}]`, true);
             });
         };
 
         window.toggleAccountBanRestriction = function(uid, currentBanState) {
-            if (!confirm(currentBanState ? "Restore account status parameters?" : "Completely block this user token node?")) return;
-            update(ref(database, 'users/' + uid), { isBlocked: !currentBanState }).then(() => {
-                appendTerminalShellLog("SECURITY", `Ban status verification flag inverted for account hash identifier: [${uid}] -> State: ${!currentBanState}`, true);
+            if (!confirm(currentBanState ? "Restore full standard security authorization clearances?" : "Completely invalidate and blacklist this user account profile token node?")) return;
+            
+            // If we are unbanning, also ensure forceDisconnect is cleared out safely
+            let updates = { isBlocked: !currentBanState };
+            if(currentBanState === true) {
+                updates.forceDisconnect = false;
+                updates.popupMessage = "";
+            }
+
+            update(ref(database, 'users/' + uid), updates).then(() => {
+                appendTerminalShellLog("SECURITY_MATRIX", `Account ban authentication restrictions flag state inverted onto user hash identifier: [${uid}] -> New Flag State Value: ${!currentBanState}`, true);
             });
         };
 
@@ -499,7 +942,7 @@
             activeTargetUidCache = null;
         };
 
-        // Trigger bootstrap initialization maps
+        // RUN MASTER INITIALIZATION HANDSHAKE ENGINE STACKS
         startLiveDatabaseTableListener();
     </script>
 </body>

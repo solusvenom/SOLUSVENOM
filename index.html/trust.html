@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venom Terminal - Trust & Security Deck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. MASTER GLASS DESIGN SYSTEM & NEON MATRIX ENGINE
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #06090e 0%, #010204 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        /* Ambient Venom Neon Aura Elements */
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.15; }
+        .orb-1 { width: 500px; height: 500px; background: #39FF14; top: -15%; left: -10%; }
+        .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom: -10%; right: -10%; }
+
+        /* Structural Glassmorphism Framework */
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(3, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.95); border-radius: 36px; }
+
+        /* Real-time Dynamic Shimmer Scanning Reflection */
+        .premium-glass::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg); animation: shimmerEffect 7s infinite ease-in-out; pointer-events: none;
+        }
+        @keyframes shimmerEffect { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        /* ==========================================================================
+           2. HEADER HEADER CONSOLE STRIP
+           ========================================================================== */
+        .deck-header {
+            padding: 45px 24px 15px 24px;
+            display: flex; align-items: center; gap: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 10;
+        }
+        .back-node-btn { color: rgba(255,255,255,0.5); font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        .back-node-btn:hover { color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
+        .deck-header h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+
+        /* ==========================================================================
+           3. CORE SCROLL CONSOLE ENGINE & SHIELD HERO COMPONENT
+           ========================================================================== */
+        .content-scroll { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 140px; z-index: 10; display: flex; flex-direction: column; gap: 24px; }
+
+        .trust-hero-shield {
+            padding: 24px; border-radius: 24px; background: rgba(57, 255, 20, 0.01);
+            border: 1px solid rgba(57, 255, 20, 0.1); text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 14px;
+        }
+        .shield-icon-glow {
+            width: 64px; height: 64px; border-radius: 20px; background: rgba(57, 255, 20, 0.05);
+            border: 1px solid rgba(57, 255, 20, 0.2); display: flex; justify-content: center;
+            align-items: center; color: #39FF14; font-size: 1.8rem; text-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+        }
+        .trust-hero-shield h4 { font-size: 1.05rem; font-weight: 700; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
+        .trust-hero-shield p { font-size: 0.75rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        /* Matrix Telemetry Status Logs List Grid */
+        .telemetry-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .telemetry-node-card {
+            padding: 14px; border-radius: 16px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 12px;
+        }
+        .telemetry-node-card i { font-size: 1.1rem; color: #7c3aed; }
+        .telemetry-node-card.green-variant i { color: #39FF14; }
+        .node-meta-strings small { font-size: 0.58rem; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block; letter-spacing: 0.5px; }
+        .node-meta-strings span { font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; font-weight: bold; color: #fff; margin-top: 1px; display: block; }
+
+        .block-header-title { font-size: 0.7rem; text-transform: uppercase; color: rgba(255,255,255,0.3); letter-spacing: 1px; font-weight: bold; border-left: 2px solid #39FF14; padding-left: 8px; }
+
+        /* ==========================================================================
+           4. ACCORDION PROTOCOL DYNAMIC COMPONENT STRUCTURES
+           ========================================================================== */
+        .accordion-wrapper-deck { display: flex; flex-direction: column; gap: 12px; }
+        .accordion-node {
+            border-radius: 16px; background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.04); overflow: hidden; transition: all 0.3s ease;
+        }
+        .accordion-trigger-bar {
+            padding: 16px; display: flex; justify-content: space-between;
+            align-items: center; cursor: pointer; background: rgba(0,0,0,0.1); transition: 0.2s;
+        }
+        .accordion-trigger-bar:hover { background: rgba(255,255,255,0.02); }
+        .trigger-left-block { display: flex; align-items: center; gap: 12px; }
+        .trigger-left-block i { color: rgba(255,255,255,0.4); font-size: 0.95rem; }
+        .trigger-left-block h5 { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.85); }
+        
+        .arrow-indicator-icon { font-size: 0.75rem; color: rgba(255,255,255,0.3); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Expansion Core States Engine Classes styling CSS */
+        .accordion-content-panel {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0,0,0,0.2); border-top: 0 solid rgba(255,255,255,0.04);
+        }
+        .inner-content-text { padding: 16px; font-size: 0.72rem; color: rgba(255,255,255,0.5); line-height: 1.6; display: flex; flex-direction: column; gap: 10px; }
+        .inner-content-text b { color: #39FF14; font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; }
+
+        .accordion-node.open { border-color: rgba(57, 255, 20, 0.15); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .accordion-node.open .arrow-indicator-icon { transform: rotate(180deg); color: #39FF14; }
+        .accordion-node.open .accordion-content-panel { border-top-width: 1px; }
+
+        /* Cryptographic Footer License Trace Section */
+        .crypto-hash-footer {
+            padding: 16px; border-radius: 16px; background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.03); text-align: center;
+        }
+        .crypto-hash-footer small { font-size: 0.58rem; text-transform: uppercase; color: rgba(255,255,255,0.3); letter-spacing: 0.8px; display: block; }
+        .crypto-hash-footer p { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: #39FF14; margin-top: 6px; word-break: break-all; opacity: 0.8; letter-spacing: 0.5px; }
+
+        /* ==========================================================================
+           5. FLOATING CYBER CURVED NAVIGATION DECK BAR
+           ========================================================================== */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 86px;
+            border-radius: 32px 32px 0 0; display: flex; justify-content: space-around;
+            align-items: center; z-index: 100; padding: 0 10px 12px 10px;
+            background: linear-gradient(180deg, rgba(11, 15, 24, 0.98) 0%, rgba(4, 6, 10, 0.99) 100%);
+            border-top: 1px solid rgba(57, 255, 20, 0.15);
+            box-shadow: 0 -15px 35px rgba(0,0,0,0.8);
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; gap: 5px; 
+            color: rgba(255,255,255,0.32); text-decoration: none; transition: all 0.3s ease;
+            position: relative; flex: 1; text-align: center;
+        }
+        .nav-item i { font-size: 1.25rem; transition: transform 0.2s; }
+        .nav-item span { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+        
+        .nav-center {
+            position: relative; transform: translateY(-26px);
+            width: 66px; height: 66px; background: #020304; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid rgba(255,255,255,0.12); box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+            color: rgba(255,255,255,0.4) !important; flex: none; z-index: 110;
+        }
+        .nav-center i { font-size: 1.5rem !important; }
+        
+        .nav-item.active { color: #39FF14; text-shadow: 0 0 10px rgba(57,255,20,0.2); }
+        .nav-item.active span { color: #ffffff; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="phone-wrapper premium-glass">
+        
+        <header class="deck-header">
+            <a href="main.html" class="back-node-btn"><i class="fa-solid fa-arrow-left-long"></i></a>
+            <h3>Trust Protocols Console</h3>
+        </header>
+
+        <div class="content-scroll">
+
+            <div class="trust-hero-shield premium-glass">
+                <div class="shield-icon-glow">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h4>End-To-End Security Operational</h4>
+                <p>Venom software systems architecture operates under strict cryptographic ledger verification rules. Your terminal logs are isolated on hardware layer memory buffers.</p>
+            </div>
+
+            <div class="telemetry-status-grid">
+                <div class="telemetry-node-card green-variant">
+                    <i class="fa-solid fa-circle-nodes"></i>
+                    <div class="node-meta-side node-meta-strings">
+                        <small>Network Layer</small>
+                        <span id="displayLatency">18 ms</span>
+                    </div>
+                </div>
+                <div class="telemetry-node-card">
+                    <i class="fa-solid fa-lock"></i>
+                    <div class="node-meta-side node-meta-strings">
+                        <small>Encryption Type</small>
+                        <span>AES-256 BIT</span>
+                    </div>
+                </div>
+            </div>
+
+            <span class="block-header-title">System Legal & Rules Accordions</span>
+
+            <div class="accordion-wrapper-deck">
+                
+                <div class="accordion-node">
+                    <div class="accordion-trigger-bar" onclick="toggleSystemAccordionNodeElement(this)">
+                        <div class="trigger-left-block">
+                            <i class="fa-solid fa-building-shield"></i>
+                            <h5>Terms of Service Agreement</h5>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-indicator-icon"></i>
+                    </div>
+                    <div class="accordion-content-panel">
+                        <div class="inner-content-text">
+                            <p><b>1. Terminal Authorization:</b> Users are explicitly prohibited from configuring multiple clone execution IDs from single hardware configurations.</p>
+                            <p><b>2. Anti-Exploit Enforcement:</b> Automated execution vectors, script injections, or balance-altering bugs manipulation triggers will instantly lock core user structures permanently.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-node">
+                    <div class="accordion-trigger-bar" onclick="toggleSystemAccordionNodeElement(this)">
+                        <div class="trigger-left-block">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <h5>Privacy & Data Isolation Protocol</h5>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-indicator-icon"></i>
+                    </div>
+                    <div class="accordion-content-panel">
+                        <div class="inner-content-text">
+                            <p><b>Data Minimization:</b> Banking settlement data values are masked natively using cryptographic hashing before being sent to the Firebase backend clusters.</p>
+                            <p><b>Peripheral Safety:</b> The app does not index internal contacts arrays or physical GPS coordinates layers. Your node data trace routes remain completely sandboxed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-node">
+                    <div class="accordion-trigger-bar" onclick="toggleSystemAccordionNodeElement(this)">
+                        <div class="trigger-left-block">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            <h5>Fairplay Clearance Operations</h5>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-indicator-icon"></i>
+                    </div>
+                    <div class="accordion-content-panel">
+                        <div class="inner-content-text">
+                            <p><b>Reward Allocation Stability:</b> All financial assets earned through referrals or manual deposits follow automated settlement checks loops blocks.</p>
+                            <p><b>Audit Intervals:</b> Master Admin consoles run validation scans every 24 sequence intervals to verify pending asset withdrawals and release clean pipeline packets.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <span class="block-header-title">Hardware Identity Signature</span>
+
+            <div class="crypto-hash-footer">
+                <small>Terminal Core Security Hash Signature Key</small>
+                <p id="cryptoSignatureTraceText">FETCHING_INTEGRITY_STREAM_HASH_TOKEN...</p>
+            </div>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Profile</span>
+            </a>
+            <a href="wallet.html" class="nav-item">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="main.html" class="nav-item nav-center">
+                <i class="fa-solid fa-circle-dot"></i>
+            </a>
+            <a href="refer.html" class="nav-item">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Refer</span>
+            </a>
+            <a href="trust.html" class="nav-item active">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Trust</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Global Firebase Configuration Profile Mapping
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Security Core Session Verification Context Checkers
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                generateDynamicSystemIntegritySignatureHash(user.uid);
+                initializeLiveNetworkTelemetryMeter();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        // PURE VANILLA JS ACCORDION EXTENSION EXPANSION CONTROLLER
+        window.toggleSystemAccordionNodeElement = function(elementTriggerNode) {
+            const currentAccordionBlockNode = elementTriggerNode.parentElement;
+            const targetContentPanelArea = currentAccordionBlockNode.querySelector('.accordion-content-panel');
+
+            // Detect matching active state status classes strings
+            const isCurrentlyExpanded = currentAccordionBlockNode.classList.contains('open');
+
+            // Close all active open adjacent nodes blocks layers inside view matrix
+            document.querySelectorAll('.accordion-node').forEach((nodeItem) => {
+                nodeItem.classList.remove('open');
+                nodeItem.querySelector('.accordion-content-panel').style.maxHeight = null;
+            });
+
+            // If target node was not open, trigger max height metrics attributes dynamically
+            if (!isCurrentlyExpanded) {
+                currentAccordionBlockNode.classList.add('open');
+                targetContentPanelArea.style.maxHeight = targetContentPanelArea.scrollHeight + "px";
+            }
+        };
+
+        // CRYPTO HIGH FREQUENCY KEY SYSTEM SIMULATION STRING GENERATOR
+        function generateDynamicSystemIntegritySignatureHash(userUidString) {
+            const systemConstantSeed = "VN_SYSTEM_INTEGRITY_V2__";
+            let numericBufferArray = 0;
+
+            for (let i = 0; i < userUidString.length; i++) {
+                numericBufferArray += userUidString.charCodeAt(i);
+            }
+
+            const mathematicallyDerivedToken = Math.sin(numericBufferArray).toString(16).substring(4, 14).toUpperCase();
+            const finalizedSignatureHashString = btoa(systemConstantSeed + userUidString.substring(0, 6) + "_" + mathematicallyDerivedToken).substring(0, 32).toUpperCase();
+            
+            document.getElementById('cryptoSignatureTraceText').innerText = "SHA256//" + finalizedSignatureHashString;
+        }
+
+        // SIMULATION REALTIME NETWORK LATENCY LOOP PACKETS METERS
+        function initializeLiveNetworkTelemetryMeter() {
+            const latencyElementNode = document.getElementById('displayLatency');
+            
+            setInterval(() => {
+                // Generate microsecond baseline structural fluctuation offsets values
+                const pseudoRandomOffsetValue = Math.floor(Math.random() * (28 - 14 + 1)) + 14;
+                latencyElementNode.innerText = pseudoRandomOffsetValue + " ms";
+            }, 4500);
+        }
+    </script>
+</body>
+</html>

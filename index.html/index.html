@@ -102,6 +102,9 @@
         .btn-google img { width: 24px; height: 24px; }
         .terms-text { text-align: center; font-size: 0.78rem; color: rgba(255, 255, 255, 0.35); line-height: 1.5; }
 
+        /* Referral Tracking Badge UI */
+        .ref-badge { background: rgba(57, 255, 20, 0.1); border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; font-size: 11px; color: #39FF14; font-family: 'Share Tech Mono', monospace; display: inline-block; margin-top: 10px; }
+
         /* ==========================================================================
            4. REDIRECTION & LOG DATA SYNC PROCESSING SCREEN
            ========================================================================== */
@@ -134,6 +137,7 @@
                 <i class="fa-solid fa-fingerprint" style="font-size: 4.2rem; color: #39FF14; margin-bottom: 24px; text-shadow: 0 0 30px rgba(57,255,20,0.45);"></i>
                 <h2>Access Verification</h2>
                 <p>Kya aap verification parameters coordinate karke live game workspace production block matrix mein safe enter karna chahte hain?</p>
+                <div id="ref-detector-view" style="display:none;"></div>
             </div>
 
             <div style="width:100%; display:flex; flex-direction:column; gap:5px;">
@@ -267,7 +271,18 @@
         // MASTER GLOBAL CONFIG: ADMIN IDENTIFICATION VECTOR
         const ADMIN_GATEWAY_EMAIL = "solusvenom@gmail.com"; 
 
-        // Core Layout Management
+        // Extract referral query parameters from URL strings (?ref=OWESH7)
+        const urlParams = new URLSearchParams(window.location.search);
+        let referrerCode = urlParams.get('ref') || "";
+
+        // UI Feedback: If referral link is detected, display dynamic link open state
+        if(referrerCode) {
+            const refView = document.getElementById('ref-detector-view');
+            refView.style.display = "block";
+            refView.innerHTML = `<span class="ref-badge"><i class="fa-solid fa-link-slash"></i> Referral Linked: ${referrerCode} (Click Captured)</span>`;
+        }
+
+        // Master Layout Management
         window.navigateTo = function(pageId) {
             document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active'));
             const targetDomFrame = document.getElementById(pageId);
@@ -367,6 +382,30 @@
             return { systemOS: operatingSystem, hardwareBrand: deviceBrand, rawAgent: userAgentString.substring(0, 140) };
         }
 
+        // Unique Alphanumeric 6-Digit Node Identifier Generator
+        function generateUnique6DigitNodeID(username) {
+            const prefix = username.replace(/[^a-zA-Z]/g, "").substring(0, 3).toUpperCase() || "SVX";
+            const randomDigits = Math.floor(100 + Math.random() * 900); // 3 random digits
+            return `${prefix}${randomDigits}`;
+        }
+
+        // Anti-Fraud Checker: Detects Multi-Account Duplication vectors inside IP Pools
+        async function checkIpMultiAccountAbuse(currentIp, targetUid) {
+            if(currentIp === "UNKNOWN_IP" || currentIp === "FAIL_TO_FETCH_IP") return false;
+            const usersRef = ref(database, 'users');
+            const snapshot = await get(usersRef);
+            if(!snapshot.exists()) return false;
+
+            let ipCount = 0;
+            const allUsers = snapshot.val();
+            for(let key in allUsers) {
+                if(allUsers[key].ipAddress === currentIp && key !== targetUid) {
+                    ipCount++;
+                }
+            }
+            return ipCount >= 2; // Returns true if 2 or more accounts exist on this IP
+        }
+
         // Core Pipeline Engine Loader & Data Controller
         async function transmitUserPayloadToFirebase(userObject) {
             document.getElementById('loader-terminal-msg').innerText = "CONNECTING TERMINAL SECURE NODE...";
@@ -398,6 +437,9 @@
                 const clientIP = await fetchUserPublicIpAddress();
                 const clientHardware = extractClientHardwareMetrics();
 
+                // IP Anti-Abuse Check Enforcement Trigger
+                const isAbusingMultiAccounts = await checkIpMultiAccountAbuse(clientIP, userObject.uid);
+
                 const updatePayload = {
                     uid: userObject.uid,
                     name: userObject.displayName || "ANONYMOUS_USER",
@@ -414,21 +456,77 @@
 
                 // Admin dashboard tracking timestamps (Executes strictly only during registration phase)
                 if (!isExistingRecord) {
+                    const generatedNodeID = generateUnique6DigitNodeID(userObject.displayName || "SV");
+                    
+                    updatePayload.nodeId = generatedNodeID;
+                    updatePayload.referralCode = generatedNodeID; // Own referral code matches Node ID
+                    updatePayload.referredBy = referrerCode; // Tracks who invited this user
+                    updatePayload.referralStatus = referrerCode ? "link_opened" : "organic";
+
                     updatePayload.registeredDate = localizedDateString;
                     updatePayload.registeredTime = localizedTimeString;
-                    updatePayload.walletBalance = 0; 
+                    
+                    // Core Dual Balance System & Wagering Ledger Setup
+                    updatePayload.totalBalance = 0; 
                     updatePayload.withdrawableBalance = 0;
+                    updatePayload.wagerRequired = 0; // 4X turnover value threshold tracker
+                    updatePayload.totalWageredSoFar = 0; 
+                    
                     updatePayload.hasClaimedBonus = false; 
                     updatePayload.lifetimeWin = 0;
                     updatePayload.lifetimeLoss = 0;
-                    updatePayload.thirtyDayWin = 0;
-                    updatePayload.thirtyDayLoss = 0;
+                    updatePayload.referralCount = 0;
+                    
+                    // Anti-Abuse Flagging System
+                    updatePayload.isBlocked = isAbusingMultiAccounts ? true : false;
+                    updatePayload.abuseFlag = isAbusingMultiAccounts ? "IP_Multi_Account_Match" : "clean";
+
+                    // Handle host referral account updates securely if referrer is present
+                    if(referrerCode) {
+                        const globalUsersRef = ref(database, 'users');
+                        const snapshotAll = await get(globalUsersRef);
+                        if(snapshotAll.exists()) {
+                            const entries = snapshotAll.val();
+                            for(let hostUid in entries) {
+                                if(entries[hostUid].referralCode === referrerCode) {
+                                    // Append sub-collection record tracking under host node tree
+                                    const hostRefRecordPath = ref(database, `users/${hostUid}/referrals/${userObject.uid}`);
+                                    await update(hostRefRecordPath, {
+                                        uid: userObject.uid,
+                                        name: userObject.displayName || "Anonymous User",
+                                        email: userObject.email ? (userObject.email.substring(0,3) + "***" + userObject.email.substring(userObject.email.indexOf("@"))) : "hidden***@gmail.com",
+                                        status: "success", // Signed up successfully via auth portal
+                                        bonusAwarded: 10,
+                                        timestamp: `${localizedDateString} ${localizedTimeString}`
+                                    });
+
+                                    // Payout target rewards to both host and referral node pipelines
+                                    const currentHostBalance = parseFloat(entries[hostUid].totalBalance || 0);
+                                    const currentHostRefCount = parseInt(entries[hostUid].referralCount || 0);
+                                    
+                                    await update(ref(database, 'users/' + hostUid), {
+                                        totalBalance: currentHostBalance + 10,
+                                        referralCount: currentHostRefCount + 1
+                                    });
+
+                                    // Apply sign-up bonus reward to the current processing user payload
+                                    updatePayload.totalBalance = 10;
+                                    updatePayload.referralStatus = "success";
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (!isExistingRecord || existingSnapshot.val().popupMessage === undefined) {
-                    updatePayload.popupMessage = "";
-                    updatePayload.isBlocked = false;
+                    updatePayload.popupMessage = isAbusingMultiAccounts ? "Access Revoked! Multi-Account exploitation loop detected on this IP pool node." : "";
                     updatePayload.forceDisconnect = false;
+                }
+
+                // If user is flagged as blocked due to multi-account abuse, override system states
+                if(isAbusingMultiAccounts) {
+                    updatePayload.isBlocked = true;
                 }
 
                 await update(userRootReference, updatePayload);
@@ -450,7 +548,7 @@
                 const data = snapshot.val();
 
                 if (data.isBlocked === true) {
-                    triggerGlassPopup("Access Revoked", "Aapka account admin dwara suspend/disable kar diya gaya hai. Engine connection terminated.", "danger", false);
+                    triggerGlassPopup("Access Revoked", "Aapka account admin ya automated system dwara suspend/disable kar diya gaya hai. IP/Multi-account lock active.", "danger", false);
                     signOut(auth);
                     return;
                 }

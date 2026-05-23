@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venom Terminal - Financial Deck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. MASTER GLASS DESIGN SYSTEM & NEON GLOW ENGINE
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #06090e 0%, #010204 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        /* Ambient Venom Neon Aura Elements */
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.15; }
+        .orb-1 { width: 500px; height: 500px; background: #39FF14; top: -15%; left: -10%; }
+        .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom: -10%; right: -10%; }
+
+        /* Structural Glassmorphism Framework */
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(3, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.95); border-radius: 36px; }
+
+        /* Real-time Dynamic Shimmer Scanning Reflection */
+        .premium-glass::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg); animation: shimmerEffect 7s infinite ease-in-out; pointer-events: none;
+        }
+        @keyframes shimmerEffect { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        /* ==========================================================================
+           2. HEADER INTEGRATION STRIP
+           ========================================================================== */
+        .deck-header {
+            padding: 45px 24px 15px 24px;
+            display: flex; align-items: center; gap: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 10;
+        }
+        .back-node-btn { color: rgba(255,255,255,0.5); font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        .back-node-btn:hover { color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
+        .deck-header h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+
+        /* ==========================================================================
+           3. BALANCE MONITOR PANEL (TELEMETRY STRIP)
+           ========================================================================== */
+        .balance-monitor-panel {
+            padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 10;
+        }
+        .balance-tile { padding: 16px; border-radius: 20px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); }
+        .balance-tile small { font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 4px; }
+        .balance-tile h2 { font-family: 'Share Tech Mono', monospace; font-size: 1.55rem; font-weight: 800; color: #ffffff; }
+        .tile-withdrawable { border-color: rgba(57, 255, 20, 0.12); background: rgba(57, 255, 20, 0.01); }
+        .tile-withdrawable h2 { color: #39FF14; text-shadow: 0 0 12px rgba(57, 255, 20, 0.2); }
+
+        /* ==========================================================================
+           4. SEGMENT TAB CONTROL NAVIGATION CONTROLLERS
+           ========================================================================== */
+        .segment-tab-strip { display: flex; padding: 16px 24px 0 24px; gap: 8px; z-index: 10; }
+        .tab-trigger {
+            flex: 1; padding: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; border: none; background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.4);
+            border-radius: 14px; cursor: pointer; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.04);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .tab-trigger.active { background: rgba(57, 255, 20, 0.08); color: #39FF14; border-color: rgba(57, 255, 20, 0.2); box-shadow: 0 0 15px rgba(57, 255, 20, 0.05); }
+
+        /* ==========================================================================
+           5. SCROLLABLE CONTAINER ENGINE & SUB-PANELS LAYOUT
+           ========================================================================== */
+        .content-scroll { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 140px; z-index: 10; }
+        .wallet-sub-panel { display: none; flex-direction: column; gap: 20px; }
+        .wallet-sub-panel.active { display: flex; }
+
+        /* Interactive Inputs & Input Nodes Form Styles */
+        .input-group-node { display: flex; flex-direction: column; gap: 8px; }
+        .input-group-node label { font-size: 0.68rem; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 1px; font-weight: 600; }
+        .input-wrapper-field { position: relative; display: flex; align-items: center; }
+        .input-wrapper-field i { position: absolute; left: 16px; color: rgba(255,255,255,0.3); font-size: 1rem; }
+        .input-wrapper-field input {
+            width: 100%; padding: 16px 16px 16px 46px; background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; color: #fff;
+            font-size: 1.1rem; font-family: 'Share Tech Mono', monospace; font-weight: bold; outline: none; transition: 0.2s;
+        }
+        .input-wrapper-field input:focus { border-color: #39FF14; box-shadow: 0 0 15px rgba(57, 255, 20, 0.1); }
+
+        /* Token Matrix Fast Fill System Buttons Grid */
+        .token-quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .token-chip {
+            padding: 12px 6px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 700;
+            cursor: pointer; text-align: center; font-family: 'Share Tech Mono', monospace; transition: 0.2s;
+        }
+        .token-chip:hover { border-color: #39FF14; color: #39FF14; background: rgba(57, 255, 20, 0.02); }
+
+        /* Core Dynamic Operations Form Processing Trigger Button */
+        .btn-execution-gate {
+            background: #39FF14; color: #000; font-family: 'Share Tech Mono', monospace;
+            padding: 16px; border-radius: 16px; text-transform: uppercase; font-weight: 800;
+            font-size: 0.9rem; text-align: center; border: none; cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px;
+        }
+        .btn-execution-gate:hover { box-shadow: 0 0 25px rgba(57, 255, 20, 0.35); transform: translateY(-1px); }
+        .btn-withdraw-variant { background: #7c3aed; color: #fff; }
+        .btn-withdraw-variant:hover { box-shadow: 0 0 25px rgba(124, 58, 237, 0.4); }
+
+        /* Notice Warnings & Cyber Bullet Text Area Layouts */
+        .terminal-notice-box { padding: 14px 18px; border-radius: 16px; background: rgba(234, 179, 8, 0.02); border: 1px solid rgba(234, 179, 8, 0.15); display: flex; gap: 12px; }
+        .terminal-notice-box i { color: #eab308; font-size: 1.1rem; margin-top: 2px; }
+        .terminal-notice-box p { font-size: 0.72rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        /* Ledger Transactions Framework Stream Architecture UI */
+        .transaction-stream-ledger { display: flex; flex-direction: column; gap: 12px; }
+        .ledger-row-card {
+            padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center;
+        }
+        .ledger-meta-info { display: flex; align-items: center; gap: 14px; }
+        .ledger-icon-node { width: 40px; height: 40px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1rem; }
+        
+        .type-deposit-node { background: rgba(57, 255, 20, 0.05); color: #39FF14; border: 1px solid rgba(57, 255, 20, 0.1); }
+        .type-withdraw-node { background: rgba(124, 58, 237, 0.05); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.1); }
+
+        .ledger-text-strings h5 { font-size: 0.82rem; font-weight: 700; color: #fff; }
+        .ledger-text-strings small { font-size: 0.62rem; color: rgba(255,255,255,0.4); display: block; margin-top: 2px; }
+        
+        .ledger-right-metrics { text-align: right; }
+        .ledger-right-metrics span { font-family: 'Share Tech Mono', monospace; font-size: 0.95rem; font-weight: 700; display: block; }
+        .ledger-right-metrics small { font-size: 0.6rem; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 4px; }
+        
+        .status-success { background: rgba(57, 255, 20, 0.08); color: #39FF14; }
+        .status-pending { background: rgba(234, 179, 8, 0.08); color: #eab308; }
+        .status-failed { background: rgba(255, 0, 85, 0.08); color: #ff0055; }
+
+        .empty-ledger-box { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.3); font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .empty-ledger-box i { font-size: 2.2rem; color: rgba(255,255,255,0.1); }
+
+        /* ==========================================================================
+           6. INTERCEPTOR DYNAMIC POPUP MODAL TERMINAL DISPLAY
+           ========================================================================== */
+        .popup-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 3, 5, 0.94); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); z-index: 9999; display: none; 
+            justify-content: center; align-items: center; padding: 35px;
+        }
+        .popup-overlay.active { display: flex; }
+        .popup-card {
+            width: 100%; padding: 40px 25px; border-radius: 28px; text-align: center;
+            border: 1px solid #39FF14 !important; background: #040705;
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.12);
+        }
+        .popup-card.alert-danger { border-color: #ff0055 !important; background: #090405; box-shadow: 0 0 40px rgba(255, 0, 85, 0.12); }
+        .popup-card.alert-warning { border-color: #eab308 !important; background: #080703; box-shadow: 0 0 40px rgba(234,179,8,0.12); }
+        
+        .popup-card i { font-size: 3.4rem; color: #39FF14; margin-bottom: 18px; text-shadow: 0 0 20px rgba(57, 255, 20, 0.3); }
+        .popup-card.alert-danger i { color: #ff0055; text-shadow: 0 0 20px rgba(255, 0, 85, 0.3); }
+        .popup-card.alert-warning i { color: #eab308; text-shadow: 0 0 20px rgba(234,179,8,0.3); }
+        
+        .popup-card h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Share Tech Mono', monospace; }
+        .popup-card p { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.5; }
+        
+        .btn-action { background: #39FF14; color: #000; border: none; padding: 15px; border-radius: 16px; width: 100%; font-weight: 700; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-family: 'Share Tech Mono', monospace; }
+        .btn-action:hover { box-shadow: 0 0 20px rgba(57, 255, 20, 0.3); }
+        .btn-danger-action { background: #ff0055; color: #fff; }
+        .btn-danger-action:hover { box-shadow: 0 0 20px rgba(255, 0, 85, 0.3); }
+
+        /* ==========================================================================
+           7. FLOATING CYBER HALF-CIRCLE CURVED NAVIGATION DECK BAR
+           ========================================================================== */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 86px;
+            border-radius: 32px 32px 0 0; display: flex; justify-content: space-around;
+            align-items: center; z-index: 100; padding: 0 10px 12px 10px;
+            background: linear-gradient(180deg, rgba(11, 15, 24, 0.98) 0%, rgba(4, 6, 10, 0.99) 100%);
+            border-top: 1px solid rgba(57, 255, 20, 0.15);
+            box-shadow: 0 -15px 35px rgba(0,0,0,0.8);
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; gap: 5px; 
+            color: rgba(255,255,255,0.32); text-decoration: none; transition: all 0.3s ease;
+            position: relative; flex: 1; text-align: center;
+        }
+        .nav-item i { font-size: 1.25rem; transition: transform 0.2s; }
+        .nav-item span { font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+        .nav-item:hover i { transform: translateY(-2px); color: rgba(255,255,255,0.8); }
+        
+        .nav-center {
+            position: relative; transform: translateY(-26px);
+            width: 66px; height: 66px; background: #020304; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid rgba(255,255,255,0.12); box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+            color: rgba(255,255,255,0.4) !important; flex: none; z-index: 110;
+        }
+        .nav-center i { font-size: 1.5rem !important; }
+        
+        .nav-item.active { color: #39FF14; text-shadow: 0 0 10px rgba(57,255,20,0.2); }
+        .nav-item.active span { color: #ffffff; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div id="walletAlertModal" class="popup-overlay">
+        <div id="alertCardFrame" class="popup-card premium-glass">
+            <i id="alertIcon" class="fa-solid fa-triangle-exclamation"></i>
+            <h2 id="alertTitle">System Warning</h2>
+            <p id="alertDesc">Processing operation parameters check matching errors logs.</p>
+            <button class="btn-action" onclick="dismissWalletModalPopup()">Acknowledge Logs</button>
+        </div>
+    </div>
+
+    <div class="phone-wrapper premium-glass">
+        
+        <header class="deck-header">
+            <a href="main.html" class="back-node-btn"><i class="fa-solid fa-arrow-left-long"></i></a>
+            <h3>Financial Control Center</h3>
+        </header>
+
+        <section class="balance-monitor-panel">
+            <div class="balance-tile">
+                <small>Total Balance</small>
+                <h2>₹<span id="displayTotalBal">0.00</span></h2>
+            </div>
+            <div class="balance-tile tile-withdrawable">
+                <small>Withdrawable</small>
+                <h2>₹<span id="displayWithdrawBal">0.00</span></h2>
+            </div>
+        </section>
+
+        <div class="segment-tab-strip">
+            <button class="tab-trigger active" id="tabBtnDeposit" onclick="switchWalletOperationsDeckSegment('DEPOSIT')">Deposit Core</button>
+            <button class="tab-trigger" id="tabBtnWithdraw" onclick="switchWalletOperationsDeckSegment('WITHDRAW')">Withdraw Asset</button>
+            <button class="tab-trigger" id="tabBtnHistory" onclick="switchWalletOperationsDeckSegment('HISTORY')">History Logs</button>
+        </div>
+
+        <div class="content-scroll">
+
+            <div id="panelDeposit" class="wallet-sub-panel active">
+                <div class="input-group-node">
+                    <label>Enter Injection Amount (INR)</label>
+                    <div class="input-wrapper-field">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        <input type="number" id="inputDepositAmt" placeholder="0.00" min="1">
+                    </div>
+                </div>
+
+                <div class="token-quick-grid">
+                    <div class="token-chip" onclick="injectQuickTokenAmountField(100)">+ ₹100</div>
+                    <div class="token-chip" onclick="injectQuickTokenAmountField(500)">+ ₹500</div>
+                    <div class="token-chip" onclick="injectQuickTokenAmountField(1000)">+ ₹1k</div>
+                    <div class="token-chip" onclick="injectQuickTokenAmountField(2000)">+ ₹2k</div>
+                </div>
+
+                <button class="btn-execution-gate" onclick="executeSecureDepositPipelineRequest()">
+                    <i class="fa-solid fa-shield-halved"></i> Proceed via Secured Gateway
+                </button>
+
+                <div class="terminal-notice-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p>Secured data encryption algorithm working in layer. Payments process immediately via microsecond token clusters channels logs sync models.</p>
+                </div>
+            </div>
+
+            <div id="panelWithdraw" class="wallet-sub-panel">
+                <div class="input-group-node">
+                    <label>Extraction Amount (INR)</label>
+                    <div class="input-wrapper-field">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <input type="number" id="inputWithdrawAmt" placeholder="0.00" min="200">
+                    </div>
+                </div>
+
+                <button class="btn-execution-gate btn-withdraw-variant" onclick="executeExtractionWithdrawalProcess()">
+                    <i class="fa-solid fa-building-columns"></i> Transmit Extraction Node
+                </button>
+
+                <div class="terminal-notice-box">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <p>Security Restriction: Minimum clearance vector parameter set to <b>₹200.00</b>. Payout requests processed inside 24 standard systemic network verification intervals.</p>
+                </div>
+            </div>
+
+            <div id="panelHistory" class="wallet-sub-panel">
+                <div id="ledgerTxContainer" class="transaction-stream-ledger">
+                    <div class="empty-ledger-box">
+                        <i class="fa-solid fa-database"></i>
+                        <p>Syncing core matrix ledger records...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Profile</span>
+            </a>
+            <a href="wallet.html" class="nav-item active">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="main.html" class="nav-item nav-center">
+                <i class="fa-solid fa-circle-dot"></i>
+            </a>
+            <a href="refer.html" class="nav-item">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>Refer</span>
+            </a>
+            <a href="trust.html" class="nav-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Trust</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, update, onValue, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Global Firebase Configuration Profile
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUserUid = null;
+        let cachedWithdrawableBal = 0;
+        let userBankDetailsStructureCache = null;
+
+        // Security Core Session Validation
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                connectRealtimeFinancialDataPipeline(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        // LIVE REALTIME PIPELINE DATA SYNC LISTENER
+        function connectRealtimeFinancialDataPipeline(uid) {
+            const userRefPath = ref(database, 'users/' + uid);
+
+            onValue(userRefPath, (snapshot) => {
+                if (!snapshot.exists()) return;
+                const data = snapshot.val();
+
+                // Telemetry Mapping onto UI view fields
+                const targetTotalBal = parseFloat(data.totalBalance || 0);
+                cachedWithdrawableBal = parseFloat(data.withdrawableBalance || 0);
+
+                document.getElementById('displayTotalBal').innerText = targetTotalBal.toFixed(2);
+                document.getElementById('displayWithdrawBal').innerText = cachedWithdrawableBal.toFixed(2);
+
+                // Cache banking reference maps parameters for structural extraction checks
+                userBankDetailsStructureCache = {
+                    holderName: data.holderName || "",
+                    accountNumber: data.accountNumber || "",
+                    ifscCode: data.ifscCode || ""
+                };
+
+                // Inject stream items inside historical matrix logger section
+                renderHistoricalLedgerSheetsStream(data.transactions);
+            });
+        }
+
+        // SEGMENT TAB CONTEXT SWITCH ENGINE SUB LOGIC
+        window.switchWalletOperationsDeckSegment = function(targetSegmentContext) {
+            document.getElementById('panelDeposit').classList.remove('active');
+            document.getElementById('panelWithdraw').classList.remove('active');
+            document.getElementById('panelHistory').classList.remove('active');
+
+            document.getElementById('tabBtnDeposit').classList.remove('active');
+            document.getElementById('tabBtnWithdraw').classList.remove('active');
+            document.getElementById('tabBtnHistory').classList.remove('active');
+
+            if (targetSegmentContext === "DEPOSIT") {
+                document.getElementById('panelDeposit').classList.add('active');
+                document.getElementById('tabBtnDeposit').classList.add('active');
+            } else if (targetSegmentContext === "WITHDRAW") {
+                document.getElementById('panelWithdraw').classList.add('active');
+                document.getElementById('tabBtnWithdraw').classList.add('active');
+            } else if (targetSegmentContext === "HISTORY") {
+                document.getElementById('panelHistory').classList.add('active');
+                document.getElementById('tabBtnHistory').classList.add('active');
+            }
+        };
+
+        // QUICK TOKENS VALUE GENERATOR FILL SUB-FIELD
+        window.injectQuickTokenAmountField = function(tokenAmountValue) {
+            const inputField = document.getElementById('inputDepositAmt');
+            let baseVal = parseFloat(inputField.value) || 0;
+            inputField.value = baseVal + tokenAmountValue;
+        };
+
+        // SECURED GATEWAY DEPOSIT SUBMISSION VECTOR HANDLER
+        window.executeSecureDepositPipelineRequest = function() {
+            const amtVal = parseFloat(document.getElementById('inputDepositAmt').value);
+            
+            if (isNaN(amtVal) || amtVal <= 0) {
+                triggerWalletNoticeModalPopup("Invalid Vector Input", "Please enter a positive numeric ledger amount to initialize payment tracks sequence.", "warning");
+                return;
+            }
+
+            // Target redirect link integration space (Can map dynamic gateway urls later)
+            alert(`Initializing Gateway Vector Tunnel for: ₹${amtVal.toFixed(2)}\nConnecting core authorization matrix network...`);
+            
+            // Production deployment logic can initialize automated nodes inside transactions branch here
+        };
+
+        // SECURE EXTRACTION WITHDRAWAL LAYER STRIP VALIDATION RULES
+        window.executeExtractionWithdrawalProcess = function() {
+            const extractionAmtInput = document.getElementById('inputWithdrawAmt');
+            const targetExtractionValue = parseFloat(extractionAmtInput.value);
+
+            // 1. Threshold Validation Limit Rules
+            if (isNaN(targetExtractionValue) || targetExtractionValue < 200) {
+                triggerWalletNoticeModalPopup("Extraction Denied", "System security configuration parameter mismatch. Minimum extraction threshold limits set to ₹200.00.", "danger");
+                return;
+            }
+
+            // 2. Resource Core Balance Bounds Intercept Verification
+            if (targetExtractionValue > cachedWithdrawableBal) {
+                triggerWalletNoticeModalPopup("Resource Deficit", `Extraction overflow detected. Request matches [₹${targetExtractionValue.toFixed(2)}] but withdrawable allocation pools hold [₹${cachedWithdrawableBal.toFixed(2)}].`, "warning");
+                return;
+            }
+
+            // 3. Strict Check: Bank Binding Authentication Framework Locks
+            if (!userBankDetailsStructureCache || 
+                userBankDetailsStructureCache.holderName.trim() === "" || 
+                userBankDetailsStructureCache.accountNumber.trim() === "" || 
+                userBankDetailsStructureCache.ifscCode.trim() === "") {
+                triggerWalletNoticeModalPopup("Security Hold", "Extraction pathway unlinked. Account configuration contains unmapped routing strings. Kindly register banking matrix via Profile channels.", "warning");
+                return;
+            }
+
+            // Proceed logic execution block: commit secure requests state transitions inside Firebase infrastructure
+            if (currentUserUid) {
+                const txRefNode = ref(database, 'users/' + currentUserUid + '/transactions');
+                const userMainRef = ref(database, 'users/' + currentUserUid);
+
+                const freshTxPayload = {
+                    type: "WITHDRAW",
+                    amount: targetExtractionValue,
+                    status: "PENDING",
+                    timestamp: serverTimestamp()
+                };
+
+                // Atomic subtraction process tracking state allocation parameters
+                let calculatedRemainingWithdrawPool = cachedWithdrawableBal - targetExtractionValue;
+
+                push(txRefNode, freshTxPayload).then(() => {
+                    update(userMainRef, {
+                        withdrawableBalance: calculatedRemainingWithdrawPool
+                    }).then(() => {
+                        extractionAmtInput.value = "";
+                        triggerWalletNoticeModalPopup("Transmission Success", "Extraction block data packet committed to core sync stream. Verification sequence running.", "success");
+                    });
+                }).catch((err) => {
+                    console.error("Ledger Fatal Error:", err);
+                });
+            }
+        };
+
+        // HISTORICAL STREAM LEDGER PARSING LIST LAYER UI VISUAL GENERATOR
+        function renderHistoricalLedgerSheetsStream(transactionsBranchPayload) {
+            const containerNode = document.getElementById('ledgerTxContainer');
+            containerNode.innerHTML = ""; // Clear existing fallback placeholder views strings
+
+            if (!transactionsBranchPayload) {
+                containerNode.innerHTML = `
+                    <div class="empty-ledger-box">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <p>No transactions registered on this hardware terminal token channel.</p>
+                    </div>`;
+                return;
+            }
+
+            // Transform nested dynamic maps records arrays keys inside chronological trace indexes lists
+            const keysArrayList = Object.keys(transactionsBranchPayload).reverse();
+
+            keysArrayList.forEach((keyString) => {
+                const singleTxRecord = transactionsBranchPayload[keyString];
+                
+                const typeLabel = singleTxRecord.type === "DEPOSIT" ? "Token Injection" : "Asset Extraction";
+                const iconClassTypeStr = singleTxRecord.type === "DEPOSIT" ? "fa-solid fa-arrow-down-left" : "fa-solid fa-arrow-up-right";
+                const themeBlockClassNode = singleTxRecord.type === "DEPOSIT" ? "type-deposit-node" : "type-withdraw-node";
+                
+                let readableTimeStr = "Sync Vector Time";
+                if (singleTxRecord.timestamp) {
+                    const parseDateObj = new Date(singleTxRecord.timestamp);
+                    readableTimeStr = parseDateObj.toLocaleDateString() + " | " + parseDateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }
+
+                const rowCardStringHtml = `
+                    <div class="ledger-row-card premium-glass">
+                        <div class="ledger-meta-info">
+                            <div class="ledger-icon-node ${themeBlockClassNode}">
+                                <i class="${iconClassTypeStr}"></i>
+                            </div>
+                            <div class="ledger-text-strings">
+                                <h5>${typeLabel}</h5>
+                                <small>${readableTimeStr}</small>
+                            </div>
+                        </div>
+                        <div class="ledger-right-metrics">
+                            <span>₹${parseFloat(singleTxRecord.amount).toFixed(2)}</span>
+                            <small class="status-${singleTxRecord.status.toLowerCase()}">${singleTxRecord.status}</small>
+                        </div>
+                    </div>`;
+                
+                containerNode.innerHTML += rowCardStringHtml;
+            });
+        }
+
+        // INTERCEPT SYSTEM MODAL DIALOG NOTIFICATION UI LAYER GENERATOR BUILDERS
+        function triggerWalletNoticeModalPopup(title, desc, layoutStyleMode) {
+            const overlay = document.getElementById('walletAlertModal');
+            const cardFrame = document.getElementById('alertCardFrame');
+            const iconNode = document.getElementById('alertIcon');
+
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertDesc').innerText = desc;
+
+            cardFrame.className = "popup-card premium-glass";
+            
+            if (layoutStyleMode === "danger") {
+                cardFrame.classList.add('alert-danger');
+                iconNode.className = "fa-solid fa-triangle-exclamation";
+            } else if (layoutStyleMode === "warning") {
+                cardFrame.classList.add('alert-warning');
+                iconNode.className = "fa-solid fa-circle-exclamation";
+            } else if (layoutStyleMode === "success") {
+                cardFrame.className = "popup-card premium-glass"; // Default neon green border style framework
+                iconNode.className = "fa-solid fa-circle-check";
+                iconNode.style.color = "#39FF14";
+                iconNode.style.textShadow = "0 0 20px rgba(57, 255, 20, 0.4)";
+            }
+
+            overlay.classList.add('active');
+        }
+
+        window.dismissWalletModalPopup = function() {
+            document.getElementById('walletAlertModal').classList.remove('active');
+        };
+    </script>
+</body>
+</html>
