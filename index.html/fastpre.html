@@ -29,7 +29,7 @@
             border-radius: 36px; position: relative; overflow: hidden;
         }
 
-        .phone-wrapper { width: 410px; height: 860px; background: rgba(4, 5, 8, 0.82); z-index: 5; display: flex; flex-direction: column; padding: 40px 24px 20px 24px; justify-content: space-between; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); transition: border 0.3s ease; }
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(4, 5, 8, 0.82); z-index: 5; display: flex; flex-direction: column; padding: 30px 24px 20px 24px; justify-content: space-between; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); transition: border 0.3s ease; }
         
         /* Tactical 5-Second Threat Neon Pulse Border */
         .phone-wrapper.threat-active { border: 1px solid rgba(255, 0, 85, 0.4) !important; box-shadow: 0 0 40px rgba(255, 0, 85, 0.2); }
@@ -51,14 +51,14 @@
         .user-block h3 { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.3px; color: #fff; }
         .user-block p { font-size: 0.72rem; color: #39FF14; font-weight: 500; font-family: 'Share Tech Mono', monospace; }
 
-        .wallet-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 15px 22px; text-align: center; margin-top: 15px; position: relative; z-index: 2; }
+        .wallet-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 12px 22px; text-align: center; margin-top: 10px; position: relative; z-index: 2; }
         .wallet-card small { font-size: 0.68rem; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); letter-spacing: 1px; font-weight: 600; }
         .wallet-card h1 { font-family: 'Share Tech Mono', monospace; font-size: 2rem; color: #39FF14; font-weight: 800; text-shadow: 0 0 25px rgba(57, 255, 20, 0.4); margin-top: 2px; }
 
         /* ==========================================================================
            3. TIMER TELEMETRY COUNTER & PREDICTION SELECTION BLOCK
            ========================================================================== */
-        .timer-analytics-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding: 0 5px; z-index: 2; }
+        .timer-analytics-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding: 0 5px; z-index: 2; }
         .period-box small { font-size: 0.68rem; color: rgba(255,255,255,0.4); display: block; text-transform: uppercase; }
         .period-box span { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #fff; }
 
@@ -68,8 +68,8 @@
         .countdown-box.threat-active span { color: #ff0055; text-shadow: 0 0 20px rgba(255,0,85,0.5); animation: criticalTimerFlash 0.5s infinite alternate; }
         @keyframes criticalTimerFlash { 0% { opacity: 1; } 100% { opacity: 0.4; } }
 
-        /* Colour Interaction Selectors Grid */
-        .color-bet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 15px; z-index: 2; }
+        /* Color Interaction Selectors Grid */
+        .color-bet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 10px; z-index: 2; }
         .btn-bet { padding: 12px; border-radius: 18px; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         .btn-green { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25); }
         .btn-violet { background: linear-gradient(135deg, #6d28d9, #8b5cf6); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25); }
@@ -78,15 +78,28 @@
         .btn-bet:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
         .btn-bet:disabled { opacity: 0.25; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
+        /* Premium 0-9 Numerical Grid Architecture Layout */
+        .numeric-prediction-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; z-index: 2; }
+        .btn-num { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 0; border-radius: 14px; color: #fff; font-family: 'Share Tech Mono', monospace; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.25s ease; text-align: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.05); }
+        
+        /* Individual Color Coding Profiles according to system standards */
+        .num-violet-red { border-bottom: 3px solid #8b5cf6 !important; }
+        .num-violet-green { border-bottom: 3px solid #8b5cf6 !important; }
+        .num-green { border-bottom: 3px solid #10b981 !important; }
+        .num-red { border-bottom: 3px solid #ef4444 !important; }
+
+        .btn-num:hover:not(:disabled) { background: rgba(255, 255, 255, 0.08); transform: scale(1.05); }
+        .btn-num:disabled { opacity: 0.25; cursor: not-allowed; transform: none !important; }
+
         /* ==========================================================================
            4. HISTORICAL RECORD LAYER (DYNAMIC PERIOD MATRIX)
            ========================================================================== */
-        .history-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 15px; flex: 1; margin: 15px 0; display: flex; flex-direction: column; gap: 10px; overflow: hidden; z-index: 2; height: 180px; }
+        .history-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 12px 15px; flex: 1; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; overflow: hidden; z-index: 2; height: 160px; }
         .history-card h4 { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
         .history-card h4 i { color: #39FF14; }
 
         .history-list-wrapper { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; padding-right: 2px; }
-        .history-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 10px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+        .history-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
         .history-item .p-num { font-family: 'Share Tech Mono', monospace; color: rgba(255,255,255,0.6); }
         
         .badge-dot { display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Share Tech Mono', monospace; }
@@ -94,11 +107,13 @@
         .badge-green { color: #10b981; } .badge-green::before { background: #10b981; box-shadow: 0 0 10px #10b981; }
         .badge-violet { color: #8b5cf6; } .badge-violet::before { background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6; }
         .badge-red { color: #ef4444; } .badge-red::before { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+        .badge-dual-gv { color: #10b981; } .badge-dual-gv::before { background: linear-gradient(135deg, #10b981, #8b5cf6); box-shadow: 0 0 10px #8b5cf6; }
+        .badge-dual-rv { color: #ef4444; } .badge-dual-rv::before { background: linear-gradient(135deg, #ef4444, #8b5cf6); box-shadow: 0 0 10px #8b5cf6; }
 
         /* ==========================================================================
            5. HIGH-VOLUME LIVE ORDER DATA TRAFFIC OVERLAY
            ========================================================================== */
-        .live-traffic-panel { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 15px; height: 180px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; z-index: 2; margin-bottom: 5px; }
+        .live-traffic-panel { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 12px 15px; height: 160px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; z-index: 2; margin-bottom: 5px; }
         .live-traffic-panel h4 { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
         .live-traffic-panel h4 span { color: #39FF14; font-family: 'Share Tech Mono', monospace; }
         .traffic-rows-container { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
@@ -142,7 +157,7 @@
         .verdict-deck.status-lost i { color: #ff0055; text-shadow: 0 0 20px rgba(255,0,85,0.4); }
         .verdict-deck h2 { font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; }
         .verdict-deck p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
-        .verdict-deck .res-ball { width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Share Tech Mono', monospace; font-weight: 800; font-size: 1.2rem; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin: 5px 0; }
+        .verdict-deck .res-ball { width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Share Tech Mono', monospace; font-weight: 800; font-size: 1.4rem; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin: 5px 0; border: 2px solid rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
@@ -208,6 +223,19 @@
             </div>
         </div>
 
+        <div class="numeric-prediction-grid">
+            <button class="btn-num num-violet-red" id="numBtn-0" onclick="openBetPlacementSheet('0')">0</button>
+            <button class="btn-num num-green" id="numBtn-1" onclick="openBetPlacementSheet('1')">1</button>
+            <button class="btn-num num-red" id="numBtn-2" onclick="openBetPlacementSheet('2')">2</button>
+            <button class="btn-num num-green" id="numBtn-3" onclick="openBetPlacementSheet('3')">3</button>
+            <button class="btn-num num-red" id="numBtn-4" onclick="openBetPlacementSheet('4')">4</button>
+            <button class="btn-num num-violet-green" id="numBtn-5" onclick="openBetPlacementSheet('5')">5</button>
+            <button class="btn-num num-red" id="numBtn-6" onclick="openBetPlacementSheet('6')">6</button>
+            <button class="btn-num num-green" id="numBtn-7" onclick="openBetPlacementSheet('7')">7</button>
+            <button class="btn-num num-red" id="numBtn-8" onclick="openBetPlacementSheet('8')">8</button>
+            <button class="btn-num num-green" id="numBtn-9" onclick="openBetPlacementSheet('9')">9</button>
+        </div>
+
         <div class="color-bet-grid">
             <button class="btn-bet btn-green" id="betBtn-GREEN" onclick="openBetPlacementSheet('GREEN')">Green</button>
             <button class="btn-bet btn-violet" id="betBtn-VIOLET" onclick="openBetPlacementSheet('VIOLET')">Violet</button>
@@ -216,8 +244,7 @@
 
         <div class="live-traffic-panel">
             <h4><i class="fa-solid fa-tower-broadcast"></i> Network Node Streams <span id="activeConnectionsCount">LIVE</span></h4>
-            <div class="traffic-rows-container" id="liveNetworkTrafficContainer">
-                </div>
+            <div class="traffic-rows-container" id="liveNetworkTrafficContainer"></div>
         </div>
 
         <div class="history-card">
@@ -311,7 +338,6 @@
         // COUNTDOWN TIMER ENGINE LOOP WITH REMOTELY LINKED INTEGRATED SYNTH
         // ==========================================================================
         function executeGlobalUnifiedGameTimerLoop() {
-            // High-volume high-density fake players generation loop allocation trigger
             executeContinuousLiveHighVolumeTrafficStream();
 
             setInterval(() => {
@@ -320,6 +346,7 @@
                 const nowTimestamp = new Date();
                 const minutesString = String(nowTimestamp.getMinutes()).padStart(2, '0');
                 const hourString = String(nowTimestamp.getHours()).padStart(2, '0');
+                
                 activeSelectedPeriodIdentification = `20260523${hourString}${minutesString}`;
                 document.getElementById('currentPeriodIdDisplay').innerText = activeSelectedPeriodIdentification;
 
@@ -336,13 +363,11 @@
                     generateBleepSoundTickerFrequency();
                     setBetOptionButtonsDisabledState(true);
                 } 
-                // CRITICAL CONDITION: AUTOMATED BG ENGINE LOOP RUNS HAR ROUND PAR RESOLUTION
                 else if (localPeriodGameTimeClockSeconds <= 0) {
                     localPeriodGameTimeClockSeconds = 30; // Quick reset
                     chassis.classList.remove('threat-active');
                     clockBox.classList.remove('threat-active');
                     
-                    // Sab kuch automatic chalega chahe click kiya ho ya nahi
                     evaluateRoundSettlementVerdictMetrics();
                 } 
                 else {
@@ -355,34 +380,47 @@
         }
 
         function setBetOptionButtonsDisabledState(status) {
+            // Disable color buttons
             document.getElementById('betBtn-GREEN').disabled = status;
             document.getElementById('betBtn-VIOLET').disabled = status;
             document.getElementById('betBtn-RED').disabled = status;
+            
+            // Disable 0-9 numerical buttons
+            for (let i = 0; i <= 9; i++) {
+                document.getElementById(`numBtn-${i}`).disabled = status;
+            }
         }
 
         // ==========================================================================
-        // HIGH-VOLUME DYNAMIC TRAFFIC POOL SIMULATOR (1000+ BETA STAKES VISUALS)
+        // HIGH-VOLUME DYNAMIC TRAFFIC POOL SIMULATOR (0-9 INCLUDED)
         // ==========================================================================
         function executeContinuousLiveHighVolumeTrafficStream() {
             const trafficWrapper = document.getElementById('liveNetworkTrafficContainer');
-            const targetColorSelections = ["GREEN", "RED", "VIOLET"];
+            const targetColorSelections = ["GREEN", "RED", "VIOLET", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
             setInterval(() => {
                 const randomProfileName = simulatedPremiumUsersArray[Math.floor(Math.random() * simulatedPremiumUsersArray.length)];
                 const randomTargetSelection = targetColorSelections[Math.floor(Math.random() * targetColorSelections.length)];
                 
-                // High volume stakes allocation spectrum inside ₹1000 to ₹5000 range
                 const highVolumeFakeStakeAmount = Math.floor(Math.random() * 5) * 1000 + 1000;
 
                 let backgroundTagMarkupStyle = "background: rgba(16, 185, 129, 0.15); color: #10b981;";
-                if (randomTargetSelection === "RED") backgroundTagMarkupStyle = "background: rgba(239, 68, 68, 0.15); color: #ef4444;";
-                else if (randomTargetSelection === "VIOLET") backgroundTagMarkupStyle = "background: rgba(139, 92, 246, 0.15); color: #8b5cf6;";
+                
+                if (["RED", "2", "4", "6", "8"].includes(randomTargetSelection)) {
+                    backgroundTagMarkupStyle = "background: rgba(239, 68, 68, 0.15); color: #ef4444;";
+                } else if (["VIOLET"].includes(randomTargetSelection)) {
+                    backgroundTagMarkupStyle = "background: rgba(139, 92, 246, 0.15); color: #8b5cf6;";
+                } else if (randomTargetSelection === "0") {
+                    backgroundTagMarkupStyle = "background: linear-gradient(90deg, rgba(239,68,68,0.2), rgba(139,92,246,0.2)); color: #ef4444; border: 1px solid #8b5cf6;";
+                } else if (randomTargetSelection === "5") {
+                    backgroundTagMarkupStyle = "background: linear-gradient(90deg, rgba(16,185,129,0.2), rgba(139,92,246,0.2)); color: #10b981; border: 1px solid #8b5cf6;";
+                }
 
                 const dynamicRowTemplateString = `
                     <div class="traffic-row">
                         <div class="traffic-user"><i class="fa-solid fa-user-ninja" style="opacity:0.3;"></i> <span>${randomProfileName}</span></div>
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <span class="traffic-target" style="${backgroundTagMarkupStyle}">${randomTargetSelection}</span>
+                            <span class="traffic-target" style="${backgroundTagMarkupStyle}">${isNaN(randomTargetSelection) ? randomTargetSelection : 'Num ' + randomTargetSelection}</span>
                             <span class="traffic-amt">₹${highVolumeFakeStakeAmount}</span>
                         </div>
                     </div>
@@ -390,7 +428,6 @@
 
                 trafficWrapper.insertAdjacentHTML('afterbegin', dynamicRowTemplateString);
 
-                // Memory array element stack optimizer pruning loop bounds
                 if (trafficWrapper.children.length > 20) {
                     trafficWrapper.removeChild(trafficWrapper.lastChild);
                 }
@@ -400,13 +437,19 @@
         // ==========================================================================
         // PLAY SYSTEM ACTIONS MECHANICS OPERATORS INTERFACE
         // ==========================================================================
-        window.openBetPlacementSheet = function(color) {
+        window.openBetPlacementSheet = function(target) {
             if (localPeriodGameTimeClockSeconds <= 5) return;
-            selectedColorTargetOption = color;
+            selectedColorTargetOption = target;
             
-            document.getElementById('targetSelectedColorText').innerText = color;
-            document.getElementById('targetSelectedColorText').style.color = (color==='GREEN')?'#10b981':(color==='RED')?'#ef4444':'#8b5cf6';
+            const targetTextElement = document.getElementById('targetSelectedColorText');
+            targetTextElement.innerText = isNaN(target) ? target : "Number " + target;
             
+            if (["GREEN", "1", "3", "7", "9"].includes(target)) targetTextElement.style.color = '#10b981';
+            else if (["RED", "2", "4", "6", "8"].includes(target)) targetTextElement.style.color = '#ef4444';
+            else if (target === "VIOLET") targetTextElement.style.color = '#8b5cf6';
+            else if (target === "0") targetTextElement.style.color = '#ef4444'; 
+            else if (target === "5") targetTextElement.style.color = '#10b981';
+
             document.getElementById('gameModalOverlay').classList.add('active');
             document.getElementById('betPlacementSheet').style.display = "flex";
             document.getElementById('roundVerdictCard').style.display = "none";
@@ -450,7 +493,7 @@
                 const finalComputedWalletBalance = currentLiveBal - selectedInvestmentChipAmount;
                 const updatesMap = {};
                 updatesMap[`users/${currentUserId}/walletBalance`] = finalComputedWalletBalance;
-                updatesMap[`users/${currentUserId}/activeBet/color`] = selectedColorTargetOption;
+                updatesMap[`users/${currentUserId}/activeBet/color`] = selectedColorTargetOption; // Color fields tracks number/colors simultaneously
                 updatesMap[`users/${currentUserId}/activeBet/amount`] = selectedInvestmentChipAmount;
                 updatesMap[`users/${currentUserId}/activeBet/period`] = activeSelectedPeriodIdentification;
 
@@ -466,49 +509,57 @@
         };
 
         // ==========================================================================
-        // LIVE PARSE RESOLUTION TERMINAL SETTLEMENTS CHECKER (AUTOMATED BACKGROUND)
+        // DYNAMIC ALGORITHMIC 0-9 OUTCOME SYSTEM CALCULATOR
         // ==========================================================================
         async function evaluateRoundSettlementVerdictMetrics() {
-            // Determine result color vector patterns matching arrays algorithmically
-            const colorRoster = ["GREEN", "RED", "VIOLET"];
+            let chosenRandomLuckyDigit = Math.floor(Math.random() * 10); // Generates 0 to 9 cleanly
             
             // Check for explicit admin override panels configuration locks first
-            let serverOutcomeRandomResultColor = "NONE";
             try {
                 const overrideSnapRef = await get(ref(database, 'gameControls/fastparityOverride'));
                 if (overrideSnapRef.exists() && overrideSnapRef.val() !== "NONE") {
-                    serverOutcomeRandomResultColor = overrideSnapRef.val();
+                    const forcedValue = overrideSnapRef.val();
+                    if (!isNaN(forcedValue)) {
+                        chosenRandomLuckyDigit = parseInt(forcedValue);
+                    } else {
+                        // Color conversion fallback overrides matches
+                        if (forcedValue === "GREEN") chosenRandomLuckyDigit = [1,3,7,9][Math.floor(Math.random()*4)];
+                        else if (forcedValue === "RED") chosenRandomLuckyDigit = [2,4,6,8][Math.floor(Math.random()*4)];
+                        else if (forcedValue === "VIOLET") chosenRandomLuckyDigit = Math.random() > 0.5 ? 0 : 5;
+                    }
                     await update(ref(database, 'gameControls'), { fastparityOverride: "NONE" });
-                } else {
-                    serverOutcomeRandomResultColor = colorRoster[Math.floor(Math.random() * colorRoster.length)];
                 }
             } catch (err) {
-                serverOutcomeRandomResultColor = colorRoster[Math.floor(Math.random() * colorRoster.length)];
+                console.warn("Override interceptor skipped.");
             }
 
-            const chosenRandomLuckyDigit = (serverOutcomeRandomResultColor === "VIOLET") ? 0 : (serverOutcomeRandomResultColor === "GREEN") ? 7 : 4;
+            // Derive base primary system configurations matching outputs parameters
+            let finalPrimaryColorTag = "GREEN";
+            if (chosenRandomLuckyDigit === 0) finalPrimaryColorTag = "DUAL_RV"; // Red + Violet
+            else if (chosenRandomLuckyDigit === 5) finalPrimaryColorTag = "DUAL_GV"; // Green + Violet
+            else if (chosenRandomLuckyDigit % 2 === 0) finalPrimaryColorTag = "RED";
+            else finalPrimaryColorTag = "GREEN";
 
-            // Always update history charts layout stream rows regardless of user bet states
-            appendCalculatedOutcomeItemIntoHistoryGrid(activeSelectedPeriodIdentification, serverOutcomeRandomResultColor, chosenRandomLuckyDigit);
+            // Process rendering to charts logic pipeline
+            appendCalculatedOutcomeItemIntoHistoryGrid(activeSelectedPeriodIdentification, finalPrimaryColorTag, chosenRandomLuckyDigit);
 
             if (!currentUserId) return;
             
             const userBetRef = ref(database, `users/${currentUserId}/activeBet`);
             const snapshot = await get(userBetRef);
             
-            let userPlacementsColor = "";
+            let userPlacementsTarget = "";
             let userInvestmentVolume = 0;
             let userTargetPeriodTrack = "";
 
             if (snapshot.exists()) {
                 const betData = snapshot.val();
-                userPlacementsColor = betData.color || "";
+                userPlacementsTarget = betData.color || "";
                 userInvestmentVolume = parseInt(betData.amount || 0);
                 userTargetPeriodTrack = betData.period || "";
             }
 
-            // If user did not place a bet this loop cycle round, terminate processing pipeline here cleanly
-            if (userPlacementsColor === "" || userTargetPeriodTrack !== activeSelectedPeriodIdentification) {
+            if (userPlacementsTarget === "" || userTargetPeriodTrack !== activeSelectedPeriodIdentification) {
                 return; 
             }
 
@@ -521,27 +572,52 @@
 
             card.className = "verdict-deck premium-glass";
             vBall.innerText = chosenRandomLuckyDigit;
-            vBall.style.background = (serverOutcomeRandomResultColor==='GREEN')?'#10b981':(serverOutcomeRandomResultColor==='RED')?'#ef4444':'#8b5cf6';
+            
+            // Assign ballistic neon color rendering profiles
+            if (finalPrimaryColorTag === "GREEN") vBall.style.background = '#10b981';
+            else if (finalPrimaryColorTag === "RED") vBall.style.background = '#ef4444';
+            else if (finalPrimaryColorTag === "DUAL_RV") vBall.style.background = 'linear-gradient(135deg, #ef4444, #8b5cf6)';
+            else if (finalPrimaryColorTag === "DUAL_GV") vBall.style.background = 'linear-gradient(135deg, #10b981, #8b5cf6)';
 
             try {
                 const userSnapshotRef = ref(database, `users/${currentUserId}`);
                 const freshUserSnap = await get(userSnapshotRef);
                 let currentLiveBalance = currentUserCurrentBalance;
-                
-                // Track standard transaction turnover matrices parameters fields
-                let currentLifetimeWin = 0;
-                let currentWagerRequirement = 0;
+                let currentLifetimeWin = parseFloat(freshUserSnap.val().lifetimeWin || 0);
+                let currentWagerRequirement = parseFloat(freshUserSnap.val().wagerRequirement || 0);
 
                 if (freshUserSnap.exists()) {
-                    const uData = freshUserSnap.val();
-                    currentLiveBalance = parseFloat(uData.walletBalance || 0);
-                    currentLifetimeWin = parseFloat(uData.lifetimeWin || 0);
-                    currentWagerRequirement = parseFloat(uData.wagerRequirement || 0);
+                    currentLiveBalance = parseFloat(freshUserSnap.val().walletBalance || 0);
                 }
 
-                if (userPlacementsColor === serverOutcomeRandomResultColor) {
-                    const prizeWinningsYield = userInvestmentVolume * 1.98; // 2x minus 2% network handling gas structures fees
-                    const updatedWagerVolume = Math.max(0, currentWagerRequirement - userInvestmentVolume);
+                // Check complex Multi-layered Winning Criteria Logic Matrices
+                let isRoundVictorToken = false;
+                let prizeMultiplierCoefficient = 0;
+
+                if (!isNaN(userPlacementsTarget)) {
+                    // Scenario A: User predicted accurate individual digit matrix target (9X Multiplier)
+                    if (parseInt(userPlacementsTarget) === chosenRandomLuckyDigit) {
+                        isRoundVictorToken = true;
+                        prizeMultiplierCoefficient = 8.82; // 9x minus 2% engine optimization tax
+                    }
+                } else {
+                    // Scenario B: User predicted color channels indices
+                    if (userPlacementsTarget === "GREEN" && ["GREEN", "DUAL_GV"].includes(finalPrimaryColorTag)) {
+                        isRoundVictorToken = true;
+                        prizeMultiplierCoefficient = (finalPrimaryColorTag === "DUAL_GV") ? 1.47 : 1.96; // Halved or standard odds ratios
+                    } else if (userPlacementsTarget === "RED" && ["RED", "DUAL_RV"].includes(finalPrimaryColorTag)) {
+                        isRoundVictorToken = true;
+                        prizeMultiplierCoefficient = (finalPrimaryColorTag === "DUAL_RV") ? 1.47 : 1.96;
+                    } else if (userPlacementsTarget === "VIOLET" && ["DUAL_GV", "DUAL_RV"].includes(finalPrimaryColorTag)) {
+                        isRoundVictorToken = true;
+                        prizeMultiplierCoefficient = 4.41; // Violet returns 4.5x payouts
+                    }
+                }
+
+                const updatedWagerVolume = Math.max(0, currentWagerRequirement - userInvestmentVolume);
+
+                if (isRoundVictorToken) {
+                    const prizeWinningsYield = userInvestmentVolume * prizeMultiplierCoefficient;
 
                     await update(ref(database), {
                         [`users/${currentUserId}/walletBalance`]: currentLiveBalance + prizeWinningsYield,
@@ -555,8 +631,6 @@
                     vTitle.innerText = "YOU WIN 🎉";
                     vDesc.innerText = `Calculation success! Your wallet balance has been credited with +₹${prizeWinningsYield.toFixed(2)}. Remaining Wager Target: ₹${updatedWagerVolume}`;
                 } else {
-                    const updatedWagerVolume = Math.max(0, currentWagerRequirement - userInvestmentVolume);
-
                     await update(ref(database), {
                         [`users/${currentUserId}/wagerRequirement`]: updatedWagerVolume,
                         [`users/${currentUserId}/activeBet`]: null
@@ -568,7 +642,6 @@
                     vDesc.innerText = `Server configuration selected divergent structural options indices. -₹${userInvestmentVolume} dropped. Remaining Wager: ₹${updatedWagerVolume}`;
                 }
 
-                // Show modal verdict overlay to active users who placed bets
                 overlay.classList.add('active');
                 card.style.display = "flex";
                 document.getElementById('betPlacementSheet').style.display = "none";
@@ -577,7 +650,7 @@
             }
         }
 
-        function appendCalculatedOutcomeItemIntoHistoryGrid(period, color, digit) {
+        function appendCalculatedOutcomeItemIntoHistoryGrid(period, colorTag, digit) {
             const wrapper = document.getElementById('historyRecordsContainer');
             if(wrapper.innerHTML.includes("SYNCING")) wrapper.innerHTML = "";
             
@@ -585,11 +658,17 @@
                 wrapper.removeChild(wrapper.lastChild);
             }
 
-            const badgeClass = color === "GREEN" ? "badge-green" : color === "RED" ? "badge-red" : "badge-violet";
+            let badgeClass = "badge-green";
+            let colorDisplayLabel = "Green";
+
+            if (colorTag === "RED") { badgeClass = "badge-red"; colorDisplayLabel = "Red"; }
+            else if (colorTag === "DUAL_RV") { badgeClass = "badge-dual-rv"; colorDisplayLabel = "Red+Violet"; }
+            else if (colorTag === "DUAL_GV") { badgeClass = "badge-dual-gv"; colorDisplayLabel = "Green+Violet"; }
+
             const rowHtml = `
                 <div class="history-item">
                     <span class="p-num">Period: ${period}</span>
-                    <span class="badge-dot ${badgeClass}">${color} (${digit})</span>
+                    <span class="badge-dot ${badgeClass}">${colorDisplayLabel} (${digit})</span>
                 </div>
             `;
             wrapper.insertAdjacentHTML('afterbegin', rowHtml);
@@ -606,7 +685,6 @@
             document.getElementById('roundVerdictCard').style.display = "none";
         };
 
-        // Initialize execution systems
         executeGlobalUnifiedGameTimerLoop();
     </script>
 </body>
