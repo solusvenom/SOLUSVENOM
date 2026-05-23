@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solus Venom - Supreme Console</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. MASTER GLASS DESIGN SYSTEM & FULL ADMIN GRID WIREFRAME
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #06090e 0%, #010203 100%);
+            color: #ffffff; min-height: 100vh; padding: 25px; display: flex; flex-direction: column;
+            gap: 20px; overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar for Cyber Aesthetic */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb { background: #39FF14; border-radius: 10px; box-shadow: 0 0 10px #39FF14; }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+        }
+
+        /* Top Bar Branding Block */
+        .admin-header {
+            padding: 25px 35px; display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid rgba(57, 255, 20, 0.15); background: rgba(4, 6, 9, 0.7); position: relative;
+        }
+        .panel-title h1 { font-family: 'Share Tech Mono', monospace; font-size: 1.8rem; font-weight: 800; color: #39FF14; text-shadow: 0 0 20px rgba(57, 255, 20, 0.3); }
+        .panel-title p { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        
+        .system-stats { display: flex; gap: 30px; align-items: center; }
+        .stat-node { text-align: right; }
+        .stat-node small { font-size: 0.68rem; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+        .stat-node div { font-family: 'Share Tech Mono', monospace; font-size: 1.4rem; font-weight: 700; color: #fff; }
+
+        /* Games Grid Panel Framework */
+        .games-control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .game-card-module { padding: 25px; border: 1px solid rgba(255,255,255,0.05); background: rgba(3, 4, 7, 0.6); position: relative; overflow: hidden; }
+        .game-card-module h2 { font-family: 'Share Tech Mono', monospace; font-size: 1.25rem; color: #39FF14; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px; }
+        
+        .override-actions-row { display: flex; gap: 10px; margin-top: 12px; }
+        .btn-override { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: 700; font-family: 'Share Tech Mono', monospace; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; transition: 0.2s; }
+        .btn-ovr-green { background: #10b981; color: #000; }
+        .btn-ovr-violet { background: #8b5cf6; color: #fff; }
+        .btn-ovr-red { background: #ef4444; color: #fff; }
+        .btn-override:hover { filter: brightness(1.2); box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
+        
+        .active-lock-badge { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(57,255,20,0.1); color: #39FF14; border: 1px solid rgba(57,255,20,0.2); display: inline-block; margin-top: 8px; transition: all 0.3s ease; }
+
+        /* ==========================================================================
+           2. DATABASE METRICS LIVE DATAGRID INTERFACE TABLE
+           ========================================================================== */
+        .table-container { flex: 1; overflow-x: auto; background: rgba(3, 4, 7, 0.8); border: 1px solid rgba(255,255,255,0.05); }
+        
+        .admin-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; white-space: nowrap; }
+        .admin-table th { 
+            background: rgba(0,0,0,0.4); padding: 18px 20px; font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase; color: #39FF14; border-bottom: 1px solid rgba(57, 255, 20, 0.15); letter-spacing: 0.5px;
+        }
+        .admin-table td { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.85); vertical-align: middle; }
+        .admin-table tr:hover { background: rgba(255,255,255,0.01); }
+
+        .user-meta-cell { display: flex; align-items: center; gap: 12px; }
+        .user-meta-cell img { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); object-fit: cover; }
+        .user-meta-cell .meta-det h4 { font-size: 0.9rem; font-weight: 600; color: #fff; }
+        .user-meta-cell .meta-det small { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+
+        .status-tag { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: inline-block; font-family: 'Share Tech Mono', monospace; }
+        .status-online { background: rgba(57, 255, 20, 0.1); color: #39FF14; border: 1px solid rgba(57,255,20,0.2); }
+        .status-offline { background: rgba(255, 255, 255, 0.05); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.08); }
+        .status-banned { background: rgba(255, 0, 85, 0.1); color: #ff0055; border: 1px solid rgba(255,0,85,0.2); }
+
+        .balance-txt { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #39FF14; }
+
+        /* ==========================================================================
+           3. TERMINAL ACTION OPERATOR BUTTONS BLOCK
+           ========================================================================== */
+        .actions-group { display: flex; gap: 8px; }
+        .btn-action { 
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            color: #fff; width: 34px; height: 34px; border-radius: 10px; display: flex;
+            justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; font-size: 0.85rem;
+        }
+        .btn-action:hover { color: #000; background: #39FF14; border-color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.3); }
+        .btn-action.btn-danger-action:hover { background: #ff0055; border-color: #ff0055; color: #fff; box-shadow: 0 0 10px rgba(255,0,85,0.3); }
+
+        /* ==========================================================================
+           4. LIVE CONSOLE MONITOR LOG SYSTEM (NEW ADDITION)
+           ========================================================================== */
+        .live-terminal-logs {
+            background: rgba(2, 4, 7, 0.9); height: 130px; padding: 15px 25px;
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
+            font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; color: #a1a1aa;
+            display: flex; flex-direction: column; gap: 6px; overflow-y: auto;
+        }
+        .log-entry { display: flex; gap: 15px; line-height: 1.4; }
+        .log-timestamp { color: rgba(255,255,255,0.25); }
+        .log-tag { color: #39FF14; text-transform: uppercase; font-weight: bold; }
+        .log-tag.danger { color: #ff0055; }
+
+        /* Modals & Overlays Configuration Elements */
+        .overlay-modal { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2,3,5,0.92); backdrop-filter: blur(15px);
+            z-index: 9999; display: none; justify-content: center; align-items: center; padding: 20px;
+        }
+        .overlay-modal.active { display: flex; }
+        
+        .control-card { width: 100%; max-width: 440px; padding: 35px 25px; border-radius: 24px; border: 1px solid rgba(57,255,20,0.2) !important; background: #040609; box-shadow: 0 0 30px rgba(57,255,20,0.1); }
+        .control-card h3 { font-family: 'Share Tech Mono', monospace; font-size: 1.3rem; margin-bottom: 20px; color: #39FF14; display: flex; align-items: center; gap: 10px; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .form-group label { font-size: 0.75rem; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+        .form-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #fff; font-size: 0.95rem; outline: none; }
+        .form-input:focus { border-color: #39FF14; }
+
+        .modal-buttons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .btn-panel { padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.82rem; }
+        .btn-confirm { background: #39FF14; color: #000; }
+        .btn-cancel { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.08); }
+    </style>
+</head>
+<body>
+
+    <header class="admin-header premium-glass">
+        <div class="panel-title">
+            <h1>Venom Master Shell</h1>
+            <p>Real-time User Allocation Controller Terminal</p>
+        </div>
+        <div class="system-stats">
+            <div class="stat-node">
+                <small>Ping Handshake</small>
+                <div id="stat-server-ping" style="color: #10b981;">0 ms</div>
+            </div>
+            <div class="stat-node">
+                <small>Total Registers</small>
+                <div id="stat-total-users">00</div>
+            </div>
+            <div class="stat-node">
+                <small>Active Threads</small>
+                <div id="stat-online-users" style="color: #39FF14;">00</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="games-control-grid">
+        
+        <div class="game-card-module premium-glass">
+            <h2><i class="fa-solid fa-dice"></i> FastParity Hacking Core</h2>
+            <div class="form-group" style="margin-bottom:10px;">
+                <label>Force Next Round Outcome (Override)</label>
+                <div class="override-actions-row">
+                    <button class="btn-override btn-ovr-green" onclick="forceNextFastParityColorResult('GREEN')">Green</button>
+                    <button class="btn-override btn-ovr-violet" onclick="forceNextFastParityColorResult('VIOLET')">Violet</button>
+                    <button class="btn-override btn-ovr-red" onclick="forceNextFastParityColorResult('RED')">Red</button>
+                </div>
+            </div>
+            <div id="fastparityStatusLockNode" class="active-lock-badge">Mode: Automated Algorithms (Random)</div>
+        </div>
+
+        <div class="game-card-module premium-glass">
+            <h2><i class="fa-solid fa-jet-fighter"></i> Aviator Flight Interceptor</h2>
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Next Round Crash Multiplier Target (Guna)</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="number" id="aviatorMultiplierInputField" class="form-input" placeholder="e.g. 1.50, 3.00, 10.00" step="0.1" style="margin:0; flex:1;">
+                    <button class="btn-panel btn-confirm" style="border-radius:12px; padding:0 20px;" onclick="lockNextAviatorCrashMultiplierPoint()">Lock Multiplier</button>
+                </div>
+            </div>
+            <div id="aviatorStatusLockNode" class="active-lock-badge">Current Crash Curve: Dynamic Random Fallback</div>
+        </div>
+
+    </section>
+
+    <main class="table-container premium-glass">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>User Credentials</th>
+                    <th>Network Node IP</th>
+                    <th>Device Specs</th>
+                    <th>Wallet Balance</th>
+                    <th>Active Bet Status</th>
+                    <th>Status Matrix</th>
+                    <th style="text-align: center;">Terminal Actions</th>
+                </tr>
+            </thead>
+            <tbody id="usersDynamicTableBody">
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.3); font-family: 'Share Tech Mono', monospace;">INTERROGATING REMOTE CHANNELS POOL...</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="live-terminal-logs premium-glass" id="liveTerminalLogsFrame">
+        <div class="log-entry">
+            <span class="log-timestamp">[00:00:00]</span>
+            <span class="log-tag">SYSTEM</span>
+            <span class="log-msg">Secure core pipeline handshake initialized... Ready.</span>
+        </div>
+    </footer>
+
+    <div id="balanceModal" class="overlay-modal">
+        <div class="control-card premium-glass">
+            <h3><i class="fa-solid fa-wallet"></i> Modify Wallet Volume</h3>
+            <div class="form-group">
+                <label>Selected Target Profile</label>
+                <input type="text" id="balTargetDisplay" class="form-input" disabled style="color:rgba(255,255,255,0.4);">
+            </div>
+            <div class="form-group">
+                <label>Operation Mechanism</label>
+                <select id="balOperationSelect" class="form-input" style="color: #fff; background: #000;">
+                    <option value="ADD">CREDIT (+): Add Funds Layer</option>
+                    <option value="SUBTRACT">DEBIT (-): Deduct Balance Volume</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Transaction Amount (INR)</label>
+                <input type="number" id="balAmountInput" class="form-input" placeholder="Enter amount (e.g. 500)" min="1">
+            </div>
+            <div class="modal-buttons-row">
+                <button class="btn-panel btn-cancel" onclick="closeControlModal('balanceModal')">Abort</button>
+                <button class="btn-panel btn-confirm" onclick="executeDatabaseBalanceAdjustment()">Commit Order</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="noticeModal" class="overlay-modal">
+        <div class="control-card premium-glass">
+            <h3><i class="fa-solid fa-satellite-dish"></i> Emit Warning Notice</h3>
+            <div class="form-group">
+                <label>Recipient Target Mail</label>
+                <input type="text" id="noticeTargetDisplay" class="form-input" disabled style="color:rgba(255,255,255,0.4);">
+            </div>
+            <div class="form-group">
+                <label>System Message Payload</label>
+                <textarea id="noticeTextMessage" class="form-input" rows="4" placeholder="Type notification context string details clear here..." style="resize:none;"></textarea>
+            </div>
+            <div class="modal-buttons-row">
+                <button class="btn-panel btn-cancel" onclick="closeControlModal('noticeModal')">Cancel</button>
+                <button class="btn-panel btn-confirm" onclick="transmitRemoteWarningNotification()">Broadcast Push</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Unified Credentials Config Profile Matching Engine Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Core Cache State Map Storage Array Structure
+        let activeTargetUidCache = null;
+        let activeTargetCurrentBalanceCache = 0;
+
+        // Custom Console Logger Utility Function
+        function appendTerminalShellLog(tag, message, isDanger = false) {
+            const container = document.getElementById('liveTerminalLogsFrame');
+            const timeStr = new Date().toTimeString().split(' ')[0];
+            const logHTML = `
+                <div class="log-entry">
+                    <span class="log-timestamp">[${timeStr}]</span>
+                    <span class="log-tag ${isDanger ? 'danger' : ''}">${tag}</span>
+                    <span class="log-msg">${message}</span>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', logHTML);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Initialize Realtime Sync Loop Channels Hook
+        function startLiveDatabaseTableListener() {
+            const startTimestamp = Date.now();
+            
+            onValue(ref(database, 'users'), (snapshot) => {
+                // Calculate Dynamic Network Ping Handshake Delay
+                const currentPing = Date.now() - startTimestamp;
+                document.getElementById('stat-server-ping').innerText = `${currentPing > 120 ? Math.floor(Math.random() * 40) + 15 : currentPing} ms`;
+
+                const tableBody = document.getElementById('usersDynamicTableBody');
+                tableBody.innerHTML = ""; // Clear current table buffer frames
+
+                if (!snapshot.exists()) {
+                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.3);">NO ACTIVE ACCOUNTS REGISTERED</td></tr>`;
+                    appendTerminalShellLog("SYNC", "User reference pool snapshot returned null query parameters.");
+                    return;
+                }
+
+                let totalCount = 0;
+                let onlineCount = 0;
+
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    totalCount++;
+
+                    // Extract Status State tags constraints
+                    let statusMarkup = `<span class="status-tag status-offline">Offline</span>`;
+                    if (user.isBlocked === true) {
+                        statusMarkup = `<span class="status-tag status-banned">Banned</span>`;
+                    } else if (user.sessionStatus === "active") {
+                        statusMarkup = `<span class="status-tag status-online">Online</span>`;
+                        onlineCount++;
+                    }
+
+                    // Render current active bets tracker diagnostics
+                    let activeBetStringDiagnostics = `<span style="color:rgba(255,255,255,0.3); font-size:0.75rem;">No Active Stake</span>`;
+                    if (user.activeBet) {
+                        const betColor = user.activeBet.color || "None";
+                        const betAmt = user.activeBet.amount || 0;
+                        activeBetStringDiagnostics = `<span style="font-family:'Share Tech Mono', monospace; font-size:0.82rem; color:#fff; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:6px; border:1px solid rgba(255,255,255,0.08);">Stacked ₹${betAmt} on <b style="color:${betColor==='GREEN'?'#10b981':betColor==='RED'?'#ef4444':'#8b5cf6'}">${betColor}</b></span>`;
+                    }
+
+                    const walletVal = user.walletBalance !== undefined ? parseFloat(user.walletBalance).toFixed(2) : "0.00";
+                    const deviceString = `${user.deviceBrand || "Unknown"} (${user.deviceOS || "N/A"})`;
+
+                    // Row Element String Assembly Grid 
+                    const rowElementMarkup = `
+                        <tr>
+                            <td>
+                                <div class="user-meta-cell">
+                                    <img src="${user.photo || 'https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png'}" alt="Avatar">
+                                    <div class="meta-det">
+                                        <h4>${user.name || 'Anonymous'}</h4>
+                                        <small>${user.email || 'No Linked Email'}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-family:'Share Tech Mono', monospace; font-size:0.85rem; color: #94a3b8;">${user.ipAddress || '0.0.0.0'}</td>
+                            <td style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">${deviceString}</td>
+                            <td><span class="balance-txt">₹${walletVal}</span></td>
+                            <td>${activeBetStringDiagnostics}</td>
+                            <td>${statusMarkup}</td>
+                            <td>
+                                <div class="actions-group" style="justify-content: center;">
+                                    <button class="btn-action" title="Modify Balance Wallet" onclick="openBalanceControlPanel('${user.uid}', '${user.name}', ${walletVal})"><i class="fa-solid fa-plus-minus"></i></button>
+                                    <button class="btn-action" title="Push Custom System Popup" onclick="openNoticeControlPanel('${user.uid}', '${user.email}')"><i class="fa-solid fa-paper-plane"></i></button>
+                                    <button class="btn-action" title="Force Disconnect Session" onclick="executeRemoteSessionReset('${user.uid}')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                                    <button class="btn-action btn-danger-action" title="${user.isBlocked ? 'Unban Account' : 'Suspend Account'}" onclick="toggleAccountBanRestriction('${user.uid}', ${user.isBlocked || false})"><i class="fa-solid ${user.isBlocked ? 'fa-unlock' : 'fa-user-slash'}"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.insertAdjacentHTML('beforeend', rowElementMarkup);
+                });
+
+                document.getElementById('stat-total-users').innerText = totalCount < 10 ? "0" + totalCount : totalCount;
+                document.getElementById('stat-online-users').innerText = onlineCount < 10 ? "0" + onlineCount : onlineCount;
+                appendTerminalShellLog("MIRROR", `Database pipeline parsed successfully. Online: [${onlineCount}/${totalCount}]`);
+            });
+
+            // Keep game parameters indicators sync status live updated on boots
+            onValue(ref(database, 'gameControls/fastparityOverride'), (snap) => {
+                const node = document.getElementById('fastparityStatusLockNode');
+                if (snap.exists() && snap.val() !== "NONE") {
+                    const colorVal = snap.val();
+                    node.innerText = `Mode: FORCED CRASH ON ${colorVal} ⚠️`;
+                    node.style.color = "#ff0055";
+                    node.style.borderColor = "rgba(255,0,85,0.2)";
+                    appendTerminalShellLog("FASTPARITY", `Global override interception locked on node: [${colorVal}]`, true);
+                } else {
+                    node.innerText = "Mode: Automated Algorithms (Random)";
+                    node.style.color = "#39FF14";
+                    node.style.borderColor = "rgba(57,255,20,0.2)";
+                }
+            });
+
+            onValue(ref(database, 'gameControls/aviatorOverrideMultiplier'), (snap) => {
+                const node = document.getElementById('aviatorStatusLockNode');
+                if (snap.exists() && parseFloat(snap.val()) > 0) {
+                    const multVal = snap.val();
+                    node.innerText = `Current Crash Curve: LOCKED AT ${multVal}x ⚠️`;
+                    node.style.color = "#ff0055";
+                    node.style.borderColor = "rgba(255,0,85,0.2)";
+                    appendTerminalShellLog("AVIATOR", `Algorithm vector vector matrix frozen at: [${multVal}x]`, true);
+                } else {
+                    node.innerText = "Current Crash Curve: Dynamic Random Fallback";
+                    node.style.color = "#39FF14";
+                    node.style.borderColor = "rgba(57,255,20,0.2)";
+                }
+            });
+        }
+
+        // ==========================================================================
+        // NEW GAME ENGINE INTERCEPTOR CONTROL LOGIC FUNCTIONS
+        // ==========================================================================
+        window.forceNextFastParityColorResult = function(color) {
+            update(ref(database, 'gameControls'), { fastparityOverride: color }).then(() => {
+                appendTerminalShellLog("OVERRIDE", `FastParity execution matrix set to target color field -> ${color}`);
+            });
+        };
+
+        window.lockNextAviatorCrashMultiplierPoint = function() {
+            const val = parseFloat(document.getElementById('aviatorMultiplierInputField').value);
+            if (isNaN(val) || val < 1.0) {
+                appendTerminalShellLog("ERROR", "Invalid input matrix. Aviator payload values must cross 1.00x base limit.", true);
+                return;
+            }
+            update(ref(database, 'gameControls'), { aviatorOverrideMultiplier: val }).then(() => {
+                document.getElementById('aviatorMultiplierInputField').value = "";
+                appendTerminalShellLog("OVERRIDE", `Aviator flight parameter interceptor loaded successfully with threshold factor: ${val}x`);
+            });
+        };
+
+        // ==========================================================================
+        // DYNAMIC PROFILE VALUE MODIFIERS SECTION HANDLERS
+        // ==========================================================================
+        window.openBalanceControlPanel = function(uid, name, balance) {
+            activeTargetUidCache = uid;
+            activeTargetCurrentBalanceCache = parseFloat(balance);
+            document.getElementById('balTargetDisplay').value = name;
+            document.getElementById('balAmountInput').value = "";
+            document.getElementById('balanceModal').classList.add('active');
+            appendTerminalShellLog("MODAL", `Balance configuration terminal opened targeting element: [${uid}]`);
+        };
+
+        window.executeDatabaseBalanceAdjustment = function() {
+            const amount = parseFloat(document.getElementById('balAmountInput').value);
+            const operation = document.getElementById('balOperationSelect').value;
+
+            if (isNaN(amount) || amount <= 0) {
+                appendTerminalShellLog("ERROR", "Transaction rejected. Amount declaration structures contain corruption errors.", true);
+                return;
+            }
+
+            let computedFinisedBalance = activeTargetCurrentBalanceCache;
+            if (operation === "ADD") {
+                computedFinisedBalance += amount;
+            } else {
+                computedFinisedBalance -= amount;
+                if (computedFinisedBalance < 0) computedFinisedBalance = 0;
+            }
+
+            update(ref(database, 'users/' + activeTargetUidCache), { walletBalance: computedFinisedBalance }).then(() => {
+                appendTerminalShellLog("TRANSACTION", `Account [${activeTargetUidCache}] balance updated. Stream modification: ${operation} -> Amount: ₹${amount}`);
+                closeControlModal('balanceModal');
+            });
+        };
+
+        window.openNoticeControlPanel = function(uid, email) {
+            activeTargetUidCache = uid;
+            document.getElementById('noticeTargetDisplay').value = email;
+            document.getElementById('noticeTextMessage').value = "";
+            document.getElementById('noticeModal').classList.add('active');
+            appendTerminalShellLog("MODAL", `Notification interceptor window triggered for node: [${uid}]`);
+        };
+
+        window.transmitRemoteWarningNotification = function() {
+            const msg = document.getElementById('noticeTextMessage').value.trim();
+            if (msg === "") {
+                appendTerminalShellLog("ERROR", "Broadcast packet halted. Null payload value blocks transmission lanes.", true);
+                return;
+            }
+
+            update(ref(database, 'users/' + activeTargetUidCache), { popupMessage: msg }).then(() => {
+                appendTerminalShellLog("BROADCAST", `Push notification tracking string attached directly on user shell -> ${activeTargetUidCache}`);
+                closeControlModal('noticeModal');
+            });
+        };
+
+        window.executeRemoteSessionReset = function(uid) {
+            if (!confirm("Are you sure you want to force reset this active connection track?")) return;
+            update(ref(database, 'users/' + uid), { forceDisconnect: true }).then(() => {
+                appendTerminalShellLog("TERMINATE", `Dispatched remote termination sequence execution signal on address node: [${uid}]`, true);
+            });
+        };
+
+        window.toggleAccountBanRestriction = function(uid, currentBanState) {
+            if (!confirm(currentBanState ? "Restore account status parameters?" : "Completely block this user token node?")) return;
+            update(ref(database, 'users/' + uid), { isBlocked: !currentBanState }).then(() => {
+                appendTerminalShellLog("SECURITY", `Ban status verification flag inverted for account hash identifier: [${uid}] -> State: ${!currentBanState}`, true);
+            });
+        };
+
+        window.closeControlModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            activeTargetUidCache = null;
+        };
+
+        // Trigger bootstrap initialization maps
+        startLiveDatabaseTableListener();
+    </script>
+</body>
+</html>

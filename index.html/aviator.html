@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solus Venom - Aviator Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. PREMIUM CYBER GRAPH DESIGN & MATRIX WIREFRAME
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #040609 0%, #010102 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.2; }
+        .orb-flight { width: 500px; height: 500px; background: linear-gradient(135deg, #0d9488, #39FF14); top: -10%; right: -10%; }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 36px; position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(3, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; padding: 40px 22px 15px 22px; justify-content: space-between; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); }
+
+        /* Top Header Navigation Strip */
+        .header-strip { display: flex; justify-content: space-between; align-items: center; z-index: 2; }
+        .identity-block { display: flex; align-items: center; gap: 10px; }
+        .identity-block img { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid #39FF14; box-shadow: 0 0 12px rgba(57,255,20,0.3); }
+        .identity-block h4 { font-size: 0.9rem; font-weight: 700; color: #fff; }
+        .identity-block p { font-size: 0.68rem; color: rgba(255,255,255,0.4); font-family: 'Share Tech Mono', monospace; }
+
+        .wallet-node { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 10px 18px; border-radius: 16px; text-align: right; }
+        .wallet-node small { font-size: 0.6rem; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+        .wallet-node div { font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; color: #39FF14; font-weight: 700; }
+
+        /* Recent Multipliers Badges Scroller Grid */
+        .history-scroller-strip { display: flex; gap: 8px; overflow-x: auto; padding: 5px 2px; margin-top: 5px; z-index: 2; width: 100%; -webkit-overflow-scrolling: touch; }
+        .history-scroller-strip::-webkit-scrollbar { display: none; }
+        .badge-multiplier { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; padding: 5px 12px; border-radius: 8px; font-weight: 700; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); flex-shrink: 0; }
+        .badge-premium-mult { color: #39FF14; border-color: rgba(57,255,20,0.2); background: rgba(57,255,20,0.03); }
+
+        /* ==========================================================================
+           2. DYNAMIC FLIGHT CANVAS RADAR SYSTEM & COUNTER
+           ========================================================================== */
+        .radar-display-container {
+            width: 100%; height: 260px; background: #020305; border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.04); position: relative; margin-top: 10px;
+            overflow: hidden; z-index: 2; box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+        }
+        
+        .radar-display-container::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 20px 20px; top: 0; left: 0; pointer-events: none;
+        }
+
+        #flightRenderCanvas { width: 100%; height: 100%; display: block; position: absolute; top: 0; left: 0; z-index: 1; }
+
+        .multiplier-digital-counter {
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            font-family: 'Share Tech Mono', monospace; font-size: 3.2rem; font-weight: 800;
+            color: #ffffff; text-shadow: 0 0 30px rgba(255,255,255,0.2); z-index: 5; text-align: center;
+        }
+        .multiplier-digital-counter.flew-away { color: #ff0055 !important; text-shadow: 0 0 30px rgba(255,0,85,0.6); animation: blastTextShake 0.15s infinite; }
+        .multiplier-digital-counter.betting-phase { color: #facc15 !important; text-shadow: 0 0 30px rgba(250,204,21,0.4); font-size: 2rem; }
+        @keyframes blastTextShake { 0% { transform: translate(-52%, -48%) scale(1.02); } 100% { transform: translate(-48%, -52%) scale(0.98); } }
+
+        .game-status-logs { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: #39FF14; text-transform: uppercase; position: absolute; top: 15px; left: 20px; z-index: 5; letter-spacing: 1px; }
+
+        /* ==========================================================================
+           3. LIVE ACTIVE STREAM DATA TRAFFIC OVERLAY PANELS
+           ========================================================================== */
+        .live-traffic-terminal { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 15px; height: 190px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; z-index: 2; margin-top: 10px; }
+        .live-traffic-terminal h5 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
+        .live-traffic-terminal h5 span { color: #39FF14; font-family: 'Share Tech Mono', monospace; }
+        
+        .traffic-rows-box { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
+        .traffic-flight-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 12px; font-size: 0.75rem; animation: rowInject 0.25s ease; }
+        @keyframes rowInject { from { opacity:0; transform: translateY(-3px); } to { opacity:1; transform: translateY(0); } }
+        
+        .pilot-identity { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); }
+        .pilot-stake-badge { font-family: 'Share Tech Mono', monospace; font-weight: bold; color: #fff; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 6px; }
+        .pilot-status-cashout { font-family: 'Share Tech Mono', monospace; font-weight: 800; color: #000; background: #39FF14; padding: 2px 8px; border-radius: 6px; box-shadow: 0 0 10px rgba(57,255,20,0.2); }
+        .pilot-status-flying { font-family: 'Share Tech Mono', monospace; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 1px 7px; border-radius: 6px; }
+
+        /* ==========================================================================
+           4. TRANSACTION BOARD & BET / CASHOUT DYNAMIC CONTROLLER
+           ========================================================================== */
+        .control-panel-deck { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.04); border-radius: 26px; padding: 16px; margin-top: 10px; z-index: 2; display: flex; flex-direction: column; gap: 12px; }
+        
+        .chip-grid-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .chip-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 10px; border-radius: 12px; font-family: 'Share Tech Mono', monospace; font-weight: 700; font-size: 0.82rem; text-align: center; cursor: pointer; color: rgba(255,255,255,0.6); transition: 0.2s; }
+        .chip-item.selected { background: rgba(57, 255, 20, 0.05); border-color: #39FF14; color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.15); }
+
+        /* Giant Master Action Button Engine */
+        .btn-master-flight-action {
+            width: 100%; padding: 20px; border-radius: 20px; border: none;
+            font-size: 1.15rem; font-weight: 800; text-transform: uppercase;
+            font-family: 'Share Tech Mono', monospace; letter-spacing: 0.5px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.2;
+        }
+        
+        .btn-state-bet { background: linear-gradient(135deg, #059669, #39FF14); color: #000000; box-shadow: 0 6px 20px rgba(57,255,20,0.25); }
+        .btn-state-bet small { font-size: 0.7rem; font-weight: 600; text-transform: none; opacity: 0.7; }
+        
+        .btn-state-waiting { background: rgba(255,255,255,0.04) !important; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4) !important; cursor: not-allowed; box-shadow: none !important; }
+        
+        .btn-state-cashout { background: linear-gradient(135deg, #ea580c, #facc15); color: #000000; box-shadow: 0 6px 25px rgba(234, 88, 12, 0.35); }
+        .btn-state-cashout small { font-size: 0.75rem; font-weight: 700; }
+
+        /* ==========================================================================
+           5. RUNTIME CASHOUT WIN OVERLAY DIALOG MODAL
+           ========================================================================== */
+        .win-overlay-modal {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2,3,5,0.95); backdrop-filter: blur(20px);
+            z-index: 999; display: none; justify-content: center; align-items: center; padding: 25px;
+        }
+        .win-overlay-modal.active { display: flex; }
+        .win-card-deck { width: 100%; padding: 40px 25px; text-align: center; border: 1px solid rgba(57, 255, 20, 0.25) !important; background: rgba(4,8,6,0.96); border-radius: 28px; box-shadow: 0 0 40px rgba(57,255,20,0.15); display: flex; flex-direction: column; align-items: center; gap: 10px;}
+        .win-card-deck i { font-size: 3.8rem; color: #39FF14; text-shadow: 0 0 20px rgba(57,255,20,0.4); margin-bottom: 15px; }
+        .win-card-deck h2 { font-size: 1.8rem; font-weight: 800; color: #fff; text-transform: uppercase; }
+        .win-card-deck p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 6px; line-height: 1.5; }
+        .win-card-deck h1 { font-family: 'Share Tech Mono', monospace; font-size: 2.5rem; color: #39FF14; margin: 15px 0; text-shadow: 0 0 15px rgba(57,255,20,0.3); }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-flight"></div>
+
+    <div id="cashoutWinModal" class="win-overlay-modal">
+        <div class="win-card-deck premium-glass">
+            <i class="fa-solid fa-jet-fighter"></i>
+            <h2>FLEW OUT SAFE</h2>
+            <p>You cashed out successfully before engine crash interception sequence.</p>
+            <h1 id="winAmountDisplayText">₹0.00</h1>
+            <button class="btn-master-flight-action btn-state-bet" style="padding:14px; border-radius:12px; font-size:0.9rem; max-width: 180px;" onclick="closeCashoutWinModal()">Acknowledge</button>
+        </div>
+    </div>
+
+    <div class="phone-wrapper premium-glass">
+
+        <header class="header-strip">
+            <div class="identity-block">
+                <img id="playerAvatar" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png" alt="User">
+                <div>
+                    <h4 id="playerNameText">Loading Radar...</h4>
+                    <p><i class="fa-solid fa-shield-halved" style="color:#39FF14;"></i> Aviator Operator</p>
+                </div>
+            </div>
+            <div class="wallet-node">
+                <small>Available Funds</small>
+                <div id="playerBalanceText">₹0.00</div>
+            </div>
+        </header>
+
+        <div class="history-scroller-strip" id="multiplierHistoryRow">
+            <div class="badge-multiplier badge-premium-mult">1.84x</div>
+            <div class="badge-multiplier">1.20x</div>
+            <div class="badge-multiplier badge-premium-mult">3.56x</div>
+            <div class="badge-multiplier">1.05x</div>
+            <div class="badge-multiplier">1.41x</div>
+            <div class="badge-multiplier badge-premium-mult">2.10x</div>
+        </div>
+
+        <div class="radar-display-container">
+            <div class="game-status-logs" id="engineStatusIndicatorLog">[STATUS: CONNECTING]</div>
+            <div class="multiplier-digital-counter" id="canvasLiveCounterText">1.00x</div>
+            <canvas id="flightRenderCanvas"></canvas>
+        </div>
+
+        <div class="live-traffic-terminal">
+            <h5><i class="fa-solid fa-satellite-dish"></i> Live Traffic Terminal <span id="radarNodesCount">ACTIVE</span></h5>
+            <div class="traffic-rows-box" id="globalLiveTrafficContainer">
+                </div>
+        </div>
+
+        <div class="control-panel-deck premium-glass">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <small style="font-size:0.65rem; text-transform:uppercase; color:rgba(255,255,255,0.4); letter-spacing:0.5px; font-weight:600; padding-left:2px;">Select Deployment Stake</small>
+                <div class="chip-grid-row">
+                    <div class="chip-item selected" onclick="selectStakeChipValue(this, 10)">₹10</div>
+                    <div class="chip-item" onclick="selectStakeChipValue(this, 50)">₹50</div>
+                    <div class="chip-item" onclick="selectStakeChipValue(this, 100)">₹100</div>
+                    <div class="chip-item" onclick="selectStakeChipValue(this, 500)">₹500</div>
+                </div>
+            </div>
+
+            <button class="btn-master-flight-action btn-state-bet" id="masterExecutionActionButton" onclick="handleMasterActionStateTrigger()">
+                <span>Place Bet</span>
+                <small id="subTextActionButtonDescription">Stake: ₹10</small>
+            </button>
+        </div>
+
+        <div style="font-family:'Share Tech Mono', monospace; font-size:0.68rem; color:rgba(255,255,255,0.25); text-align:center; padding-top:5px;">
+            SOLUS VENOM ENHANCED CASINO MATRIX CORE RL-1
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUserId = null;
+        let currentUserCurrentBalance = 0;
+        let currentSelectedStakeAmount = 10;
+        
+        let currentSystemGameStateMode = "BETTING"; // BETTING, FLYING, CRASHED
+        let liveRunningFlightMultiplierCoefficient = 1.00;
+        let activeRoundCalculatedServerCrashPointThreshold = 2.50; 
+        let executionMutexGateLock = false; 
+        
+        let canvas = document.getElementById('flightRenderCanvas');
+        let ctx = canvas.getContext('2d');
+        let flightLoopAnimationId = null;
+        let animationProgressTrackerTimeStep = 0;
+
+        let localBettingPhaseCountdownSeconds = 7;
+        let globalLoopTimerIntervalNode = null;
+
+        const fakePilotsNameRoster = ["Kabir_Fly", "Racer_Viper", "Aviator_Pro", "Crypto_Don", "Zeus_Strike", "Neon_Rider", "Alpha_007", "Phantom_Jet", "Shadow_Pilot", "Matrix_X", "Hydra_Venom", "Apex_Predator"];
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                document.getElementById('playerNameText').innerText = user.displayName || "Solus Pilot";
+                document.getElementById('playerAvatar').src = user.photoURL || "https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png";
+                initializeRealtimeBalanceListener(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        function initializeRealtimeBalanceListener(uid) {
+            onValue(ref(database, 'users/' + uid), (snap) => {
+                if (snap.exists()) {
+                    currentUserCurrentBalance = parseFloat(snap.val().walletBalance || 0);
+                    document.getElementById('playerBalanceText').innerText = "₹" + currentUserCurrentBalance.toFixed(2);
+                }
+            });
+        }
+
+        function configureCanvasSizeDimensionsLayout() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        window.addEventListener('resize', configureCanvasSizeDimensionsLayout);
+        configureCanvasSizeDimensionsLayout();
+
+        // ==========================================================================
+        // AUTOMATED RECURSIVE CENTRAL TIMING MACHINE 
+        // ==========================================================================
+        function triggerInfiniteCentralRadarEngineLoop() {
+            // High-volume traffic simulation execution node initialization
+            executeLiveTrafficSimulationPipeline();
+
+            // Run structural continuous loop phase sequence monitoring
+            runBettingPhaseIntervalCounter();
+        }
+
+        function runBettingPhaseIntervalCounter() {
+            currentSystemGameStateMode = "BETTING";
+            localBettingPhaseCountdownSeconds = 7;
+            
+            document.getElementById('engineStatusIndicatorLog').innerText = "[STATUS: ACCEPTING PLACEMENTS]";
+            const counterTextNode = document.getElementById('canvasLiveCounterText');
+            counterTextNode.className = "multiplier-digital-counter betting-phase";
+
+            updateActionButtonUIStateRepresentation();
+
+            globalLoopTimerIntervalNode = setInterval(() => {
+                localBettingPhaseCountdownSeconds--;
+                counterTextNode.innerText = `NEXT ROUND IN ${localBettingPhaseCountdownSeconds}s`;
+
+                if (localBettingPhaseCountdownSeconds <= 0) {
+                    clearInterval(globalLoopTimerIntervalNode);
+                    counterTextNode.className = "multiplier-digital-counter";
+                    counterTextNode.innerText = "1.00x";
+                    
+                    // Trigger automated background crash configuration allocation vector
+                    calculateDynamicRoundCrashPointVector();
+
+                    // Start visual canvas flight animation loop path
+                    beginGraphicalRadarFlightSimulationLoop();
+                }
+            }, 1000);
+        }
+
+        async function calculateDynamicRoundCrashPointVector() {
+            // Check for explicit admin override dashboard controls setup first
+            try {
+                const overrideSnapRef = await get(ref(database, 'gameControls/aviatorOverride'));
+                if (overrideSnapRef.exists() && parseFloat(overrideSnapRef.val()) > 1.0) {
+                    activeRoundCalculatedServerCrashPointThreshold = parseFloat(overrideSnapRef.val());
+                    await update(ref(database, 'gameControls'), { aviatorOverride: 0 });
+                    return;
+                }
+            } catch (err) {
+                console.warn("Override intercept failure, rolling native matrix logic");
+            }
+
+            const randomDeterminantSeed = Math.random();
+            if (randomDeterminantSeed < 0.18) activeRoundCalculatedServerCrashPointThreshold = 1.00 + (Math.random() * 0.08); 
+            else if (randomDeterminantSeed < 0.68) activeRoundCalculatedServerCrashPointThreshold = 1.12 + (Math.random() * 0.85); 
+            else if (randomDeterminantSeed < 0.93) activeRoundCalculatedServerCrashPointThreshold = 2.00 + (Math.random() * 2.2); 
+            else activeRoundCalculatedServerCrashPointThreshold = 4.20 + (Math.random() * 14.0); 
+        }
+
+        // ==========================================================================
+        // DYNAMIC RENDERING STEP VECTOR ENGINE
+        // ==========================================================================
+        function beginGraphicalRadarFlightSimulationLoop() {
+            animationProgressTrackerTimeStep = 0;
+            liveRunningFlightMultiplierCoefficient = 1.00;
+            currentSystemGameStateMode = "FLYING";
+            
+            document.getElementById('engineStatusIndicatorLog').innerText = "[STATUS: LIVE FLIGHT IN PROGRESS]";
+            updateActionButtonUIStateRepresentation();
+
+            function frameRenderStep() {
+                if (currentSystemGameStateMode !== "FLYING") return;
+
+                animationProgressTrackerTimeStep += 0.006;
+                // Complex incremental multiplier curve simulation coefficient
+                liveRunningFlightMultiplierCoefficient += 0.008 + (animationProgressTrackerTimeStep * 0.018);
+                
+                document.getElementById('canvasLiveCounterText').innerText = liveRunningFlightMultiplierCoefficient.toFixed(2) + "x";
+
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+
+                ctx.beginPath();
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = "#39FF14";
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "#39FF14";
+                ctx.moveTo(0, canvas.height);
+                
+                let targetPlaneVectorX = animationProgressTrackerTimeStep * (canvas.width * 0.85);
+                let targetPlaneVectorY = canvas.height - (Math.pow(animationProgressTrackerTimeStep, 1.8) * (canvas.height * 0.75));
+                
+                if (targetPlaneVectorX > canvas.width * 0.85) targetPlaneVectorX = canvas.width * 0.85;
+                if (targetPlaneVectorY < canvas.height * 0.2) targetPlaneVectorY = canvas.height * 0.2;
+
+                ctx.quadraticCurveTo(targetPlaneVectorX / 2, canvas.height, targetPlaneVectorX, targetPlaneVectorY);
+                ctx.stroke();
+
+                ctx.shadowBlur = 25;
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.arc(targetPlaneVectorX, targetPlaneVectorY, 7, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Auto intercept crash event check conditions
+                if (liveRunningFlightMultiplierCoefficient >= activeRoundCalculatedServerCrashPointThreshold) {
+                    executeFlightEngineCrashInterceptionSequence();
+                    return;
+                }
+
+                flightLoopAnimationId = requestAnimationFrame(frameRenderStep);
+            }
+            flightLoopAnimationId = requestAnimationFrame(frameRenderStep);
+        }
+
+        function executeFlightEngineCrashInterceptionSequence() {
+            cancelAnimationFrame(flightLoopAnimationId);
+            currentSystemGameStateMode = "CRASHED";
+            
+            document.getElementById('engineStatusIndicatorLog').innerText = "[STATUS: ENGINE CRASHED DETECTED]";
+            
+            const btn = document.getElementById('masterExecutionActionButton');
+            btn.setAttribute('data-has-active-bet', "false"); 
+
+            const counterTextNode = document.getElementById('canvasLiveCounterText');
+            counterTextNode.className = "multiplier-digital-counter flew-away";
+            counterTextNode.innerText = "FLEW AWAY";
+
+            prependOutcomeBadgeIntoHistoryStrip(activeRoundCalculatedServerCrashPointThreshold.toFixed(2) + "x");
+            updateActionButtonUIStateRepresentation();
+
+            // 3.5 seconds cooldown timeline phase before recycling engine state
+            setTimeout(() => {
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+                runBettingPhaseIntervalCounter();
+            }, 3500);
+        }
+
+        // ==========================================================================
+        // HIGH DENSITY FAKE PLAYER STAKES DATA SIMULATION STREAM
+        // ==========================================================================
+        function executeLiveTrafficSimulationPipeline() {
+            const trafficBox = document.getElementById('globalLiveTrafficContainer');
+
+            setInterval(() => {
+                // Generate fake pilots rows only during betting and initial flying loops
+                if (currentSystemGameStateMode === "CRASHED") return;
+
+                const selectedRandomPilotName = fakePilotsNameRoster[Math.floor(Math.random() * fakePilotsNameRoster.length)];
+                const randomStakeVolume = Math.floor(Math.random() * 12) * 200 + 200;
+                const allocationUidRowId = "pilot-node-" + Math.floor(Math.random() * 100000);
+
+                if (currentSystemGameStateMode === "BETTING") {
+                    const templateMarkupString = `
+                        <div class="traffic-flight-row" id="${allocationUidRowId}">
+                            <div class="pilot-identity"><i class="fa-solid fa-plane-arrival" style="opacity:0.35;"></i> <span>${selectedRandomPilotName}</span></div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <span class="pilot-stake-badge">₹${randomStakeVolume}</span>
+                                <span class="pilot-status-flying" id="status-text-${allocationUidRowId}">Flying</span>
+                            </div>
+                        </div>
+                    `;
+                    trafficBox.insertAdjacentHTML('afterbegin', templateMarkupString);
+
+                    // Auto cash out simulation logic link
+                    setTimeout(() => {
+                        const targetStatusNode = document.getElementById(`status-text-${allocationUidRowId}`);
+                        if (targetStatusNode && currentSystemGameStateMode === "FLYING") {
+                            const dynamicMultiplierYieldCapture = (1.10 + Math.random() * 1.5);
+                            if (dynamicMultiplierYieldCapture < activeRoundCalculatedServerCrashPointThreshold) {
+                                targetStatusNode.className = "pilot-status-cashout";
+                                targetStatusNode.innerText = `₹${(randomStakeVolume * dynamicMultiplierYieldCapture).toFixed(0)}`;
+                            } else {
+                                targetStatusNode.style.color = "#ff0055";
+                                targetStatusNode.innerText = "Crashed";
+                            }
+                        }
+                    }, 2000 + Math.random() * 4000);
+                }
+
+                // Node size optimization cap rules bounds
+                if (trafficBox.children.length > 20) {
+                    trafficBox.removeChild(trafficBox.lastChild);
+                }
+            }, 800);
+        }
+
+        // ==========================================================================
+        // CONTROLLERS LOGIC HANDLERS
+        // ==========================================================================
+        window.selectStakeChipValue = function(element, value) {
+            if (currentSystemGameStateMode !== "BETTING") return; 
+            document.querySelectorAll('.chip-item').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            currentSelectedStakeAmount = value;
+            updateActionButtonUIStateRepresentation();
+        };
+
+        function updateActionButtonUIStateRepresentation() {
+            const btn = document.getElementById('masterExecutionActionButton');
+            const span = btn.querySelector('span');
+            const small = btn.querySelector('small');
+
+            btn.className = "btn-master-flight-action"; 
+
+            if (currentSystemGameStateMode === "BETTING") {
+                if (btn.getAttribute('data-has-active-bet') === "true") {
+                    btn.classList.add('btn-state-waiting');
+                    span.innerText = "Bet Registered";
+                    small.innerText = `Locked: ₹${currentSelectedStakeAmount}`;
+                } else {
+                    btn.classList.add('btn-state-bet');
+                    span.innerText = "Place Bet";
+                    small.innerText = `Stake: ₹${currentSelectedStakeAmount}`;
+                    btn.disabled = false;
+                }
+            } else if (currentSystemGameStateMode === "FLYING") {
+                if (btn.getAttribute('data-has-active-bet') === "true") {
+                    btn.classList.add('btn-state-cashout');
+                    let currentLiveWinningsYieldProjection = currentSelectedStakeAmount * liveRunningFlightMultiplierCoefficient;
+                    span.innerText = "Cash Out";
+                    small.innerText = `Take: ₹${currentLiveWinningsYieldProjection.toFixed(2)}`;
+                    btn.disabled = false;
+                } else {
+                    btn.classList.add('btn-state-waiting');
+                    span.innerText = "Flying Live";
+                    small.innerText = "Wait next iteration loop";
+                    btn.disabled = true;
+                }
+            } else {
+                btn.classList.add('btn-state-waiting');
+                span.innerText = "Crashed";
+                small.innerText = "Recalibrating parameters...";
+                btn.disabled = true;
+            }
+        }
+
+        // High frequency UI listener monitoring pipeline
+        setInterval(() => {
+            if (currentSystemGameStateMode === "FLYING" && document.getElementById('masterExecutionActionButton').getAttribute('data-has-active-bet') === "true") {
+                let currentLiveWinningsYieldProjection = currentSelectedStakeAmount * liveRunningFlightMultiplierCoefficient;
+                document.getElementById('masterExecutionActionButton').querySelector('small').innerText = `Take: ₹${currentLiveWinningsYieldProjection.toFixed(2)}`;
+            }
+        }, 50);
+
+        window.handleMasterActionStateTrigger = async function() {
+            if (executionMutexGateLock) return;
+            const btn = document.getElementById('masterExecutionActionButton');
+
+            if (currentSystemGameStateMode === "BETTING") {
+                if (currentUserCurrentBalance < currentSelectedStakeAmount) {
+                    alert("Insufficient wallet volume allocation tokens! Please request balance.");
+                    return;
+                }
+
+                executionMutexGateLock = true;
+                btn.querySelector('span').innerText = "Locking Stake...";
+                btn.disabled = true;
+
+                try {
+                    const verificationSnap = await get(ref(database, `users/${currentUserId}`));
+                    let currentVerifiedBal = currentUserCurrentBalance;
+                    if (verificationSnap.exists()) {
+                        currentVerifiedBal = parseFloat(verificationSnap.val().walletBalance || 0);
+                    }
+
+                    if (currentVerifiedBal < currentSelectedStakeAmount) {
+                        alert("Pipeline Synchronization Error: Insufficient real balance state.");
+                        return;
+                    }
+
+                    const optimizedUpdatedBalance = currentVerifiedBal - currentSelectedStakeAmount;
+                    await update(ref(database, `users/${currentUserId}`), { walletBalance: optimizedUpdatedBalance });
+                    
+                    btn.setAttribute('data-has-active-bet', "true");
+                    updateActionButtonUIStateRepresentation();
+
+                } catch(err) {
+                    console.error("Bet Placement Fault:", err);
+                } finally {
+                    executionMutexGateLock = false;
+                }
+            } 
+            
+            else if (currentSystemGameStateMode === "FLYING" && btn.getAttribute('data-has-active-bet') === "true") {
+                executionMutexGateLock = true; 
+                btn.setAttribute('data-has-active-bet', "false"); 
+                
+                const snapMultiplierInstantCapture = liveRunningFlightMultiplierCoefficient;
+                const preciseWinningsYieldValue = currentSelectedStakeAmount * snapMultiplierInstantCapture;
+
+                try {
+                    const balanceReverificationSnap = await get(ref(database, `users/${currentUserId}`));
+                    let freshLiveWalletAsset = currentUserCurrentBalance;
+                    
+                    // Track standard transaction turnover fields metrics
+                    let currentLifetimeWin = 0;
+                    let currentWagerRequirement = 0;
+
+                    if (balanceReverificationSnap.exists()) {
+                        const uData = balanceReverificationSnap.val();
+                        freshLiveWalletAsset = parseFloat(uData.walletBalance || 0);
+                        currentLifetimeWin = parseFloat(uData.lifetimeWin || 0);
+                        currentWagerRequirement = parseFloat(uData.wagerRequirement || 0);
+                    }
+
+                    const finalEndCalculatedWalletAssetNode = freshLiveWalletAsset + preciseWinningsYieldValue;
+                    const updatedWagerVolume = Math.max(0, currentWagerRequirement - currentSelectedStakeAmount);
+
+                    await update(ref(database, `users/${currentUserId}`), { 
+                        walletBalance: finalEndCalculatedWalletAssetNode,
+                        lifetimeWin: currentLifetimeWin + preciseWinningsYieldValue,
+                        wagerRequirement: updatedWagerVolume
+                    });
+                    
+                    document.getElementById('winAmountDisplayText').innerText = "₹" + preciseWinningsYieldValue.toFixed(2);
+                    document.getElementById('cashoutWinModal').classList.add('active');
+                    updateActionButtonUIStateRepresentation();
+
+                } catch (err) {
+                    console.error("Critical Cashout Settlement Failure:", err);
+                } finally {
+                    executionMutexGateLock = false;
+                }
+            }
+        };
+
+        function prependOutcomeBadgeIntoHistoryStrip(multiplierString) {
+            const scroller = document.getElementById('multiplierHistoryRow');
+            
+            if (scroller.children.length >= 12) {
+                scroller.removeChild(scroller.lastChild);
+            }
+
+            const parseFloatVal = parseFloat(multiplierString);
+            const premiumBadgeClassMarker = parseFloatVal >= 2.0 ? "badge-premium-mult" : "";
+            const badgeHtml = `<div class="badge-multiplier ${premiumBadgeClassMarker}">${multiplierString}</div>`;
+            scroller.insertAdjacentHTML('afterbegin', badgeHtml);
+        }
+
+        window.closeCashoutWinModal = function() {
+            document.getElementById('cashoutWinModal').classList.remove('active');
+        };
+
+        // Initialize multi-state infinite continuous execution cycles engine
+        triggerInfiniteCentralRadarEngineLoop();
+    </script>
+</body>
+</html>

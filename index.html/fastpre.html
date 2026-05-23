@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solus Venom - FastParity Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. PREMIUM CYBER DARK DESIGN & GLASSMORPHISM FRAMEWORK
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #05070a 0%, #010203 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(130px); z-index: 0; opacity: 0.25; }
+        .orb-1 { width: 400px; height: 400px; background: linear-gradient(135deg, #059669, #39FF14); top: -10%; left: -5%; }
+        .orb-2 { width: 350px; height: 350px; background: linear-gradient(135deg, #7c3aed, #00f2fe); bottom: -10%; right: -5%; }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 36px; position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(4, 5, 8, 0.82); z-index: 5; display: flex; flex-direction: column; padding: 40px 24px 20px 24px; justify-content: space-between; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); transition: border 0.3s ease; }
+        
+        /* Tactical 5-Second Threat Neon Pulse Border */
+        .phone-wrapper.threat-active { border: 1px solid rgba(255, 0, 85, 0.4) !important; box-shadow: 0 0 40px rgba(255, 0, 85, 0.2); }
+
+        /* Real-time Layout Shimmer Scanning Coefficient */
+        .phone-wrapper::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(57, 255, 20, 0.06) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg); animation: layoutEngineShimmer 7s infinite ease-in-out; pointer-events: none; z-index: 1;
+        }
+        @keyframes layoutEngineShimmer { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        /* ==========================================================================
+           2. IDENTITY BOARD LOGS & AVAILABLE BALANCE GRID
+           ========================================================================== */
+        .profile-strip { display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+        .user-block { display: flex; align-items: center; gap: 12px; }
+        .user-block img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #39FF14; box-shadow: 0 0 15px rgba(57,255,20,0.3); }
+        .user-block h3 { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.3px; color: #fff; }
+        .user-block p { font-size: 0.72rem; color: #39FF14; font-weight: 500; font-family: 'Share Tech Mono', monospace; }
+
+        .wallet-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 15px 22px; text-align: center; margin-top: 15px; position: relative; z-index: 2; }
+        .wallet-card small { font-size: 0.68rem; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); letter-spacing: 1px; font-weight: 600; }
+        .wallet-card h1 { font-family: 'Share Tech Mono', monospace; font-size: 2rem; color: #39FF14; font-weight: 800; text-shadow: 0 0 25px rgba(57, 255, 20, 0.4); margin-top: 2px; }
+
+        /* ==========================================================================
+           3. TIMER TELEMETRY COUNTER & PREDICTION SELECTION BLOCK
+           ========================================================================== */
+        .timer-analytics-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding: 0 5px; z-index: 2; }
+        .period-box small { font-size: 0.68rem; color: rgba(255,255,255,0.4); display: block; text-transform: uppercase; }
+        .period-box span { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #fff; }
+
+        .countdown-box { text-align: right; }
+        .countdown-box small { font-size: 0.68rem; color: rgba(255,255,255,0.4); display: block; text-transform: uppercase; }
+        .countdown-box span { font-family: 'Share Tech Mono', monospace; font-size: 1.6rem; font-weight: 800; color: #39FF14; text-shadow: 0 0 15px rgba(57,255,20,0.3); }
+        .countdown-box.threat-active span { color: #ff0055; text-shadow: 0 0 20px rgba(255,0,85,0.5); animation: criticalTimerFlash 0.5s infinite alternate; }
+        @keyframes criticalTimerFlash { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+
+        /* Colour Interaction Selectors Grid */
+        .color-bet-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 15px; z-index: 2; }
+        .btn-bet { padding: 12px; border-radius: 18px; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .btn-green { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25); }
+        .btn-violet { background: linear-gradient(135deg, #6d28d9, #8b5cf6); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25); }
+        .btn-red { background: linear-gradient(135deg, #b91c1c, #ef4444); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25); }
+        
+        .btn-bet:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
+        .btn-bet:disabled { opacity: 0.25; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+        /* ==========================================================================
+           4. HISTORICAL RECORD LAYER (DYNAMIC PERIOD MATRIX)
+           ========================================================================== */
+        .history-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 15px; flex: 1; margin: 15px 0; display: flex; flex-direction: column; gap: 10px; overflow: hidden; z-index: 2; height: 180px; }
+        .history-card h4 { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
+        .history-card h4 i { color: #39FF14; }
+
+        .history-list-wrapper { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; flex: 1; padding-right: 2px; }
+        .history-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 10px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+        .history-item .p-num { font-family: 'Share Tech Mono', monospace; color: rgba(255,255,255,0.6); }
+        
+        .badge-dot { display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Share Tech Mono', monospace; }
+        .badge-dot::before { content: ''; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .badge-green { color: #10b981; } .badge-green::before { background: #10b981; box-shadow: 0 0 10px #10b981; }
+        .badge-violet { color: #8b5cf6; } .badge-violet::before { background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6; }
+        .badge-red { color: #ef4444; } .badge-red::before { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+
+        /* ==========================================================================
+           5. HIGH-VOLUME LIVE ORDER DATA TRAFFIC OVERLAY
+           ========================================================================== */
+        .live-traffic-panel { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 15px; height: 180px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; z-index: 2; margin-bottom: 5px; }
+        .live-traffic-panel h4 { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
+        .live-traffic-panel h4 span { color: #39FF14; font-family: 'Share Tech Mono', monospace; }
+        .traffic-rows-container { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; flex: 1; }
+        .traffic-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 12px; font-size: 0.78rem; animation: rowInject 0.3s ease; }
+        @keyframes rowInject { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+        .traffic-user { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.85); }
+        .traffic-target { font-family: 'Share Tech Mono', monospace; font-weight: bold; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-size: 0.7rem; }
+        .traffic-amt { font-family: 'Share Tech Mono', monospace; font-weight: bold; color: #39FF14; }
+
+        /* ==========================================================================
+           6. REAL-TIME MULTIPLE OVERLAYS (BET SHEET & SETTLEMENT POPUP)
+           ========================================================================== */
+        .glass-overlay-popup {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 3, 5, 0.94); backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px); z-index: 9999; display: none;
+            justify-content: center; align-items: center; padding: 25px;
+        }
+        .glass-overlay-popup.active { display: flex; }
+
+        /* Bet Injection Sheet Styles */
+        .sheet-deck { width: 100%; padding: 30px 22px; display: flex; flex-direction: column; gap: 20px; border: 1px solid rgba(255,255,255,0.08); background: #06080c; border-radius: 28px; }
+        .sheet-deck h3 { font-family: 'Share Tech Mono', monospace; font-size: 1.3rem; color: #fff; border-left: 3px solid #39FF14; padding-left: 10px; }
+        .sheet-deck h3 span { text-transform: uppercase; }
+        
+        .amount-selector-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .btn-chip { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 10px; border-radius: 12px; color: #fff; font-family: 'Share Tech Mono', monospace; font-weight: 700; cursor: pointer; text-align: center; font-size: 0.85rem; }
+        .btn-chip.selected { background: #39FF14; color: #000; border-color: #39FF14; box-shadow: 0 0 15px rgba(57,255,20,0.3); }
+
+        .btn-execution { padding: 16px; border-radius: 16px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; text-transform: uppercase; text-align: center; width: 100%; font-family: 'Share Tech Mono', monospace; letter-spacing: 0.5px; }
+        .btn-commit { background: #39FF14; color: #000; margin-top: 5px; }
+        .btn-abort { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.08); margin-top: 8px; }
+
+        /* Master Settlement Result Dialog Box */
+        .verdict-deck { width: 100%; padding: 40px 25px; text-align: center; border-radius: 28px; display: flex; flex-direction: column; align-items: center; gap: 15px; position: relative; overflow: hidden; }
+        .verdict-deck.status-win { border: 1px solid rgba(57, 255, 20, 0.25) !important; background: rgba(4, 10, 6, 0.98); box-shadow: 0 0 40px rgba(57, 255, 20, 0.15); }
+        .verdict-deck.status-lost { border: 1px solid rgba(255, 0, 85, 0.25) !important; background: rgba(10, 4, 6, 0.98); box-shadow: 0 0 40px rgba(255, 0, 85, 0.15); }
+        
+        .verdict-deck i { font-size: 4rem; margin-bottom: 5px; }
+        .verdict-deck.status-win i { color: #39FF14; text-shadow: 0 0 20px rgba(57,255,20,0.4); }
+        .verdict-deck.status-lost i { color: #ff0055; text-shadow: 0 0 20px rgba(255,0,85,0.4); }
+        .verdict-deck h2 { font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; }
+        .verdict-deck p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+        .verdict-deck .res-ball { width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Share Tech Mono', monospace; font-weight: 800; font-size: 1.2rem; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin: 5px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="phone-wrapper premium-glass" id="appMainChassis">
+
+        <div id="gameModalOverlay" class="glass-overlay-popup">
+            
+            <div id="betPlacementSheet" class="sheet-deck premium-glass" style="display: none;">
+                <h3>Join <span id="targetSelectedColorText">Green</span></h3>
+                <div class="form-group" style="display:flex; flex-direction:column; gap:8px;">
+                    <small style="font-size:0.68rem; text-transform:uppercase; color:rgba(255,255,255,0.4);">Select Investment Chip</small>
+                    <div class="amount-selector-row">
+                        <div class="btn-chip selected" onclick="selectBetAmountChip(this, 10)">₹10</div>
+                        <div class="btn-chip" onclick="selectBetAmountChip(this, 50)">₹50</div>
+                        <div class="btn-chip" onclick="selectBetAmountChip(this, 100)">₹100</div>
+                        <div class="btn-chip" onclick="selectBetAmountChip(this, 500)">₹500</div>
+                    </div>
+                </div>
+                <div>
+                    <button id="confirmContractBtn" class="btn-execution btn-commit" onclick="commitBetTransactionToPipeline()">Confirm Contract</button>
+                    <button class="btn-execution btn-abort" onclick="closeGameOverlayModal()">Cancel</button>
+                </div>
+            </div>
+
+            <div id="roundVerdictCard" class="verdict-deck premium-glass" style="display: none;">
+                <i id="verdictIcon" class="fa-solid fa-trophy"></i>
+                <h2 id="verdictTitle">YOU WIN</h2>
+                <p id="verdictDesc">Your calculation matched server allocation indexes perfectly.</p>
+                <div id="verdictColorBall" class="res-ball" style="background: #10b981;">7</div>
+                <button class="btn-execution btn-commit" style="background:#fff; color:#000; max-width:180px; margin-top:10px;" onclick="acknowledgeRoundEndClose()">Close</button>
+            </div>
+
+        </div>
+
+        <div class="profile-strip">
+            <div class="user-block">
+                <img id="userProfilePic" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png" alt="User Pic">
+                <div>
+                    <h3 id="userProfileName">Loading Engine...</h3>
+                    <p><i class="fa-solid fa-bolt"></i> Solus Member</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-circle-nodes" style="color: #39FF14; font-size: 1.2rem; text-shadow: 0 0 10px #39FF14;"></i>
+        </div>
+
+        <div class="wallet-card premium-glass">
+            <small>Available Balance</small>
+            <h1 id="userBalanceDisplay">₹0.00</h1>
+        </div>
+
+        <div class="timer-analytics-row" id="telemetryRowContainer">
+            <div class="period-box">
+                <small>Active Period</small>
+                <span id="currentPeriodIdDisplay">202605230000</span>
+            </div>
+            <div class="countdown-box" id="countdownBoxWrapper">
+                <small>Time Remaining</small>
+                <span id="timerClockSecondsDisplay">30s</span>
+            </div>
+        </div>
+
+        <div class="color-bet-grid">
+            <button class="btn-bet btn-green" id="betBtn-GREEN" onclick="openBetPlacementSheet('GREEN')">Green</button>
+            <button class="btn-bet btn-violet" id="betBtn-VIOLET" onclick="openBetPlacementSheet('VIOLET')">Violet</button>
+            <button class="btn-bet btn-red" id="betBtn-RED" onclick="openBetPlacementSheet('RED')">Red</button>
+        </div>
+
+        <div class="live-traffic-panel">
+            <h4><i class="fa-solid fa-tower-broadcast"></i> Network Node Streams <span id="activeConnectionsCount">LIVE</span></h4>
+            <div class="traffic-rows-container" id="liveNetworkTrafficContainer">
+                </div>
+        </div>
+
+        <div class="history-card">
+            <h4><i class="fa-solid fa-clock-rotate-left"></i> Dynamic Period History</h4>
+            <div class="history-list-wrapper" id="historyRecordsContainer">
+                <div style="text-align: center; padding-top: 30px; font-family:'Share Tech Mono', monospace; color:rgba(255,255,255,0.2); font-size:0.8rem;">SYNCING BLOCK DATA...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Core Credentials Configuration Vector
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Core App Runtime Variables Local Cache Space
+        let currentUserId = null;
+        let currentUserCurrentBalance = 0;
+        let selectedColorTargetOption = "";
+        let selectedInvestmentChipAmount = 10;
+        let localPeriodGameTimeClockSeconds = 30;
+        let activeSelectedPeriodIdentification = "";
+        let transactionInProgressGate = false; 
+
+        // Names dataset array for simulation matching terminal pools
+        const simulatedPremiumUsersArray = ["Arjun_X", "Devil_Alpha", "Solus_Wolf", "Karan_99", "Rohan_Neon", "Abhi_Viper", "Cyber_Rex", "Venom_Operator", "Max_Shill", "Zero_Cool", "Phoenix_Rx", "Vector_07"];
+
+        // Internal Sound Synthesizer Node Engine (Produces pure tactical "Tik Tik" without asset crashes)
+        function generateBleepSoundTickerFrequency() {
+            try {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContextClass) return;
+                const ctx = new AudioContextClass();
+                const oscNode = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                
+                oscNode.type = 'sine';
+                oscNode.frequency.setValueAtTime(880, ctx.currentTime);
+                gainNode.gain.setValueAtTime(0.12, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+                
+                oscNode.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscNode.start();
+                oscNode.stop(ctx.currentTime + 0.09);
+            } catch (err) {
+                console.warn("AudioContext blocking matrix caught: ", err);
+            }
+        }
+
+        // Initialize user authentication stream mapping trackers
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                document.getElementById('userProfilePic').src = user.photoURL || "https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_512dp.png";
+                document.getElementById('userProfileName').innerText = user.displayName || "Solus User";
+                initializeLiveAccountBalanceSynchronizer(user.uid);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        function initializeLiveAccountBalanceSynchronizer(uid) {
+            const pathRef = ref(database, 'users/' + uid);
+            onValue(pathRef, (snap) => {
+                if (snap.exists()) {
+                    const data = snap.val();
+                    currentUserCurrentBalance = parseFloat(data.walletBalance || 0);
+                    document.getElementById('userBalanceDisplay').innerText = "₹" + currentUserCurrentBalance.toFixed(2);
+                }
+            });
+        }
+
+        // ==========================================================================
+        // COUNTDOWN TIMER ENGINE LOOP WITH REMOTELY LINKED INTEGRATED SYNTH
+        // ==========================================================================
+        function executeGlobalUnifiedGameTimerLoop() {
+            // High-volume high-density fake players generation loop allocation trigger
+            executeContinuousLiveHighVolumeTrafficStream();
+
+            setInterval(() => {
+                localPeriodGameTimeClockSeconds--;
+
+                const nowTimestamp = new Date();
+                const minutesString = String(nowTimestamp.getMinutes()).padStart(2, '0');
+                const hourString = String(nowTimestamp.getHours()).padStart(2, '0');
+                activeSelectedPeriodIdentification = `20260523${hourString}${minutesString}`;
+                document.getElementById('currentPeriodIdDisplay').innerText = activeSelectedPeriodIdentification;
+
+                const clockDisplay = document.getElementById('timerClockSecondsDisplay');
+                const chassis = document.getElementById('appMainChassis');
+                const clockBox = document.getElementById('countdownBoxWrapper');
+
+                clockDisplay.innerText = localPeriodGameTimeClockSeconds + "s";
+
+                // DETAILED RECTIFIER CONDITION: CRITICAL THREAT INTERCEPTOR TIME AT 5 SECONDS
+                if (localPeriodGameTimeClockSeconds <= 5 && localPeriodGameTimeClockSeconds > 0) {
+                    chassis.classList.add('threat-active');
+                    clockBox.classList.add('threat-active');
+                    generateBleepSoundTickerFrequency();
+                    setBetOptionButtonsDisabledState(true);
+                } 
+                // CRITICAL CONDITION: AUTOMATED BG ENGINE LOOP RUNS HAR ROUND PAR RESOLUTION
+                else if (localPeriodGameTimeClockSeconds <= 0) {
+                    localPeriodGameTimeClockSeconds = 30; // Quick reset
+                    chassis.classList.remove('threat-active');
+                    clockBox.classList.remove('threat-active');
+                    
+                    // Sab kuch automatic chalega chahe click kiya ho ya nahi
+                    evaluateRoundSettlementVerdictMetrics();
+                } 
+                else {
+                    chassis.classList.remove('threat-active');
+                    clockBox.classList.remove('threat-active');
+                    setBetOptionButtonsDisabledState(false);
+                }
+
+            }, 1000);
+        }
+
+        function setBetOptionButtonsDisabledState(status) {
+            document.getElementById('betBtn-GREEN').disabled = status;
+            document.getElementById('betBtn-VIOLET').disabled = status;
+            document.getElementById('betBtn-RED').disabled = status;
+        }
+
+        // ==========================================================================
+        // HIGH-VOLUME DYNAMIC TRAFFIC POOL SIMULATOR (1000+ BETA STAKES VISUALS)
+        // ==========================================================================
+        function executeContinuousLiveHighVolumeTrafficStream() {
+            const trafficWrapper = document.getElementById('liveNetworkTrafficContainer');
+            const targetColorSelections = ["GREEN", "RED", "VIOLET"];
+
+            setInterval(() => {
+                const randomProfileName = simulatedPremiumUsersArray[Math.floor(Math.random() * simulatedPremiumUsersArray.length)];
+                const randomTargetSelection = targetColorSelections[Math.floor(Math.random() * targetColorSelections.length)];
+                
+                // High volume stakes allocation spectrum inside ₹1000 to ₹5000 range
+                const highVolumeFakeStakeAmount = Math.floor(Math.random() * 5) * 1000 + 1000;
+
+                let backgroundTagMarkupStyle = "background: rgba(16, 185, 129, 0.15); color: #10b981;";
+                if (randomTargetSelection === "RED") backgroundTagMarkupStyle = "background: rgba(239, 68, 68, 0.15); color: #ef4444;";
+                else if (randomTargetSelection === "VIOLET") backgroundTagMarkupStyle = "background: rgba(139, 92, 246, 0.15); color: #8b5cf6;";
+
+                const dynamicRowTemplateString = `
+                    <div class="traffic-row">
+                        <div class="traffic-user"><i class="fa-solid fa-user-ninja" style="opacity:0.3;"></i> <span>${randomProfileName}</span></div>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span class="traffic-target" style="${backgroundTagMarkupStyle}">${randomTargetSelection}</span>
+                            <span class="traffic-amt">₹${highVolumeFakeStakeAmount}</span>
+                        </div>
+                    </div>
+                `;
+
+                trafficWrapper.insertAdjacentHTML('afterbegin', dynamicRowTemplateString);
+
+                // Memory array element stack optimizer pruning loop bounds
+                if (trafficWrapper.children.length > 20) {
+                    trafficWrapper.removeChild(trafficWrapper.lastChild);
+                }
+            }, 1200);
+        }
+
+        // ==========================================================================
+        // PLAY SYSTEM ACTIONS MECHANICS OPERATORS INTERFACE
+        // ==========================================================================
+        window.openBetPlacementSheet = function(color) {
+            if (localPeriodGameTimeClockSeconds <= 5) return;
+            selectedColorTargetOption = color;
+            
+            document.getElementById('targetSelectedColorText').innerText = color;
+            document.getElementById('targetSelectedColorText').style.color = (color==='GREEN')?'#10b981':(color==='RED')?'#ef4444':'#8b5cf6';
+            
+            document.getElementById('gameModalOverlay').classList.add('active');
+            document.getElementById('betPlacementSheet').style.display = "flex";
+            document.getElementById('roundVerdictCard').style.display = "none";
+        };
+
+        window.selectBetAmountChip = function(element, val) {
+            document.querySelectorAll('.btn-chip').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedInvestmentChipAmount = val;
+        };
+
+        window.commitBetTransactionToPipeline = async function() {
+            if (transactionInProgressGate) return; 
+            
+            if (currentUserCurrentBalance < selectedInvestmentChipAmount) {
+                alert("Insufficient wallet matrix balance! Please request admin fund allocation tokens.");
+                closeGameOverlayModal();
+                return;
+            }
+
+            transactionInProgressGate = true;
+            const targetBtn = document.getElementById('confirmContractBtn');
+            targetBtn.innerText = "Processing Node...";
+            targetBtn.disabled = true;
+
+            try {
+                const freshSnapshotRef = ref(database, `users/${currentUserId}`);
+                const freshSnap = await get(freshSnapshotRef);
+                let currentLiveBal = currentUserCurrentBalance;
+                
+                if (freshSnap.exists()) {
+                    currentLiveBal = parseFloat(freshSnap.val().walletBalance || 0);
+                }
+
+                if (currentLiveBal < selectedInvestmentChipAmount) {
+                     alert("Pipeline discrepancy caught! Insufficient runtime balance.");
+                     closeGameOverlayModal();
+                     return;
+                }
+
+                const finalComputedWalletBalance = currentLiveBal - selectedInvestmentChipAmount;
+                const updatesMap = {};
+                updatesMap[`users/${currentUserId}/walletBalance`] = finalComputedWalletBalance;
+                updatesMap[`users/${currentUserId}/activeBet/color`] = selectedColorTargetOption;
+                updatesMap[`users/${currentUserId}/activeBet/amount`] = selectedInvestmentChipAmount;
+                updatesMap[`users/${currentUserId}/activeBet/period`] = activeSelectedPeriodIdentification;
+
+                await update(ref(database), updatesMap);
+                closeGameOverlayModal();
+            } catch (err) {
+                console.error("Pipeline Transmission Error:", err);
+            } finally {
+                transactionInProgressGate = false;
+                targetBtn.innerText = "Confirm Contract";
+                targetBtn.disabled = false;
+            }
+        };
+
+        // ==========================================================================
+        // LIVE PARSE RESOLUTION TERMINAL SETTLEMENTS CHECKER (AUTOMATED BACKGROUND)
+        // ==========================================================================
+        async function evaluateRoundSettlementVerdictMetrics() {
+            // Determine result color vector patterns matching arrays algorithmically
+            const colorRoster = ["GREEN", "RED", "VIOLET"];
+            
+            // Check for explicit admin override panels configuration locks first
+            let serverOutcomeRandomResultColor = "NONE";
+            try {
+                const overrideSnapRef = await get(ref(database, 'gameControls/fastparityOverride'));
+                if (overrideSnapRef.exists() && overrideSnapRef.val() !== "NONE") {
+                    serverOutcomeRandomResultColor = overrideSnapRef.val();
+                    await update(ref(database, 'gameControls'), { fastparityOverride: "NONE" });
+                } else {
+                    serverOutcomeRandomResultColor = colorRoster[Math.floor(Math.random() * colorRoster.length)];
+                }
+            } catch (err) {
+                serverOutcomeRandomResultColor = colorRoster[Math.floor(Math.random() * colorRoster.length)];
+            }
+
+            const chosenRandomLuckyDigit = (serverOutcomeRandomResultColor === "VIOLET") ? 0 : (serverOutcomeRandomResultColor === "GREEN") ? 7 : 4;
+
+            // Always update history charts layout stream rows regardless of user bet states
+            appendCalculatedOutcomeItemIntoHistoryGrid(activeSelectedPeriodIdentification, serverOutcomeRandomResultColor, chosenRandomLuckyDigit);
+
+            if (!currentUserId) return;
+            
+            const userBetRef = ref(database, `users/${currentUserId}/activeBet`);
+            const snapshot = await get(userBetRef);
+            
+            let userPlacementsColor = "";
+            let userInvestmentVolume = 0;
+            let userTargetPeriodTrack = "";
+
+            if (snapshot.exists()) {
+                const betData = snapshot.val();
+                userPlacementsColor = betData.color || "";
+                userInvestmentVolume = parseInt(betData.amount || 0);
+                userTargetPeriodTrack = betData.period || "";
+            }
+
+            // If user did not place a bet this loop cycle round, terminate processing pipeline here cleanly
+            if (userPlacementsColor === "" || userTargetPeriodTrack !== activeSelectedPeriodIdentification) {
+                return; 
+            }
+
+            const card = document.getElementById('roundVerdictCard');
+            const overlay = document.getElementById('gameModalOverlay');
+            const vIcon = document.getElementById('verdictIcon');
+            const vTitle = document.getElementById('verdictTitle');
+            const vDesc = document.getElementById('verdictDesc');
+            const vBall = document.getElementById('verdictColorBall');
+
+            card.className = "verdict-deck premium-glass";
+            vBall.innerText = chosenRandomLuckyDigit;
+            vBall.style.background = (serverOutcomeRandomResultColor==='GREEN')?'#10b981':(serverOutcomeRandomResultColor==='RED')?'#ef4444':'#8b5cf6';
+
+            try {
+                const userSnapshotRef = ref(database, `users/${currentUserId}`);
+                const freshUserSnap = await get(userSnapshotRef);
+                let currentLiveBalance = currentUserCurrentBalance;
+                
+                // Track standard transaction turnover matrices parameters fields
+                let currentLifetimeWin = 0;
+                let currentWagerRequirement = 0;
+
+                if (freshUserSnap.exists()) {
+                    const uData = freshUserSnap.val();
+                    currentLiveBalance = parseFloat(uData.walletBalance || 0);
+                    currentLifetimeWin = parseFloat(uData.lifetimeWin || 0);
+                    currentWagerRequirement = parseFloat(uData.wagerRequirement || 0);
+                }
+
+                if (userPlacementsColor === serverOutcomeRandomResultColor) {
+                    const prizeWinningsYield = userInvestmentVolume * 1.98; // 2x minus 2% network handling gas structures fees
+                    const updatedWagerVolume = Math.max(0, currentWagerRequirement - userInvestmentVolume);
+
+                    await update(ref(database), {
+                        [`users/${currentUserId}/walletBalance`]: currentLiveBalance + prizeWinningsYield,
+                        [`users/${currentUserId}/lifetimeWin`]: currentLifetimeWin + prizeWinningsYield,
+                        [`users/${currentUserId}/wagerRequirement`]: updatedWagerVolume,
+                        [`users/${currentUserId}/activeBet`]: null
+                    });
+
+                    card.classList.add('status-win');
+                    vIcon.className = "fa-solid fa-trophy";
+                    vTitle.innerText = "YOU WIN 🎉";
+                    vDesc.innerText = `Calculation success! Your wallet balance has been credited with +₹${prizeWinningsYield.toFixed(2)}. Remaining Wager Target: ₹${updatedWagerVolume}`;
+                } else {
+                    const updatedWagerVolume = Math.max(0, currentWagerRequirement - userInvestmentVolume);
+
+                    await update(ref(database), {
+                        [`users/${currentUserId}/wagerRequirement`]: updatedWagerVolume,
+                        [`users/${currentUserId}/activeBet`]: null
+                    });
+
+                    card.classList.add('status-lost');
+                    vIcon.className = "fa-solid fa-circle-xmark";
+                    vTitle.innerText = "YOU LOST 💔";
+                    vDesc.innerText = `Server configuration selected divergent structural options indices. -₹${userInvestmentVolume} dropped. Remaining Wager: ₹${updatedWagerVolume}`;
+                }
+
+                // Show modal verdict overlay to active users who placed bets
+                overlay.classList.add('active');
+                card.style.display = "flex";
+                document.getElementById('betPlacementSheet').style.display = "none";
+            } catch (err) {
+                console.error("Settlement Matrix failure:", err);
+            }
+        }
+
+        function appendCalculatedOutcomeItemIntoHistoryGrid(period, color, digit) {
+            const wrapper = document.getElementById('historyRecordsContainer');
+            if(wrapper.innerHTML.includes("SYNCING")) wrapper.innerHTML = "";
+            
+            if (wrapper.children.length >= 10) {
+                wrapper.removeChild(wrapper.lastChild);
+            }
+
+            const badgeClass = color === "GREEN" ? "badge-green" : color === "RED" ? "badge-red" : "badge-violet";
+            const rowHtml = `
+                <div class="history-item">
+                    <span class="p-num">Period: ${period}</span>
+                    <span class="badge-dot ${badgeClass}">${color} (${digit})</span>
+                </div>
+            `;
+            wrapper.insertAdjacentHTML('afterbegin', rowHtml);
+        }
+
+        window.closeGameOverlayModal = function() {
+            if (transactionInProgressGate) return;
+            document.getElementById('gameModalOverlay').classList.remove('active');
+            document.getElementById('betPlacementSheet').style.display = "none";
+        };
+
+        window.acknowledgeRoundEndClose = function() {
+            document.getElementById('gameModalOverlay').classList.remove('active');
+            document.getElementById('roundVerdictCard').style.display = "none";
+        };
+
+        // Initialize execution systems
+        executeGlobalUnifiedGameTimerLoop();
+    </script>
+</body>
+</html>

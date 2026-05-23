@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solus Venom - Master Firewall</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==========================================================================
+           1. CORE CYBER LAB DESIGN & HIGH SECURITY WIREFRAME (NEON GREEN EDITION)
+           ========================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: radial-gradient(circle at 50% 50%, #05070a 0%, #010203 100%);
+            color: #ffffff; min-height: 100vh; display: flex;
+            justify-content: center; align-items: center; overflow: hidden; position: relative;
+        }
+
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); z-index: 0; opacity: 0.25; }
+        .orb-firewall { width: 500px; height: 500px; background: linear-gradient(135deg, #059669, #39FF14); top: -20%; left: -10%; }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 36px; position: relative; overflow: hidden;
+        }
+
+        .phone-wrapper { width: 410px; height: 860px; background: rgba(4, 5, 8, 0.85); z-index: 5; display: flex; flex-direction: column; padding: 45px 30px; justify-content: space-between; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.95); }
+
+        /* Real-time Cyber Shimmer Scanning */
+        .phone-wrapper::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(57, 255, 20, 0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-30deg); animation: layoutEngineShimmer 6s infinite ease-in-out; pointer-events: none; z-index: 1;
+        }
+        @keyframes layoutEngineShimmer { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        /* ==========================================================================
+           2. SECURITY TERMINAL LOG ELEMENTS & CRYPTO HEADERS
+           ========================================================================== */
+        .security-header { text-align: center; margin-top: 10px; z-index: 2; }
+        .security-header i { font-size: 3.5rem; color: #39FF14; text-shadow: 0 0 30px rgba(57, 255, 20, 0.45); margin-bottom: 20px; }
+        .security-header h2 { font-size: 1.6rem; font-weight: 800; font-family: 'Share Tech Mono', monospace; letter-spacing: -0.5px; background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .security-header p { color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-top: 8px; line-height: 1.4; }
+
+        /* ==========================================================================
+           3. MASTER CREDENTIAL CAPTURE SECURE FIELD SYSTEM
+           ========================================================================== */
+        .form-container { display: flex; flex-direction: column; gap: 18px; width: 100%; margin-top: 10px; margin-bottom: 20px; z-index: 2; }
+        .input-group { position: relative; display: flex; flex-direction: column; gap: 6px; }
+        .input-group label { font-size: 0.7rem; text-transform: uppercase; color: rgba(255,255,255,0.4); letter-spacing: 1px; font-weight: 600; padding-left: 5px; }
+        
+        .input-wrapper { position: relative; width: 100%; }
+        .input-wrapper i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 1rem; transition: 0.3s; }
+        
+        .input-field {
+            width: 100%; padding: 15px 15px 15px 52px; border-radius: 18px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff; font-size: 0.9rem; font-weight: 500; outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-family: 'Share Tech Mono', monospace;
+        }
+        .input-field:focus { border-color: #39FF14; background: rgba(57, 255, 20, 0.02); box-shadow: 0 0 20px rgba(57, 255, 20, 0.15); }
+        .input-field:focus + i { color: #39FF14; }
+
+        /* ==========================================================================
+           4. GLOW ACTIONS OPERATORS & INTERCEPTOR OVERLAYS
+           ========================================================================== */
+        .btn-firewall-auth {
+            background: linear-gradient(135deg, #059669, #39FF14); color: #000000;
+            border: none; padding: 16px; border-radius: 20px; font-weight: 800;
+            font-size: 0.95rem; cursor: pointer; text-transform: uppercase; width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+            transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(57, 255, 20, 0.25);
+            font-family: 'Share Tech Mono', monospace; letter-spacing: 1px;
+        }
+        .btn-firewall-auth:hover { box-shadow: 0 0 30px rgba(57, 255, 20, 0.5); transform: translateY(-2px); }
+        .btn-firewall-auth:active { transform: translateY(0); }
+        .btn-firewall-auth:disabled { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.2); cursor: not-allowed; box-shadow: none; }
+
+        .terminal-logs { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); text-align: center; line-height: 1.5; z-index: 2; margin-top: auto; }
+        .terminal-logs span { color: #39FF14; }
+
+        /* Dialog Alert Override Elements */
+        .alert-modal {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2,3,5,0.96); backdrop-filter: blur(20px);
+            z-index: 1000; display: none; justify-content: center; align-items: center; padding: 25px;
+        }
+        .alert-modal.active { display: flex; }
+        .alert-card { width: 100%; padding: 40px 25px; text-align: center; border: 1px solid rgba(255, 0, 85, 0.3) !important; background: #0c0507; border-radius: 28px; }
+        .alert-card i { font-size: 3rem; color: #ff0055; margin-bottom: 15px; text-shadow: 0 0 15px rgba(255,0,85,0.3); }
+        .alert-card h4 { font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; margin-bottom: 8px; color: #fff; }
+        .alert-card p { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.4; margin-bottom: 20px; }
+        .btn-modal-clear { background: #ff0055; color: #fff; border: none; padding: 14px; border-radius: 14px; width: 100%; font-family: 'Share Tech Mono', monospace; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-firewall"></div>
+
+    <div id="firewallAlert" class="alert-modal">
+        <div class="alert-card premium-glass">
+            <i class="fa-solid fa-ban"></i>
+            <h4 id="alertTitle">Auth Refused</h4>
+            <p id="alertDesc">System log validation rejected security tokens mismatch.</p>
+            <button class="btn-modal-clear" onclick="closeFirewallAlert()">Clear Terminal</button>
+        </div>
+    </div>
+
+    <div class="phone-wrapper premium-glass">
+
+        <div class="security-header">
+            <i class="fa-solid fa-user-shield"></i>
+            <h2>Console Authentication</h2>
+            <p>Admin gateway identification processed. Please type secure authorization pass-keys to drop firewall restrictions.</p>
+        </div>
+
+        <div class="form-container">
+            <div class="input-group">
+                <label>Admin Terminal Mail</label>
+                <div class="input-wrapper">
+                    <input type="email" id="adminEmailField" class="input-field" value="solusvenom@gmail.com" autocomplete="off">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>System Firewall Key</label>
+                <div class="input-wrapper">
+                    <input type="password" id="adminPasswordField" class="input-field" placeholder="•••••••••••••" autocomplete="off">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+            </div>
+
+            <button class="btn-firewall-auth" id="executeAuthBtn" style="margin-top: 10px;">
+                <span>Decrypt Access</span> <i class="fa-solid fa-unlock-keyhole"></i>
+            </button>
+        </div>
+
+        <div class="terminal-logs">
+            SECURE RECTIFIER SHELL PIPELINE LINK <br>
+            [STATUS: <span>GUARDED_RESTRICTION_ACTIVE</span>]
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Dynamic Configuration Synchronization Node Array
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQvrYueSkyOuQtHylnayTPjFVk1ThhXNg",
+            authDomain: "solous-venom.firebaseapp.com",
+            projectId: "solous-venom",
+            storageBucket: "solous-venom.firebasestorage.app",
+            messagingSenderId: "972142901480",
+            appId: "1:972142901480:web:73904b99f5ca5ce428715d",
+            measurementId: "G-YWSQT0LHC3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let executionStateBlockGate = false;
+
+        document.getElementById('executeAuthBtn').addEventListener('click', async () => {
+            if (executionStateBlockGate) return;
+
+            const btn = document.getElementById('executeAuthBtn');
+            const enteredMail = document.getElementById('adminEmailField').value.trim();
+            const enteredPass = document.getElementById('adminPasswordField').value;
+
+            if (enteredMail === "" || enteredPass === "") {
+                triggerFirewallNotice("Missing Tokens", "Please fill structural email field parameters along with terminal password strings.");
+                return;
+            }
+
+            executionStateBlockGate = true;
+            btn.disabled = true;
+            btn.querySelector('span').innerText = "Validating...";
+
+            try {
+                // Real-time remote system config node fetch sequence
+                const targetAdminRefNode = ref(database, 'system_config/admin_keys');
+                const adminSnapshotData = await get(targetAdminRefNode);
+
+                let configuredTargetMail = "solusvenom@gmail.com";
+                let configuredTargetPass = "786786"; // Fallback static system configurations
+
+                if (adminSnapshotData.exists()) {
+                    const onlineServerSystemKeys = adminSnapshotData.val();
+                    configuredTargetMail = onlineServerSystemKeys.email || configuredTargetMail;
+                    configuredTargetPass = onlineServerSystemKeys.password || configuredTargetPass;
+                }
+
+                if (enteredMail === configuredTargetMail && enteredPass === configuredTargetPass) {
+                    btn.querySelector('span').innerText = "ACCESS GRANTED";
+                    setTimeout(() => {
+                        window.location.href = "admin.html";
+                    }, 800);
+                } else {
+                    triggerFirewallNotice("Access Rejected", "Security mismatch! Input firewall security validation key incorrect or expired.");
+                    resetAuthActionStateButton();
+                }
+
+            } catch (error) {
+                console.error("Firewall Authentication Link Fault:", error);
+                // Graceful local fail-safe check if network interrupts
+                if (enteredMail === "solusvenom@gmail.com" && enteredPass === "786786") {
+                    window.location.href = "admin.html";
+                } else {
+                    triggerFirewallNotice("Terminal Handshake Drop", "Unable to confirm credentials via pipeline logs. Check console array.");
+                    resetAuthActionStateButton();
+                }
+            }
+        });
+
+        function resetAuthActionStateButton() {
+            executionStateBlockGate = false;
+            const btn = document.getElementById('executeAuthBtn');
+            btn.disabled = false;
+            btn.querySelector('span').innerText = "Decrypt Access";
+        }
+
+        function triggerFirewallNotice(title, desc) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertDesc').innerText = desc;
+            document.getElementById('firewallAlert').classList.add('active');
+        }
+
+        window.closeFirewallAlert = function() {
+            document.getElementById('firewallAlert').classList.remove('active');
+        };
+    </script>
+</body>
+</html>
